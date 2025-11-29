@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:07:46 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/11/25 20:22:03 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/11/28 14:23:43 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	*ft_gcfct_arr_register_root(void **content, char *root)
 	new->type = GC_DATA;
 	ft_gclstadd_back(&lst, new);
 	while (content[i])
-		ft_gcfct_register_root(content[i++], GC_DATA, root);
+		ft_gcfct_register_root(content[i++], root);
 	ft_gc_register_root(new, root);
 	return (new->content);
 }

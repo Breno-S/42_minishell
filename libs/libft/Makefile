@@ -2,10 +2,10 @@
 #                                   CONFIG                                     #
 # **************************************************************************** #
 
-NAME    := libft.a
-CC      := cc
-CFLAGS  := -Wall -Wextra -Werror -c
-INCLUDES := ../../include
+NAME     := libft.a
+CC       := cc
+CFLAGS   := -Wall -Wextra -Werror -c
+INCLUDES := ./include
 CPPFLAGS :=  $(addprefix -I,$(INCLUDES))
 
 SRCS    := ft_isalpha.c               ft_isdigit.c         ft_isalnum.c        ft_isascii.c \
@@ -32,29 +32,53 @@ SRCS    := ft_isalpha.c               ft_isdigit.c         ft_isalnum.c        f
            ft_gcfct_register_root.c   ft_gc_calloc_root.c  ft_gc_malloc_root.c ft_atoll.c \
 		   ft_gc_content_root.c
 
+SRCS :=  $(addprefix ./srcs/,$(SRCS))
 OBJTS   := $(SRCS:.c=.o)
+PATH_SRCS := ./srcs/
+PATH_BIN := ./bin/
+PATH_OBJT := ./build/
+PATH_BUILD := build/
+
+# Cores ANSI
+GREEN   = \033[0;32m
+RED     = \033[0;31m
+YELLOW  = \033[0;33m
+BLUE    = \033[0;34m
+MAGENTA = \033[0;35m
+CYAN    = \033[0;36m
+L_GREEN = \033[1;32m
+L_RED   = \033[1;31m
+GRAY    = \033[0;90m
+NC      = \033[0m
+
 
 # **************************************************************************** #
 #                                   RULES                                      #
 # **************************************************************************** #
 
-all: $(NAME)
+all: $(addprefix $(PATH_BIN),$(NAME))
 
-$(NAME): $(OBJTS)
-	ar rcs $(NAME) $(OBJTS)
+$(addprefix $(PATH_BIN),$(NAME)) : $(subst $(PATH_SRCS),$(PATH_OBJT),$(OBJTS))
+	@mkdir -p bin
+	@printf "$(L_GREEN)Build...$(NC) %-40s\n" $(NAME)
+	@sleep 0.01
+	@ar rcs $(addprefix $(PATH_BIN),$(NAME)) $(subst $(PATH_SRCS),$(PATH_OBJT),$(OBJTS))
 
-%.o: %.c
-	$(CC) $(CPPFLAGS) $(CFLAGS) $< -o $@
+$(PATH_OBJT)%.o: $(PATH_SRCS)%.c
+	@mkdir -p build
+	@printf "$(L_GREEN)Compiling...$(NC) %-40s\n" $<
+	@sleep 0.01
+	@$(CC) $(CPPFLAGS) $(CFLAGS) $< -o $(subst srcs/,build/,$@)
 
 clean:
-	rm -f $(OBJTS)
+	rm -f $(subst $(PATH_SRCS),$(PATH_OBJT),$(OBJTS))
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(addprefix $(PATH_BIN),$(NAME))
 
 re: fclean all
 
 get_var:
-	@echo $(OBJTS)
+	@echo $(subst $(PATH_SRCS),$(PATH_OBJT),$(OBJTS))
 
 .PHONY: all clean fclean re get_var
