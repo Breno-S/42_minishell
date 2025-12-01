@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execsh.h                                           :+:      :+:    :+:   */
+/*   parsesh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/01 16:53:30 by brensant         ###   ########.fr       */
+/*   Created: 2025/12/01 15:22:36 by brensant          #+#    #+#             */
+/*   Updated: 2025/12/01 16:53:27 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECSH_H
-# define EXECSH_H
+#ifndef PARSESH_H
+# define PARSESH_H
 
-# include "libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 
-#endif // EXECSH_H
+# include "libft.h"
+# include "types.h"
+
+#endif //PARSESH_H

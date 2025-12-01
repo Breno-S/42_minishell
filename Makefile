@@ -1,20 +1,30 @@
 NAME := Minishell
+
 CC := cc
 CFLAGS := -Wall -Wextra -Werror -g
+CPPFLAGS = $(addprefix -I,$(INCLUDES))
+
+LIB_DIRS = $(PATH_LIBFT)/bin
+
 LIBFT := ./libs/libft/bin/libft.a
 SRCS_LIBFT := ./libs/libft/build/
 PATH_LIBFT := ./libs/libft/
+
 INCLUDES := include libs/libft/include
-CPPFLAGS :=  $(addprefix -I,$(INCLUDES))
 PATH_MANDATORY := ./srcs/
 SRCS_MANDATORY := main.c
 SRCS_MANDATORY := $(addprefix $(PATH_MANDATORY),$(SRCS_MANDATORY))
+
 OBJTS             := $(SRCS_MANDATORY:.c=.o)
 OBJTS_LIBFT = $(shell $(MAKE) -s -C $(PATH_LIBFT) get_var)
 OBJTS_LIBFT := $(subst ./build/,$(SRCS_LIBFT),$(OBJTS_LIBFT))
+
 PATH_BIN := ./bin/
 PATH_OBJT := ./build/
 PATH_BUILD := build/
+
+LDLIBS := -lft -lreadline
+LDFLAGS := $(addprefix -L, $(LIB_DIRS))
 
 
 # Cores ANSI
@@ -31,6 +41,7 @@ NC      = \033[0m
 
 all: $(addprefix $(PATH_BIN),$(NAME))
 
+# $(NAME)
 $(addprefix $(PATH_BIN),$(NAME)): $(LIBFT) $(subst $(PATH_MANDATORY),$(PATH_OBJT),$(OBJTS))
 		@echo "$(YELLOW)+==========================================+"
 		@echo "          Build $(NAME)          "
@@ -39,7 +50,7 @@ $(addprefix $(PATH_BIN),$(NAME)): $(LIBFT) $(subst $(PATH_MANDATORY),$(PATH_OBJT
 		@mkdir -p bin
 		@printf "$(L_GREEN)Build...$(NC) %-40s\n" $(NAME)
 		@sleep 0.01
-		@$(CC) $(CFLAGS) $(CPPFLAGS) $(subst $(PATH_MANDATORY),$(PATH_OBJT),$(OBJTS)) $(LIBFT) -o $(addprefix $(PATH_BIN),$(NAME))
+		@$(CC) $(CFLAGS) $(CPPFLAGS) $(subst $(PATH_MANDATORY),$(PATH_OBJT),$(OBJTS)) -o $(addprefix $(PATH_BIN),$(NAME)) $(LDLIBS) $(LDFLAGS) 
 
 
 $(LIBFT): $(OBJTS_LIBFT)
