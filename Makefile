@@ -1,7 +1,7 @@
 NAME := Minishell
 
 CC := cc
-CFLAGS := -Wall -Wextra -Werror -g
+CFLAGS := -Wall -Wextra -g
 CPPFLAGS = $(addprefix -I,$(INCLUDES))
 
 LIB_DIRS = $(PATH_LIBFT)/bin
@@ -12,7 +12,7 @@ PATH_LIBFT := ./libs/libft/
 
 INCLUDES := include libs/libft/include
 PATH_MANDATORY := ./srcs/
-SRCS_MANDATORY := main.c
+SRCS_MANDATORY := main.c lexer.c token.c lexer_aux.c
 SRCS_MANDATORY := $(addprefix $(PATH_MANDATORY),$(SRCS_MANDATORY))
 
 OBJTS             := $(SRCS_MANDATORY:.c=.o)

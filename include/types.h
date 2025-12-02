@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/01 16:50:09 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/02 20:10:44 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,23 @@
 
 # include "libft.h"
 
-typedef struct s_msh
-{
-	char		**envp;
-	t_cmd_tree	*tree;
-	t_child		*childs;
-	char		*cmd;
-	int			ret;
-}	t_msh;
+// typedef struct s_msh
+// {
+// 	char		**envp;
+// 	t_cmd_tree	*tree;
+// 	t_child		*childs;
+// 	char		*cmd;
+// 	int			ret;
+// }	t_msh;
 
 typedef enum e_token_class
 {
 	TOKEN_END,
 	TOKEN_INVALID,
 	TOKEN_WORD,
-	TOKEN_SUBSHELL,
+	TOKEN_PIPE,
+	TOKEN_OPEN_PAREN,
+	TOKEN_CLOSE_PAREN,
 	TOKEN_STRING_SINGLE,
 	TOKEN_STRING_DOUBLE,
 	TOKEN_COMMENT,
@@ -40,11 +42,11 @@ typedef enum e_token_class
 	TOKEN_AND,
 	TOKEN_OR,
 	TOKEN_WILDCARD,
-}	t_token_kind;
+}	t_token_class;
 
 typedef struct s_token
 {
-	t_token_kind	kind;
+	t_token_class	class;
 	const char		*text;
 	size_t			text_len;
 }	t_token;
@@ -55,11 +57,5 @@ typedef struct s_lexer
 	size_t		content_len;
 	size_t		cursor;
 }	t_lexer;
-
-int			lexer_starts_with(t_lexer *l, const char *prefix);
-void		lexer_trim_left(t_lexer *l);
-t_lexer		lexer_new(const char *content, size_t content_len);
-const char	*token_kind_name(t_token_kind kind);
-t_token		lexer_next(t_lexer *l);
 
 #endif // TYPES_H
