@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/01 16:50:09 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/01 17:24:47 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,17 @@
 # define TYPES_H
 
 # include "libft.h"
+
+
+typedef struct s_cmd_tree
+{
+	int i;
+}	t_cmd_tree;
+
+typedef struct s_child
+{
+	int i;
+}	t_child;
 
 typedef struct s_msh
 {
