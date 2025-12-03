@@ -6,11 +6,26 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 18:24:08 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/01 20:55:51 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/02 22:26:26 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
+
+int export_env(char **arr)
+{
+	int	i;
+	char *str;
+
+	i = 0;
+	while (arr[i])
+	{
+		str = ft_gcfct_register_root(ft_strdup(arr[i++]), "env");
+		if (!str)
+			return (1);
+	}
+	return(0);
+}
 
 char	**ft_trim_env(char *envp, char sep)
 {

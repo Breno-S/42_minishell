@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 20:00:26 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/09/09 16:29:38 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/02 23:52:30 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_root_list	*ft_gc_call_root(char *categ)
 	while (aux_tlist)
 	{
 		if (!ft_strcmp(ft_to_root_list(aux_tlist->content)->categ, categ))
-			return (aux_tlist->content);
+			return (ft_to_root_list(aux_tlist->content));
 		aux_tlist = aux_tlist->next;
 	}
 	return (NULL);

@@ -1,7 +1,7 @@
 NAME := Minishell
 
-CC := cc
-CFLAGS := -Wall -Wextra -Werror -g
+CC := gcc
+CFLAGS := -Wall -Wextra -Werror -g -g3 -O0
 CPPFLAGS = $(addprefix -I,$(INCLUDES))
 
 LIB_DIRS = $(PATH_LIBFT)/bin
@@ -12,7 +12,7 @@ PATH_LIBFT := ./libs/libft/
 
 INCLUDES := include libs/libft/include
 PATH_MANDATORY := ./srcs/
-SRCS_MANDATORY := main.c    ft_main_loop.c    ft_exec_utils.c
+SRCS_MANDATORY := main.c    ft_main_loop.c    ft_exec_utils.c   ft_export.c   ft_env.c  ft_unset.c
 SRCS_MANDATORY := $(addprefix $(PATH_MANDATORY),$(SRCS_MANDATORY))
 
 OBJTS             := $(SRCS_MANDATORY:.c=.o)

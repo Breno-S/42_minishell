@@ -4,7 +4,7 @@
 
 NAME     := libft.a
 CC       := cc
-CFLAGS   := -Wall -Wextra -Werror -c
+CFLAGS   := -Wall -Wextra -Werror -c -g3 -O0
 INCLUDES := ./include
 CPPFLAGS :=  $(addprefix -I,$(INCLUDES))
 
