@@ -17,7 +17,7 @@ SRCS    := ft_isalpha.c               ft_isdigit.c         ft_isalnum.c        f
            ft_strjoin.c               ft_strtrim.c         ft_split.c          ft_itoa.c \
            ft_strmapi.c               ft_striteri.c        ft_putchar_fd.c     ft_putstr_fd.c \
            ft_putendl_fd.c            ft_putnbr_fd.c       ft_lstnew.c         ft_lstadd_front.c \
-           ft_lstsize.c               ft_lstlast.c         ft_lstadd_back.c    ft_lstdelone.c \
+           ft_lstsize.c               ft_lstlast.c         ft_extadd_back.c    ft_lstdelone.c \
            ft_lstclear.c              ft_lstiter.c         ft_lstmap.c         ft_lltoa.c \
            ft_uitoa.c                 ft_uitoa_base.c      ft_ulltoa_base.c    ft_memtoa_base.c \
            ft_printf.c                ft_get_next_line.c   ft_get_next_line_utils.c \
@@ -30,7 +30,7 @@ SRCS    := ft_isalpha.c               ft_isdigit.c         ft_isalnum.c        f
            ft_gc_rm_root.c            ft_gc_start.c        ft_gc_sweep.c       ft_root_newlst.c \
            ft_size_chrarr.c           ft_isspace.c         ft_arraylen_chr.c   ft_gcfct_arr_register_root.c \
            ft_gcfct_register_root.c   ft_gc_calloc_root.c  ft_gc_malloc_root.c ft_atoll.c \
-		   ft_gc_content_root.c
+		   ft_gc_content_root.c       ft_lstadd_back.c
 
 SRCS :=  $(addprefix ./srcs/,$(SRCS))
 OBJTS   := $(SRCS:.c=.o)

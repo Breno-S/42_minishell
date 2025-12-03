@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/02 20:10:44 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/03 15:16:40 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ typedef enum e_token_class
 	TOKEN_PIPE,
 	TOKEN_OPEN_PAREN,
 	TOKEN_CLOSE_PAREN,
-	TOKEN_STRING_SINGLE,
-	TOKEN_STRING_DOUBLE,
 	TOKEN_COMMENT,
 	TOKEN_REDIR_INPUT,
 	TOKEN_REDIR_OUTPUT,
@@ -41,8 +39,30 @@ typedef enum e_token_class
 	TOKEN_REDIR_HEREDOC,
 	TOKEN_AND,
 	TOKEN_OR,
-	TOKEN_WILDCARD,
 }	t_token_class;
+
+typedef enum e_seg_type
+{
+	UNQUOTED,
+	DQUOTES,
+	SQUOTES
+}	t_seg_type;
+
+typedef struct s_segment
+{
+	t_seg_type	type;
+	char		*text;
+}	t_segment;
+
+typedef struct s_token_word
+{
+	t_token_class	class;
+	const char		*text;
+	size_t			text_len;
+	t_list			*seg_lst;
+	size_t			seg_count;
+}	t_token_word;
+
 
 typedef struct s_token
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_gc_register_root.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 16:23:14 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/09/24 12:32:48 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/03 17:52:47 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ static void	*ft_add_root(t_ext_list *root, t_gc_list *n_root)
 	if (!new)
 		return (NULL);
 	new->content = n_root;
-	ft_lstadd_back(&root, new);
+	ft_extadd_back(&root, new);
 	return (root);
 }

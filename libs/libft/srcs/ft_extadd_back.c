@@ -1,35 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstmap.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/21 13:48:25 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/03 17:52:47 by brensant         ###   ########.fr       */
+/*   Created: 2025/07/20 22:33:13 by rgomes-d          #+#    #+#             */
+/*   Updated: 2025/12/03 17:13:16 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_ext_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+void	ft_extadd_back(t_ext_list **lst, t_list *new)
 {
-	t_list		*new;
-	t_ext_list	*head;
-
-	head = ft_calloc(1, sizeof(t_ext_list));
-	if (!lst || !f || !del)
-		return ((void *)0);
-	new = ft_lstnew((f)(lst->content));
-	if (!new)
-		return ((void *)0);
-	head->head = new;
-	head->tail = new;
-	lst = lst->next;
-	while (lst)
+	if (!lst[0] || !new)
+		return ;
+	new->next = NULL;
+	if (!lst[0]->tail && !lst[0]->head)
 	{
-		ft_extadd_back(&head, ft_lstnew((f)(lst->content)));
-		lst = lst->next;
+		new->prev = NULL;
+		lst[0]->head = new;
+		lst[0]->tail = new;
+		return ;
 	}
-	return (head);
+	new->prev = lst[0]->tail;
+	lst[0]->tail->next = new;
+	lst[0]->tail = new;
 }
