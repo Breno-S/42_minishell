@@ -6,16 +6,16 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 18:24:08 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/02 22:26:26 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/04 14:16:36 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 
-int export_env(char **arr)
+int	export_env(char **arr)
 {
-	int	i;
-	char *str;
+	int		i;
+	char	*str;
 
 	i = 0;
 	while (arr[i])
@@ -24,7 +24,49 @@ int export_env(char **arr)
 		if (!str)
 			return (1);
 	}
-	return(0);
+	return (0);
+}
+
+void **create_hash_env(char **arr)
+{
+	void **hash_env;
+	int	i;
+	int	aux;
+
+	i = 0;
+	hash_env = ft_gc_calloc_root(256, sizeof(void *), "hash_env");
+	if (!hash_env)
+		return (NULL);
+	while (arr[i])
+	{
+		aux = count_hash(arr[i])
+		if (hash_env[aux])
+
+	}
+}
+
+char	**create_envp_arg(t_list *env)
+{
+	t_gc_list	*envp_arr;
+	t_root_list	*envp;
+	int			i;
+
+	i = 0;
+	envp = ft_gc_call_root("envp");
+	envp_arr = ft_gc_calloc(ft_lstsize(env) + 1, sizeof(char *), GC_DATA);
+	if (!envp_arr)
+		return (NULL);
+	while (env)
+	{
+		((void **)envp_arr->content)[i] = ft_to_gc_list(env->content)->content;
+		env = env->next;
+		i++;
+	}
+	if (!envp)
+		ft_gc_register_root(envp_arr, "envp");
+	else
+		envp->lst->head->content = envp_arr->content;
+	return (envp_arr->content);
 }
 
 char	**ft_trim_env(char *envp, char sep)

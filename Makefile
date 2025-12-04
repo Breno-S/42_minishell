@@ -1,7 +1,7 @@
 NAME := Minishell
 
-CC := gcc
-CFLAGS := -Wall -Wextra -Werror -g -g3 -O0
+CC := cc
+CFLAGS := -Wall -Wextra -Werror -g3
 CPPFLAGS = $(addprefix -I,$(INCLUDES))
 
 LIB_DIRS = $(PATH_LIBFT)/bin

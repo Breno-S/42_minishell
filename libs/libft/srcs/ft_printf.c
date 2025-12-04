@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 17:51:10 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/09/03 14:29:27 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/03 17:03:57 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ static void	ft_aux_printf(t_ext_list **new, va_list args, const char *str,
 		if (str[i++] == '%' && str[i] != 0)
 		{
 			if (flag > 0)
-				ft_lstadd_back(new, ft_lstnew(ft_substr(str, i - 1 - flag,
+				ft_extadd_back(new, ft_lstnew(ft_substr(str, i - 1 - flag,
 							flag)));
 			if (ft_strchr("cdiuxXps%", str[i]) && str[i] != 0)
-				ft_lstadd_back(new, ft_lstnew(ft_printf_digit(ls_va, str[i])));
+				ft_extadd_back(new, ft_lstnew(ft_printf_digit(ls_va, str[i])));
 			if (ft_strchr("cdiuxXps", str[i++]) && str[i] != 0)
 				ls_va = va_arg(args, void *);
 			flag = -1;
@@ -58,7 +58,7 @@ static void	ft_aux_printf(t_ext_list **new, va_list args, const char *str,
 		flag++;
 	}
 	if (flag > 0)
-		ft_lstadd_back(new, ft_lstnew(ft_substr(str, i - flag, flag)));
+		ft_extadd_back(new, ft_lstnew(ft_substr(str, i - flag, flag)));
 }
 
 static unsigned int	ft_putstr_lst(void *s)
