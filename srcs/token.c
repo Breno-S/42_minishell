@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:51:43 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/03 14:36:08by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/04 15:41:35 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,19 +42,6 @@ t_token	*token(t_token_class class, const char *text, size_t text_len)
 // 	return ((t_token *)t_word);
 // }
 
-t_segment	*segment(t_seg_type type, const char *text, size_t text_len)
-{
-	t_segment	*seg;
-
-	seg = ft_gc_calloc_root(1, sizeof(*seg), "temp");
-	seg->type = type;
-	seg->text = ft_gc_calloc_root(1, text_len + 1, "temp");
-	if (!seg->text)
-		return (NULL);
-	ft_strlcpy(seg->text, text, text_len + 1);
-	return (seg);
-}
-
 const char	*token_class_name(t_token_class class)
 {
 	switch (class)
@@ -87,4 +74,21 @@ const char	*token_class_name(t_token_class class)
 			return ("OR");
 	}
 	return (NULL);
+}
+
+void	token_add(t_token **token_list, t_token *new)
+{
+	t_token	*head;
+
+	if (!token_list)
+		return ;
+	if (!*token_list)
+		*token_list = new;
+	else
+	{
+		head = *token_list;
+		while (head->next)
+			head = head->next;
+		head->next = new;
+	}
 }

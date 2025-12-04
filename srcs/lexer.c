@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 16:59:17 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/03 13:44:55 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/04 15:45:32 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,6 @@ void	lexer_chop_char(t_lexer *l, size_t len)
 	}
 }
 
-void	lexer_trim_left(t_lexer *l)
-{
-	while (l->cursor < l->content_len && ft_isspace(l->content[l->cursor]))
-		lexer_chop_char(l, 1);
-}
-
 t_token	*lexer_next(t_lexer *l)
 {
 	t_token	*t;
@@ -73,4 +67,19 @@ t_token	*lexer_next(t_lexer *l)
 	else
 		handle_word(l, &t);
 	return (t);
+}
+
+t_token	*lexer_token_list(t_lexer *l)
+{
+	t_token	*token_list;
+	t_token	*t;
+
+	token_list = NULL;
+	t = lexer_next(l);
+	while (t && t->class != TOKEN_END)
+	{
+		token_add(&token_list, t);
+		t = lexer_next(l);
+	}
+	return (token_list);
 }

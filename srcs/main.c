@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 19:55:48 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/03 18:08:13 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/04 15:54:24 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ int	main(void)
 {
 	t_lexer		l;
 	t_token		*t;
+	// t_token		*t_list;
 	char		*line;
 
 	ft_gc_init();
@@ -30,6 +31,7 @@ int	main(void)
 			break;
 		add_history(line);
 		l = lexer_new(line, ft_strlen(line));
+		// t_list = lexer_token_list(&l);
 		t = lexer_next(&l);
 		while (t->class != TOKEN_END)
 		{

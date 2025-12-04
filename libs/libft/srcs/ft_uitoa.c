@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_uitoa.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 12:39:13 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/08/05 14:57:18 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/04 14:53:55 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	ft_lenint(unsigned int n)
 		qt_char++;
 		n /= 10;
 	}
-		qt_char += 1;
+	qt_char += 1;
 	return (qt_char);
 }
 
