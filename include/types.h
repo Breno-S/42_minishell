@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/04 14:55:09 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/03 15:16:40 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,33 +15,23 @@
 
 # include "libft.h"
 
-typedef struct s_cmd_tree
-{
-	int				i;
-}					t_cmd_tree;
-
-typedef struct s_child
-{
-	int				i;
-}					t_child;
-
-typedef struct s_msh
-{
-	char			**envp;
-	t_cmd_tree		*tree;
-	t_child			*childs;
-	char			*cmd;
-	int				ret;
-}					t_msh;
+// typedef struct s_msh
+// {
+// 	char		**envp;
+// 	t_cmd_tree	*tree;
+// 	t_child		*childs;
+// 	char		*cmd;
+// 	int			ret;
+// }	t_msh;
 
 typedef enum e_token_class
 {
 	TOKEN_END,
 	TOKEN_INVALID,
 	TOKEN_WORD,
-	TOKEN_SUBSHELL,
-	TOKEN_STRING_SINGLE,
-	TOKEN_STRING_DOUBLE,
+	TOKEN_PIPE,
+	TOKEN_OPEN_PAREN,
+	TOKEN_CLOSE_PAREN,
 	TOKEN_COMMENT,
 	TOKEN_REDIR_INPUT,
 	TOKEN_REDIR_OUTPUT,
@@ -49,27 +39,43 @@ typedef enum e_token_class
 	TOKEN_REDIR_HEREDOC,
 	TOKEN_AND,
 	TOKEN_OR,
-	TOKEN_WILDCARD,
-}					t_token_kind;
+}	t_token_class;
+
+typedef enum e_seg_type
+{
+	UNQUOTED,
+	DQUOTES,
+	SQUOTES
+}	t_seg_type;
+
+typedef struct s_segment
+{
+	t_seg_type	type;
+	char		*text;
+}	t_segment;
+
+typedef struct s_token_word
+{
+	t_token_class	class;
+	const char		*text;
+	size_t			text_len;
+	t_list			*seg_lst;
+	size_t			seg_count;
+}	t_token_word;
+
 
 typedef struct s_token
 {
-	t_token_kind	kind;
+	t_token_class	class;
 	const char		*text;
 	size_t			text_len;
-}					t_token;
+}	t_token;
 
 typedef struct s_lexer
 {
-	const char		*content;
-	size_t			content_len;
-	size_t			cursor;
-}					t_lexer;
-
-int					lexer_starts_with(t_lexer *l, const char *prefix);
-void				lexer_trim_left(t_lexer *l);
-t_lexer				lexer_new(const char *content, size_t content_len);
-const char			*token_kind_name(t_token_kind kind);
-t_token				lexer_next(t_lexer *l);
+	const char	*content;
+	size_t		content_len;
+	size_t		cursor;
+}	t_lexer;
 
 #endif // TYPES_H
