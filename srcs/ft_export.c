@@ -6,53 +6,91 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 18:23:28 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/03 19:00:03 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/04 21:18:11 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <execsh.h>
 
-static int	ft_print_export(int fd);
+// static int	ft_print_export(int fd);
+int	ft_remove_var(void *content, t_ext_list *root);
+int	change_env(int hash, t_hash_env **hash_table, char **str);
 
-int	ft_export(const char *var, int fd)
+int	ft_export(t_hash_env **hash_table, const char *var, int fd)
 {
-	t_list	*env;
-	char	**div_var;
-	char	*cmp;
-	int		len;
+	int		hash;
+	int		i;
+	char	*str;
 
 	if (!var)
-		return(ft_print_export(fd));
-	div_var = ft_trim_env((char *)var, '=');
-	env = ft_gc_call_root("env")->lst->head;
-	len = ft_strlen(div_var[0]);
-	while (env)
+		return (1);
+	i = 0;
+	hash = count_hash((char *)var);
+	str = ft_gcfct_register_root(ft_strdup(var), "env");
+	if (change_env(hash, hash_table, &str))
+		ft_hashadd_back((t_hash_env **)&hash_table[hash], ft_hashnew(str,
+				T_ENV));
+	else
+		ft_gc_collect();
+	return (fd);
+}
+
+int	ft_remove_var(void *content, t_ext_list *root)
+{
+	t_list	*aux;
+
+	if (!content || !root)
+		return (1);
+	aux = root->head;
+	while (aux)
 	{
-		cmp = ft_to_gc_list(env->content)->content;
-		if (!ft_strncmp(div_var[0], cmp, len) && cmp[len] == '=')
+		if (ft_to_gc_list(aux->content)->content == content)
 		{
-			env->content = ft_gcfct_register(ft_strdup(var), GC_DATA);
-			if (!env->content)
-				return (1);
+			ft_gc_rm_root(&root, aux);
+			break ;
+		}
+		aux = aux->next;
+	}
+	return (0);
+}
+
+int	change_env(int hash, t_hash_env **hash_table, char **str)
+{
+	t_hash_env	*hash_env;
+	int			len;
+
+	hash_env = hash_table[hash];
+	while (hash_table[hash])
+	{
+		len = ft_strchr((char *)str[0], '=') - str[0];
+		if (len < 0)
+			len = ft_strlen(str[0]);
+		if (!ft_strncmp(((t_hash_env *)hash_table[hash])->content, str[0], len))
+		{
+			ft_remove_var(((t_hash_env *)hash_table[hash])->content,
+				ft_gc_call_root("env")->lst);
+			((t_hash_env *)hash_table[hash])->content = str[0];
+			if (len != (int)ft_strlen(str[0])
+				&& ((t_hash_env *)hash_table[hash])->content[len + 1])
+				((t_hash_env *)hash_table[hash])->has_content = 1;
+			else
+				((t_hash_env *)hash_table[hash])->has_content = 0;
 			return (0);
 		}
-		env = env->next;
+		hash_env = hash_env->next;
 	}
-	if (!ft_gcfct_register_root(ft_strdup(var), "env"))
-		return (1);
-	return (0);
+	return (1);
 }
+// static int	ft_print_export(int fd)
+// {
+// 	t_list	*env;
 
-static int	ft_print_export(int fd)
-{
-	t_list	*env;
-
-	env = ft_gc_call_root("env")->lst->head;
-	while (env)
-	{
-		ft_putstr_fd("declare -x ", fd);
-		ft_putendl_fd(ft_to_gc_list(env->content)->content, fd);
-		env = env->next;
-	}
-	return (0);
-}
+// 	env = ft_gc_call_root("env")->lst->head;
+// 	while (env)
+// 	{
+// 		ft_putstr_fd("declare -x ", fd);
+// 		ft_putendl_fd(ft_to_gc_list(env->content)->content, fd);
+// 		env = env->next;
+// 	}
+// 	return (0);
+// }

@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_hashadd_back.c                                  :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/03 17:44:33 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/04 15:08:59 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/03 17:44:43 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "execsh.h"
+#include "libft.h"
 
-void	ft_hashadd_back(t_hash_env **lst, t_hash_env *new)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	t_hash_env	*head;
+	t_list	*head;
 
 	if (!lst)
 		return ;

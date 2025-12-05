@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_hashnew.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/02 23:10:32 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/04 20:30:11 by rgomes-d         ###   ########.fr       */
+/*   Created: 2025/07/19 19:46:53 by rgomes-d          #+#    #+#             */
+/*   Updated: 2025/12/04 15:48:31 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <execsh.h>
+#include "execsh.h"
 
-int	ft_env(void **hash_env, int fd)
+t_hash_env	*ft_hashnew(void *content, int type)
 {
-	int	i;
-	t_hash_env *var;
+	t_hash_env	*new_node;
+	int			i;
 
-	if (!hash_env)
-		return (-1);
-	i = 0;
-	while (i < 256)
-	{
-		var = hash_env[i++];
-		while (var)
-		{
-			ft_putendl_fd(var->content, fd);
-			var = var->next;
-		}
-	}
-	ft_putendl_fd("_=/usr/bin/env", fd);
-	return (0);
+	new_node = ft_gc_calloc_root(1, sizeof(t_hash_env), "env");
+	if (!new_node)
+		return ((void *)0);
+	new_node->content = (void *)content;
+	new_node->type_var = type;
+	i = ft_strchr(content, '=') - (char *)content;
+	if (((char *)content)[i + 1])
+		new_node->has_content = 1;
+	return (new_node);
 }

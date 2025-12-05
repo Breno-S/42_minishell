@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/04 13:53:16 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/04 20:50:43 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,23 @@ typedef enum e_env_type
 
 typedef struct s_hash_env
 {
-	char				*var;
+	char				*content;
 	int					type_var;
-	int					content;
+	int					has_content;
 	struct s_hash_env	*next;
 }						t_hash_env;
 
 int						ft_main_loop(t_msh *msh);
 char					**ft_trim_env(char *envp, char sep);
-int						ft_export(const char *var, int fd);
+void					ft_hashadd_back(t_hash_env **lst, t_hash_env *new);
+void					**create_hash_env(char **arr);
+int						count_hash(char *var);
+t_hash_env				*ft_hashnew(void *content, int type);
+
+int						ft_export(t_hash_env **hash_table, const char *var,
+							int fd);
 int						export_env(char **arr);
-int						ft_env(int fd);
+int						ft_env(void **hash_env, int fd);
 int						ft_unset(const char *var);
 char					**create_envp_arg(t_list *env);
 
