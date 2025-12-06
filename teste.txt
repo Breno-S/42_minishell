@@ -1,0 +1,10 @@
+a.out
+bin
+build
+include
+libs
+Makefile
+README.md
+saida
+srcs
+teste.txt

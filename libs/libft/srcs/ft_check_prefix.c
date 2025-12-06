@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   ft_check_prefix.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/05 18:41:22 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/05 19:43:44 by rgomes-d         ###   ########.fr       */
+/*   Created: 2025/09/05 12:15:24 by rgomes-d          #+#    #+#             */
+/*   Updated: 2025/12/05 18:13:35 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_realloc(void **mem, size_t nmemb, size_t size)
+int	ft_check_prefix(const char *str, const char *prefix)
 {
-	void	*new;
-	size_t	i;
+	int	len_str;
+	int	i;
 
 	i = 0;
-	new = ft_calloc(nmemb, size);
-	if (!new)
+	if (!str || !prefix || ft_strlen(str) < ft_strlen(prefix) || !prefix[0]
+		|| !str[0])
+		return (-1) ;
+	len_str = ft_strlen(prefix);
+	while (str[i] || i < len_str)
 	{
-		free(mem[0]);
-		return (NULL);
-	}
-	while (((char *)mem[0])[i])
+		if (str[len_str + i] != prefix[i])
+			return (-1);
 		i++;
-	if (i > (nmemb * size))
-		i = (nmemb * size) - 1;
-	ft_memcpy(new, mem[0], i);
-	free(mem[0]);
-	mem[0] = new;
-	return (new);
+	}
+	return (i);
 }
