@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/04 15:55:54 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/06 02:03:45 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ typedef struct s_token_word
 	size_t			text_len;
 	struct s_token	*next;
 	t_segment		*seg_lst;
-	size_t			seg_count;
 }	t_token_word;
 
 typedef struct s_token
@@ -75,9 +74,9 @@ typedef struct s_token
 
 typedef struct s_lexer
 {
-	const char	*content;
-	size_t		content_len;
-	size_t		cursor;
+	const char	*str;
+	size_t		str_len;
+	size_t		idx;
 }	t_lexer;
 
 #endif // TYPES_H

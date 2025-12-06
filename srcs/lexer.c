@@ -6,19 +6,19 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 16:59:17 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/04 15:45:32 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/06 01:11:47 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsesh.h"
 
-t_lexer	lexer_new(const char *content, size_t content_len)
+t_lexer	lexer_new(const char *str, size_t str_len)
 {
 	t_lexer	l;
 
-	l.content = content;
-	l.content_len = content_len;
-	l.cursor = 0;
+	l.str = str;
+	l.str_len = str_len;
+	l.idx = 0;
 	return (l);
 }
 
@@ -30,12 +30,12 @@ int	lexer_starts_with(t_lexer *l, const char *prefix)
 	prefix_len = ft_strlen(prefix);
 	if (prefix_len == 0)
 		return (1);
-	if (l->cursor + prefix_len - 1 >= l->content_len)
+	if (l->idx + prefix_len - 1 >= l->str_len)
 		return (0);
 	i = 0;
 	while (i < prefix_len)
 	{
-		if (prefix[i] != l->content[l->cursor + i])
+		if (prefix[i] != l->str[l->idx + i])
 			return (0);
 		i++;
 	}
@@ -49,7 +49,7 @@ void	lexer_chop_char(t_lexer *l, size_t len)
 	i = 0;
 	while (i < len)
 	{
-		l->cursor++;
+		l->idx++;
 		i++;
 	}
 }
@@ -60,9 +60,9 @@ t_token	*lexer_next(t_lexer *l)
 
 	t = NULL;
 	lexer_trim_left(l);
-	if (l->cursor >= l->content_len)
-		return (token(TOKEN_END, &l->cursor[l->content], 1));
-	if (is_metachar(l->content[l->cursor]))
+	if (l->idx >= l->str_len)
+		return (token(TOKEN_END, &l->str[l->idx], 1));
+	if (is_metachar(l->str[l->idx]))
 		handle_metachar(l, &t);
 	else
 		handle_word(l, &t);

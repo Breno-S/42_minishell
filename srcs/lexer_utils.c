@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 15:00:52 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/04 15:04:19 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/06 02:06:25 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	lexer_trim_left(t_lexer *l)
 {
-	while (l->cursor < l->content_len && ft_isspace(l->content[l->cursor]))
+	while (l->idx < l->str_len && ft_isspace(l->str[l->idx]))
 		lexer_chop_char(l, 1);
 }
 

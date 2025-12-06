@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/04 14:59:46 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/04 15:06:02 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/06 02:12:10 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,19 @@ t_segment	*segment(t_seg_type type, const char *text, size_t text_len)
 	return (seg);
 }
 
-void	segment_add(t_token_word *t, t_segment *new)
+void	segment_add(t_segment **seg_list, t_segment *new)
 {
 	t_segment	*head;
 
-	if (!t)
+	if (!seg_list)
 		return ;
-	if (!t->seg_lst)
-		t->seg_lst = new;
+	if (!*seg_list)
+		*seg_list = new;
 	else
 	{
-		head = t->seg_lst;
+		head = *seg_list;
 		while (head->next)
 			head = head->next;
 		head->next = new;
 	}
-	t->seg_count++;
 }
