@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:47:03 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/06 02:33:23 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/07 20:22:20 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ static size_t	consume_outside_quotes(t_lexer *l, size_t *text_len)
 		return (1);
 	}
 	seg_len = 0;
-	while (ft_strchr("\"\'", l->str[l->idx]) == NULL
-		&& l->str[l->idx] != '*' && l->idx < l->str_len)
+	while (!ft_strchr(" \t\n|&()<>;\"\'*", l->str[l->idx])
+		&& l->idx < l->str_len)
 	{
 		lexer_chop_char(l, 1);
 		seg_len++;

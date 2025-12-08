@@ -12,7 +12,15 @@ PATH_LIBFT := ./libs/libft/
 
 INCLUDES := include libs/libft/include
 PATH_MANDATORY := ./srcs/
-SRCS_MANDATORY := main.c lexer.c token.c lexer_aux.c lexer_utils.c segment.c
+SRCS_MANDATORY := \
+	lexer.c \
+	lexer_aux.c \
+	lexer_utils.c \
+	main.c \
+	parser.c \
+	parser_utils.c \
+	segment.c \
+	token.c 
 SRCS_MANDATORY := $(addprefix $(PATH_MANDATORY),$(SRCS_MANDATORY))
 
 OBJTS             := $(SRCS_MANDATORY:.c=.o)
@@ -50,7 +58,7 @@ $(addprefix $(PATH_BIN),$(NAME)): $(LIBFT) $(subst $(PATH_MANDATORY),$(PATH_OBJT
 		@mkdir -p bin
 		@printf "$(L_GREEN)Build...$(NC) %-40s\n" $(NAME)
 		@sleep 0.01
-		@$(CC) $(CFLAGS) $(CPPFLAGS) $(subst $(PATH_MANDATORY),$(PATH_OBJT),$(OBJTS)) -o $(addprefix $(PATH_BIN),$(NAME)) $(LDLIBS) $(LDFLAGS) 
+		@$(CC) $(CFLAGS) $(CPPFLAGS) $(subst $(PATH_MANDATORY),$(PATH_OBJT),$(OBJTS)) -o $(addprefix $(PATH_BIN),$(NAME)) $(LDLIBS) $(LDFLAGS)
 
 
 $(LIBFT): $(OBJTS_LIBFT)

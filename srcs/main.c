@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 19:55:48 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/04 15:54:24 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/07 20:22:32 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@
 int	main(void)
 {
 	t_lexer		l;
-	t_token		*t;
-	// t_token		*t_list;
+	t_parser	p;
+	t_token		*token_list;
+	t_ast		*ast;
 	char		*line;
 
 	ft_gc_init();
@@ -28,16 +29,12 @@ int	main(void)
 	{
 		line = ft_gcfct_register(readline("Madshell> "), GC_DATA)->content;
 		if (!line)
-			break;
+			break ;
 		add_history(line);
 		l = lexer_new(line, ft_strlen(line));
-		// t_list = lexer_token_list(&l);
-		t = lexer_next(&l);
-		while (t->class != TOKEN_END)
-		{
-			printf("%.*s (%s)\n", t->text_len, t->text, token_class_name(t->class));
-			t = lexer_next(&l);
-		}
+		token_list = lexer_token_list(&l);
+		p = parser_new(token_list);
+		ast = parser_parse(&p);
 		ft_gc_del_root("temp");
 		ft_gc_collect();
 	}

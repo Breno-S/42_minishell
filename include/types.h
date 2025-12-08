@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/06 02:03:45 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/07 20:09:45 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,36 @@ typedef struct s_lexer
 	size_t		str_len;
 	size_t		idx;
 }	t_lexer;
+
+typedef struct s_parser
+{
+	t_token	*tokens;
+	t_token	*idx;
+}	t_parser;
+
+typedef enum e_node_type
+{
+	NODE_PIPE,
+	NODE_AND,
+	NODE_OR,
+	NODE_CMD,
+	NODE_SUB,
+}	t_node_type;
+
+typedef struct s_io_node
+{
+	t_token_class		type;
+	t_token_word		*io_target;
+	struct s_io_node	*next;
+}	t_io_node;
+
+typedef struct s_ast
+{
+	t_node_type		type;
+	struct s_ast	*left;
+	struct s_ast	*right;
+	t_token			*args;
+	t_io_node		*redirs;
+}	t_ast;
 
 #endif // TYPES_H
