@@ -6,25 +6,11 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 19:09:18 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/07 20:29:17 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/08 23:11:43 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsesh.h"
-
-void	parser_chop_token(t_parser *p)
-{
-	if (!p || !p->idx)
-		return ;
-	p->idx = p->idx->next;
-}
-
-t_token_class	parser_peek(t_parser *p)
-{
-	if (!p || !p->idx)
-		return (TOKEN_END);
-	return (p->idx->class);
-}
 
 t_io_node	*io_node(t_token_class type, t_token_word *io_target)
 {

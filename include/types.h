@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/07 20:09:45 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/08 18:20:04 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ typedef struct s_ast
 	t_node_type		type;
 	struct s_ast	*left;
 	struct s_ast	*right;
-	t_token			*args;
+	t_token_word	*args;
 	t_io_node		*redirs;
 }	t_ast;
 

@@ -13,6 +13,8 @@ PATH_LIBFT := ./libs/libft/
 INCLUDES := include libs/libft/include
 PATH_MANDATORY := ./srcs/
 SRCS_MANDATORY := \
+	ast.c \
+	ast_aux.c \
 	lexer.c \
 	lexer_aux.c \
 	lexer_utils.c \
@@ -20,7 +22,7 @@ SRCS_MANDATORY := \
 	parser.c \
 	parser_utils.c \
 	segment.c \
-	token.c 
+	token.c
 SRCS_MANDATORY := $(addprefix $(PATH_MANDATORY),$(SRCS_MANDATORY))
 
 OBJTS             := $(SRCS_MANDATORY:.c=.o)

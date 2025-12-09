@@ -6,15 +6,13 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 19:55:48 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/07 20:22:32 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/08 17:50:57 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsesh.h"
 #include "execsh.h"
 #include "types.h"
-
-//    ls -la > outfile && echo -n hello
 
 int	main(void)
 {

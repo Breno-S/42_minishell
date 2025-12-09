@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:22:36 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/07 20:16:11 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/09 00:13:11 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,18 @@ void			segment_add(t_segment **seg_list, t_segment *new);
 // PARSER
 
 t_parser		parser_new(t_token *token_list);
-t_token			*parser_get_token(t_parser *p);
-t_token_class	parser_peek(t_parser *p);
 void			parser_chop_token(t_parser *p);
+t_token_class	parser_peek(t_parser *p);
+
 t_ast			*parser_parse(t_parser *p);
+
+t_ast			*parse_atom(t_parser *p);
+t_ast			*parse_cmd(t_parser *p);
+t_ast			*parse_sub(t_parser *p);
+t_ast			*parse_pipe(t_parser *p);
+t_ast			*parse_cond(t_parser *p);
+
+int				parse_redirs(t_parser *p, t_ast *ast);
 
 t_io_node		*io_node(t_token_class type, t_token_word *target);
 void			io_node_add(t_io_node **io_node_list, t_io_node *new);
