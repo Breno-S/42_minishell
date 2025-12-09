@@ -13,7 +13,7 @@ PATH_LIBFT := ./libs/libft/
 INCLUDES := include libs/libft/include
 PATH_MANDATORY := ./srcs/
 SRCS_MANDATORY := main.c    ft_main_loop.c    ft_exec_utils.c   ft_export.c   ft_env.c  ft_unset.c   ft_hashadd_back.c \
-                  ft_hashnew.c
+                  ft_hashnew.c    var_exp.c   print_export.c    env_utils.c   hashpop.c
 SRCS_MANDATORY := $(addprefix $(PATH_MANDATORY),$(SRCS_MANDATORY))
 
 OBJTS             := $(SRCS_MANDATORY:.c=.o)

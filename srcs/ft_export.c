@@ -6,25 +6,24 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 18:23:28 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/04 21:18:11 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/08 18:07:57 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <execsh.h>
 
-// static int	ft_print_export(int fd);
+int	ft_print_export(t_hash_env **hash_table, int fd);
 int	ft_remove_var(void *content, t_ext_list *root);
 int	change_env(int hash, t_hash_env **hash_table, char **str);
+
 
 int	ft_export(t_hash_env **hash_table, const char *var, int fd)
 {
 	int		hash;
-	int		i;
 	char	*str;
 
 	if (!var)
-		return (1);
-	i = 0;
+		return (ft_print_export(hash_table, fd));
 	hash = count_hash((char *)var);
 	str = ft_gcfct_register_root(ft_strdup(var), "env");
 	if (change_env(hash, hash_table, &str))
@@ -60,11 +59,11 @@ int	change_env(int hash, t_hash_env **hash_table, char **str)
 	int			len;
 
 	hash_env = hash_table[hash];
-	while (hash_table[hash])
+	len = ft_strchr((char *)str[0], '=') - str[0];
+	if (len < 0)
+		len = ft_strlen(str[0]);
+	while (hash_env)
 	{
-		len = ft_strchr((char *)str[0], '=') - str[0];
-		if (len < 0)
-			len = ft_strlen(str[0]);
 		if (!ft_strncmp(((t_hash_env *)hash_table[hash])->content, str[0], len))
 		{
 			ft_remove_var(((t_hash_env *)hash_table[hash])->content,
@@ -81,16 +80,5 @@ int	change_env(int hash, t_hash_env **hash_table, char **str)
 	}
 	return (1);
 }
-// static int	ft_print_export(int fd)
-// {
-// 	t_list	*env;
 
-// 	env = ft_gc_call_root("env")->lst->head;
-// 	while (env)
-// 	{
-// 		ft_putstr_fd("declare -x ", fd);
-// 		ft_putendl_fd(ft_to_gc_list(env->content)->content, fd);
-// 		env = env->next;
-// 	}
-// 	return (0);
-// }
+

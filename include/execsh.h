@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/05 14:30:56 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/08 21:50:30 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,32 +20,19 @@
 # include <readline/readline.h>
 # include <sys/types.h>
 
-typedef enum e_env_type
-{
-	T_ENV,
-	T_SET,
-}						t_env_type;
+int			ft_main_loop(t_msh *msh);
+char		**ft_trim_env(char *envp, char sep, char *categ);
+void		ft_hashadd_back(t_hash_env **lst, t_hash_env *new);
+void		**create_hash_env(char **arr);
+int			count_hash(char *var);
+t_hash_env	*ft_hashnew(void *content, int type);
+char		*var_exp(char *var_name);
+int			ft_print_export(t_hash_env **hash_table, int fd);
+int			ft_export(t_hash_env **hash_table, const char *var, int fd);
+int			ft_env(void **hash_env, int fd);
 
-typedef struct s_hash_env
-{
-	char				*content;
-	int					type_var;
-	int					has_content;
-	struct s_hash_env	*next;
-}						t_hash_env;
+int			ft_unset(t_hash_env **hash_table, const char *var);
+char		**create_envp_arg(t_list *env);
 
-int						ft_main_loop(t_msh *msh);
-char					**ft_trim_env(char *envp, char sep);
-void					ft_hashadd_back(t_hash_env **lst, t_hash_env *new);
-void					**create_hash_env(char **arr);
-int						count_hash(char *var);
-t_hash_env				*ft_hashnew(void *content, int type);
-
-int						ft_export(t_hash_env **hash_table, const char *var,
-							int fd);
-int						export_env(char **arr);
-int						ft_env(void **hash_env, int fd);
-int						ft_unset(const char *var);
-char					**create_envp_arg(t_list *env);
-
+int			hashpop(t_hash_env **head, t_hash_env *rm_hash);
 #endif // EXECSH_H

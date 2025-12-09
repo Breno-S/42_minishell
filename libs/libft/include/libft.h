@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 09:57:31 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/05 18:58:38 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/08 12:02:07 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,7 @@ void					*ft_gc_calloc_root(size_t nmemb, size_t size,
 void					*ft_gc_malloc_root(size_t size, char *root);
 long long				ft_atoll(const char *nptr);
 t_list					*ft_gc_content_root(char *categ);
-void					*ft_realloc(void **mem, size_t nmemb, size_t size);
+void					*ft_realloc(void **mem, size_t nmemb, size_t size,
+							size_t current_size);
 
 #endif

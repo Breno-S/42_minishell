@@ -1,35 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   hashpop.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/02 23:10:32 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/08 17:05:54 by rgomes-d         ###   ########.fr       */
+/*   Created: 2025/12/08 21:35:37 by rgomes-d          #+#    #+#             */
+/*   Updated: 2025/12/08 21:41:44 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <execsh.h>
+#include "execsh.h"
 
-int	ft_env(void **hash_env, int fd)
+int hashpop(t_hash_env **head, t_hash_env *rm_hash)
 {
-	int			i;
-	t_hash_env	*var;
+	t_hash_env *aux;
 
-	if (!hash_env)
-		return (-1);
-	i = 0;
-	while (i < 256)
+	if (!head[0] || !rm_hash)
+		return (1);
+	if(head[0] == rm_hash)
+		head[0] = NULL;
+	aux = head[0];
+	while (aux)
 	{
-		var = hash_env[i++];
-		while (var)
+		if (aux->next == rm_hash)
 		{
-			if (var->type_var == T_ENV && var->has_content)
-				ft_putendl_fd(var->content, fd);
-			var = var->next;
+			aux->next = rm_hash->next;
+			return (0);
 		}
+		aux = aux->next;
 	}
-	ft_putendl_fd("_=/usr/bin/env", fd);
-	return (0);
+	return (1);
 }

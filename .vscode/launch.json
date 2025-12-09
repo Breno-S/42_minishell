@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/nfs/homes/rgomes-d/git_Noreth/42_minishell",
-      "program": "/nfs/homes/rgomes-d/git_Noreth/42_minishell/bin/Minishell",
+      "cwd": "/home/onaldo/42_minishell",
+      "program": "/home/onaldo/42_minishell/bin/Minishell",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

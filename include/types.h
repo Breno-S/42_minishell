@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/05 19:04:42 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/08 21:49:43 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,21 @@ typedef struct s_lexer
 	size_t		content_len;
 	size_t		cursor;
 }	t_lexer;
+
+// EXEC STRUCTS
+
+typedef enum e_env_type
+{
+	T_ENV,
+	T_SET,
+}						t_env_type;
+
+typedef struct s_hash_env
+{
+	char				*content;
+	int					type_var;
+	int					has_content;
+	struct s_hash_env	*next;
+}						t_hash_env;
 
 #endif // TYPES_H
