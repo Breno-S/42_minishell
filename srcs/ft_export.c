@@ -16,7 +16,6 @@ int	ft_print_export(t_hash_env **hash_table, int fd);
 int	ft_remove_var(void *content, t_ext_list *root);
 int	change_env(int hash, t_hash_env **hash_table, char **str);
 
-
 int	ft_export(t_hash_env **hash_table, const char *var, int fd)
 {
 	int		hash;
@@ -80,5 +79,3 @@ int	change_env(int hash, t_hash_env **hash_table, char **str)
 	}
 	return (1);
 }
-
-

@@ -20,7 +20,7 @@ int	ft_check_prefix(const char *str, const char *prefix)
 	i = 0;
 	if (!str || !prefix || ft_strlen(str) < ft_strlen(prefix) || !prefix[0]
 		|| !str[0])
-		return (-1) ;
+		return (-1);
 	len_str = ft_strlen(prefix);
 	while (str[i] || i < len_str)
 	{

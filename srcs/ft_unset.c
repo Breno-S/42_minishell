@@ -20,7 +20,7 @@ int	ft_unset(t_hash_env **hash_table, const char *var)
 	t_list		*env;
 	char		*cmp;
 	t_hash_env	*hash_env;
-	int 		count;
+	int			count;
 
 	env = ft_gc_call_root("env")->lst->head;
 	count = count_hash((char *)var);

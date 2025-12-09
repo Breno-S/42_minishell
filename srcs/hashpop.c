@@ -12,13 +12,13 @@
 
 #include "execsh.h"
 
-int hashpop(t_hash_env **head, t_hash_env *rm_hash)
+int	hashpop(t_hash_env **head, t_hash_env *rm_hash)
 {
-	t_hash_env *aux;
+	t_hash_env	*aux;
 
 	if (!head[0] || !rm_hash)
 		return (1);
-	if(head[0] == rm_hash)
+	if (head[0] == rm_hash)
 		head[0] = NULL;
 	aux = head[0];
 	while (aux)

@@ -15,7 +15,7 @@
 t_hash_env	*ft_hashnew(void *content, int type)
 {
 	t_hash_env	*new_node;
-	void 		*chr;
+	void		*chr;
 	int			i;
 
 	new_node = ft_gc_calloc_root(1, sizeof(t_hash_env), "env");
@@ -26,7 +26,7 @@ t_hash_env	*ft_hashnew(void *content, int type)
 	chr = ft_strchr(content, '=');
 	if (!chr)
 		return (new_node);
-	i =  (void *)chr - (void *)content;
+	i = (void *)chr - (void *)content;
 	if (((char *)content)[i + 1])
 		new_node->has_content = 1;
 	return (new_node);

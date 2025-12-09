@@ -66,8 +66,8 @@ static unsigned int	ft_putstr_lst(void *s)
 	int	len;
 
 	len = 0;
-	if(!s)
-		return(len);
+	if (!s)
+		return (len);
 	if (((char *)s)[0] == 0)
 		len += write(1, &((char *)s)[0], 1);
 	else
