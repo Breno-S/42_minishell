@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 16:59:17 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/06 01:11:47 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/09 21:42:46 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ t_lexer	lexer_new(const char *str, size_t str_len)
 	l.str = str;
 	l.str_len = str_len;
 	l.idx = 0;
+	l.dquote_flag = 0;
+	if (*str == '"')
+		l.dquote_flag = 1;
 	return (l);
 }
 
@@ -51,6 +54,8 @@ void	lexer_chop_char(t_lexer *l, size_t len)
 	{
 		l->idx++;
 		i++;
+		if (l->str[l->idx] == '"')
+			l->dquote_flag = !l->dquote_flag;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:22:36 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/09 00:13:11 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/09 20:18:58 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 # include "libft.h"
 # include "types.h"
+
+# define VAR_START_CHARS "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_"
 
 // LEXER
 
@@ -31,6 +33,10 @@ t_token			*lexer_token_list(t_lexer *l);
 
 void			lexer_trim_left(t_lexer *l);
 int				is_metachar(char c);
+size_t			lexer_chop_til(t_lexer *l, char *ch_list, size_t limit,
+					size_t *opt_acc);
+size_t			lexer_chop_while(t_lexer *l, char *ch_list, size_t limit,
+					size_t *opt_acc);
 
 // LEXER AUX
 
@@ -47,7 +53,7 @@ void			token_add(t_token **token_list, t_token *new);
 
 // SEGMENT
 
-t_segment		*segment(t_seg_type type, const char *text, size_t text_len);
+t_segment		*segment(t_seg_type type, const char *text, size_t seg_len);
 void			segment_add(t_segment **seg_list, t_segment *new);
 
 // PARSER
