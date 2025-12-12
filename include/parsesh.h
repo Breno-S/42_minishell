@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:22:36 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/09 20:18:58 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/12 17:55:49 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,20 @@
 # include "libft.h"
 # include "types.h"
 
+# define WHITESPACE "\t\n\v\f\r "
+# define METACHARS " \t\n|&;()<>"
 # define VAR_START_CHARS "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_"
 
 // LEXER
 
 t_lexer			lexer_new(const char *str, size_t str_len);
 int				lexer_starts_with(t_lexer *l, const char *prefix);
-void			lexer_chop_char(t_lexer *l, size_t len);
 t_token			*lexer_next(t_lexer *l);
 t_token			*lexer_token_list(t_lexer *l);
 
 // LEXER UTILS
 
-void			lexer_trim_left(t_lexer *l);
-int				is_metachar(char c);
+size_t			lexer_chop_chars(t_lexer *l, size_t len);
 size_t			lexer_chop_til(t_lexer *l, char *ch_list, size_t limit,
 					size_t *opt_acc);
 size_t			lexer_chop_while(t_lexer *l, char *ch_list, size_t limit,
@@ -40,8 +40,8 @@ size_t			lexer_chop_while(t_lexer *l, char *ch_list, size_t limit,
 
 // LEXER AUX
 
-void			handle_metachar(t_lexer *l, t_token **t);
-void			handle_word(t_lexer *l, t_token **t);
+t_token			*handle_metachar(t_lexer *l);
+t_token			*handle_word(t_lexer *l);
 
 // TOKEN
 

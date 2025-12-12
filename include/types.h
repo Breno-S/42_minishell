@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/09 20:17:43 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/12 17:01:34 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,11 @@ typedef enum e_token_class
 
 typedef enum e_seg_type
 {
-	DQUOTES,
-	SQUOTES,
-	UNQUOTED,
-	VARIABLE,
+	LITERAL,
+	VAR_SPLIT,
+	VAR_FIXED,
+	CMD_SPLIT,
+	CMD_FIXED,
 	WILDCARD,
 }	t_seg_type;
 
@@ -80,6 +81,8 @@ typedef struct s_lexer
 	size_t		str_len;
 	size_t		idx;
 	int			dquote_flag;
+	int			squote_flag;
+	int			cmd_lvl;
 }	t_lexer;
 
 typedef struct s_parser
