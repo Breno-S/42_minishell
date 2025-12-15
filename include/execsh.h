@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/08 21:50:30 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/15 16:41:57 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,6 @@ int			ft_unset(t_hash_env **hash_table, const char *var);
 char		**create_envp_arg(t_list *env);
 
 int			hashpop(t_hash_env **head, t_hash_env *rm_hash);
+t_redirect	*create_heredoc(char *eof);
+char		*pwd(int fd);
 #endif // EXECSH_H

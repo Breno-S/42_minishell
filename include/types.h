@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/08 21:49:43 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/15 14:16:25 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,12 @@ typedef enum e_env_type
 	T_ENV,
 	T_SET,
 }						t_env_type;
+
+typedef struct s_redirect
+{
+	int					fd_tmp;
+	char				*path;
+}						t_redirect;
 
 typedef struct s_hash_env
 {
