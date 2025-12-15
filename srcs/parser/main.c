@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 19:55:48 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/08 17:50:57 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/15 17:37:11 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(void)
 		add_history(line);
 		l = lexer_new(line, ft_strlen(line));
 		token_list = lexer_token_list(&l);
+		expand(token_list);
 		p = parser_new(token_list);
 		ast = parser_parse(&p);
 		ft_gc_del_root("temp");
