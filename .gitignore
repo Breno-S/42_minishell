@@ -53,3 +53,12 @@ dkms.conf
 
 # debug information files
 *.dwo
+
+# Vscode
+.vscode
+
+# Executable
+Minishell
+
+# Ctags
+tags

@@ -1,0 +1,118 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   log_tree.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/15 16:57:36 by brensant          #+#    #+#             */
+/*   Updated: 2025/12/15 17:14:35 by brensant         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/**
+ * PODE NÃO MAN (ARQUIVO DE LOG)
+ */
+
+#include "parsesh.h"
+
+static void	print_token(t_token *t)
+{
+	printf("%*s", (int)t->text_len - 1, t->text);
+}
+
+static void	print_token_word(t_token_word *t)
+{
+	t_segment	*seg;
+
+	seg = t->seg_lst;
+	while (seg)
+	{
+		printf("%s", seg->text);
+		seg = seg->next;
+	}
+}
+
+static void	print_redir(t_io_node *io_node, int indent)
+{
+	for (int i = 0; i < indent; i++)
+		printf("  ");
+	if (io_node->type == TOKEN_REDIR_INPUT)
+		printf("<");
+	else if (io_node->type == TOKEN_REDIR_OUTPUT)
+		printf(">");
+	else if (io_node->type == TOKEN_REDIR_HEREDOC)
+		printf("<<");
+	else if (io_node->type == TOKEN_REDIR_APPEND)
+		printf(">>");
+	printf(" ");
+	print_token_word(io_node->io_target);
+	printf("\n");
+}
+
+static void	print_redirs(t_ast *ast, int indent)
+{
+	t_io_node	*redirs;
+
+	if (!ast || !ast->redirs)
+		return ;
+	redirs = ast->redirs;
+	while (redirs)
+	{
+		print_redir(redirs, indent);
+		redirs = redirs->next;
+	}
+}
+
+static void	print_args(t_ast *ast, int indent)
+{
+	t_token_word	*args;
+
+	if (!ast)
+		return ;
+	for (int i = 0; i < indent; i++)
+		printf("  ");
+	args = ast->args;
+	while (args)
+	{
+		print_token_word(args);
+		printf(" ");
+		args = (t_token_word *)args->next;
+	}
+		printf("\n");
+}
+
+void	traverse_tree(t_ast *ast, int indent)
+{
+	for (int i = 0; i < indent; i++)
+		printf("  ");
+	if (ast->type == NODE_CMD)
+	{
+		printf("CMD:\n");
+		print_args(ast, indent + 1);
+		print_redirs(ast, indent + 1);
+	}
+	else if (ast->type == NODE_AND)
+	{
+		printf("AND:\n");
+		traverse_tree(ast->left, indent + 1);
+		traverse_tree(ast->right, indent + 1);
+	}
+	else if (ast->type == NODE_OR)
+	{
+		printf("OR:\n");
+		traverse_tree(ast->left, indent + 1);
+		traverse_tree(ast->right, indent + 1);
+	}
+	else if (ast->type == NODE_PIPE)
+	{
+		printf("PIPE:\n");
+		traverse_tree(ast->left, indent + 1);
+		traverse_tree(ast->right, indent + 1);
+	}
+	else if (ast->type == NODE_SUB)
+	{
+		printf("SUB:\n");
+		traverse_tree(ast->left, indent + 1);
+	}
+}

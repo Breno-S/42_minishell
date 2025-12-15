@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_main_loop.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 17:14:29 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/15 12:26:09 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/15 18:58:46 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
-
-int	create_heredoc(char *eof);
 
 int	ft_main_loop(t_msh *msh)
 {
@@ -23,5 +21,3 @@ int	ft_main_loop(t_msh *msh)
 		free(msh->cmd);
 	}
 }
-
-
