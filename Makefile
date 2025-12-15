@@ -16,7 +16,7 @@ SRCS_MANDATORY := \
 	ast.c \
 	ast_aux.c \
 	lexer.c \
-	lexer_aux.c \
+	lexer_handle_word.c \
 	lexer_utils.c \
 	main.c \
 	parser.c \

@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 16:59:17 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/12 17:57:09 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/15 13:55:37 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_token	*handle_metachar(t_lexer *l)
 	else if (lexer_starts_with(l, "|"))
 		t = token(TOKEN_PIPE, &l->str[l->idx], 1);
 	else if (lexer_starts_with(l, "<"))
-		t = token(TOKEN_REDIR_APPEND, &l->str[l->idx], 1);
+		t = token(TOKEN_REDIR_INPUT, &l->str[l->idx], 1);
 	else if (lexer_starts_with(l, ">"))
 		t = token(TOKEN_REDIR_OUTPUT, &l->str[l->idx], 1);
 	else if (lexer_starts_with(l, "("))
