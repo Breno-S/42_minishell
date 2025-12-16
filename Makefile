@@ -37,6 +37,7 @@ SRCS_MANDATORY_EXEC := \
 SRCS_MANDATORY_PARSER := \
 	ast.c \
 	ast_aux.c \
+	expand.c \
 	lexer.c \
 	lexer_handle_word.c \
 	lexer_utils.c \
@@ -145,5 +146,5 @@ re: fclean all
 
 teste:
 	@echo $(SRCS_MANDATORY)
-	@echo 
+	@echo
 	@echo $(OBJTS)

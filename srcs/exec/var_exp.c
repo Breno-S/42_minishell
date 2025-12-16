@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   var_exp.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 13:32:25 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/08 18:14:34 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/16 14:17:15 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 
-char	*var_exp(char *var_name)
+char	*var_exp(const char *var_name)
 {
 	t_root_list	*hash_var;
 	t_hash_env	**hash_table;

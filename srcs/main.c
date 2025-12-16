@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/15 21:02:25 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/16 17:12:41 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,30 @@
 #include "execsh.h"
 #include "types.h"
 
+static void	print_token_word(t_token_word *t)
+{
+	t_segment	*seg;
+
+	seg = t->seg_lst;
+	while (seg)
+	{
+		printf("%s", seg->text);
+		seg = seg->next;
+	}
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_hash_env	**hash_env;
 	t_lexer		l;
 	t_parser	p;
 	t_token		*token_list;
-	t_ast		*ast;
+	// t_ast		*ast;
 	char		*line;
 
 	ft_gc_init();
-	hash_env = (t_hash_env **)create_hash_env(envp);
+	hash_env = (t_hash_env **)create_hash_env(envp, argv);
+	// printf("%s",var_exp("0"));
 	while (1)
 	{
 		line = ft_gcfct_register(readline("Madshell> "), GC_DATA)->content;
@@ -33,9 +46,10 @@ int	main(int argc, char *argv[], char *envp[])
 		add_history(line);
 		l = lexer_new(line, ft_strlen(line));
 		token_list = lexer_token_list(&l);
-		// expand(token_list);
 		p = parser_new(token_list);
-		ast = parser_parse(&p);
+		expand_token_list(token_list);
+		// ast = parser_parse(&p);
+		printf("%s",var_exp("0"));
 		ft_gc_del_root("temp");
 		ft_gc_collect();
 	}
