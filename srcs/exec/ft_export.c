@@ -6,15 +6,11 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 18:23:28 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/08 18:07:57 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/16 12:50:14 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <execsh.h>
-
-int	ft_print_export(t_hash_env **hash_table, int fd);
-int	ft_remove_var(void *content, t_ext_list *root);
-int	change_env(int hash, t_hash_env **hash_table, char **str);
 
 int	ft_export(t_hash_env **hash_table, const char *var, int fd)
 {

@@ -6,15 +6,11 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 18:07:37 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/15 13:38:07 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/16 13:08:15 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
-
-static int	aux_print_export(t_hash_env **hash_table, char ***envs);
-static int	sort_print(char **envs);
-static int	ft_fix_print(char *env, int fd);
 
 int	ft_print_export(t_hash_env **hash_table, int fd)
 {
@@ -40,7 +36,7 @@ int	ft_print_export(t_hash_env **hash_table, int fd)
 	return (0);
 }
 
-static int	ft_fix_print(char *env, int fd)
+int	ft_fix_print(char *env, int fd)
 {
 	char	**var;
 
@@ -55,7 +51,7 @@ static int	ft_fix_print(char *env, int fd)
 	return (0);
 }
 
-static int	sort_print(char **envs)
+int	sort_print(char **envs)
 {
 	int		i;
 	int		j;
@@ -80,7 +76,7 @@ static int	sort_print(char **envs)
 	return (0);
 }
 
-static int	aux_print_export(t_hash_env **hash_table, char ***envs)
+int	aux_print_export(t_hash_env **hash_table, char ***envs)
 {
 	int			count;
 	int			i;

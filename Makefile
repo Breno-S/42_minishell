@@ -43,7 +43,8 @@ SRCS_MANDATORY_PARSER := \
 	parser.c \
 	parser_utils.c \
 	segment.c \
-	token.c
+	token.c \
+	expand.c
 
 SRCS_MANDATORY := $(addprefix $(PATH_MANDATORY)/,$(SRCS_MANDATORY_COMMON))
 SRCS_MANDATORY := $(SRCS_MANDATORY) $(addprefix $(PATH_MANDATORY)/$(EXEC_SRC_DIR)/,$(SRCS_MANDATORY_EXEC))
@@ -145,5 +146,5 @@ re: fclean all
 
 teste:
 	@echo $(SRCS_MANDATORY)
-	@echo 
+	@echo
 	@echo $(OBJTS)

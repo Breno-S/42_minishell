@@ -3,20 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsesh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:22:36 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/12 17:55:49 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/16 12:58:00 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSESH_H
 # define PARSESH_H
 
-# include <readline/readline.h>
-# include <readline/history.h>
-
-# include "libft.h"
 # include "types.h"
 
 # define WHITESPACE "\t\n\v\f\r "
@@ -75,4 +71,8 @@ int				parse_redirs(t_parser *p, t_ast *ast);
 t_io_node		*io_node(t_token_class type, t_token_word *target);
 void			io_node_add(t_io_node **io_node_list, t_io_node *new);
 
-#endif //PARSESH_H
+// EXPAND
+
+void			expand(t_token *token_list);
+
+#endif // PARSESH_H
