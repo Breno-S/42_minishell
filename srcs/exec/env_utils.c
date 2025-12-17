@@ -6,39 +6,13 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 18:12:03 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/08 18:12:59 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/17 15:21:57 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 
-void	**create_hash_env(char **arr)
-{
-	void		**hash_env;
-	t_hash_env	*new;
-	int			i;
-	int			aux;
-	char		*str;
-
-	i = 0;
-	hash_env = ft_gc_calloc_root(256, sizeof(void *), "hash_env");
-	if (!hash_env)
-		return (NULL);
-	while (arr[i])
-	{
-		str = ft_gcfct_register_root(ft_strdup(arr[i]), "env");
-		aux = count_hash(arr[i]);
-		new = ft_hashnew(str, T_ENV);
-		if (hash_env[aux])
-			ft_hashadd_back((t_hash_env **)&hash_env[aux], new);
-		else
-			hash_env[aux] = new;
-		i++;
-	}
-	return (hash_env);
-}
-
-int	count_hash(char *var)
+int	count_hash(const char *var)
 {
 	int	rtn;
 	int	i;

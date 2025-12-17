@@ -6,16 +6,13 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 12:18:32 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/17 14:49:23 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/17 15:33:08 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 
-static char	*access_temp_file(int tmp);
-static void	print_warning(char *eof, int count);
-
-t_redirect	*create_heredoc(char *eof, int flag)
+t_redirect	*create_heredoc(char *eof)
 {
 	t_redirect	*heredoc;
 	char		*str;
@@ -44,7 +41,7 @@ t_redirect	*create_heredoc(char *eof, int flag)
 	return (heredoc);
 }
 
-static char	*access_temp_file(int tmp)
+char	*access_temp_file(int tmp)
 {
 	char	*tmp_char;
 	char	*path;
@@ -60,7 +57,7 @@ static char	*access_temp_file(int tmp)
 	return (path);
 }
 
-static void	print_warning(char *eof, int count)
+void	print_warning(char *eof, int count)
 {
 	ft_putstr_fd("Minishell: warning: here-document at line ", 0);
 	ft_putnbr_fd(count, 0);
