@@ -3,20 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsesh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:22:36 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/16 17:56:35 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/17 15:47:48 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSESH_H
 # define PARSESH_H
 
-# include <readline/readline.h>
-# include <readline/history.h>
-
-# include "libft.h"
 # include "types.h"
 
 # define WHITESPACE "\t\n\v\f\r "
