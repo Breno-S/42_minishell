@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 12:18:32 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/15 18:59:00 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/17 14:49:23 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static char	*access_temp_file(int tmp);
 static void	print_warning(char *eof, int count);
 
-t_redirect	*create_heredoc(char *eof)
+t_redirect	*create_heredoc(char *eof, int flag)
 {
 	t_redirect	*heredoc;
 	char		*str;
