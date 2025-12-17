@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsesh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:22:36 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/16 12:58:00 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/17 16:12:31 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,10 @@ int				parse_redirs(t_parser *p, t_ast *ast);
 t_io_node		*io_node(t_token_class type, t_token_word *target);
 void			io_node_add(t_io_node **io_node_list, t_io_node *new);
 
-// EXPAND
+// EXPANSION
 
-void			expand(t_token *token_list);
+int				expand_token(t_token_word *t);
+void			expand_token_list(t_token **token_list);
+char			*expanded_token_text(t_token_word *t);
 
-#endif // PARSESH_H
+#endif //PARSESH_H

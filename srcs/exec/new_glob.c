@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   new_glob.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 14:05:19 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/17 14:44:47 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/17 16:13:21 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 
-char *glob_exp(char *glob)
-{
-	dir = opendir(".");
-	ent = readdir(dir[0]);
-	closedir(dir);
-}
+// char *glob_exp(char *glob)
+// {
+// 	dir = opendir(".");
+// 	ent = readdir(dir[0]);
+// 	closedir(dir);
+// }
 
-t_list *handle_dir(char *dir)
+t_list	*handle_dir(char *dir)
 {
-	DIR			*o_dir;
-	t_list		*files;
-	struct dirent *ent;
+	DIR				*o_dir;
+	t_list			*files;
+	struct dirent	*ent;
 
 	ent = (struct dirent *){0};
 	o_dir = opendir(dir);
@@ -35,16 +35,16 @@ t_list *handle_dir(char *dir)
 	}
 }
 
--> abro dir -> procuro
+// -> abro dir -> procuro
 
-..
-teste
+// ..
+// teste
 
-literal
-pre*suf
-pre*in*in*suf
+// literal
+// pre*suf
+// pre*in*in*suf
 
 
-../teste/teste*.c
+// ../teste/teste*.c
 
 

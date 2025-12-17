@@ -3,21 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/16 12:57:48 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/17 16:12:29 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TYPES_H
 # define TYPES_H
 
-# include "libft.h"
-# include <dirent.h>
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <sys/types.h>
+# include "includes.h"
 
 typedef struct s_msh
 {

@@ -6,13 +6,9 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 16:57:36 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/15 17:14:35 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/17 14:10:16 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/**
- * PODE NÃO MAN (ARQUIVO DE LOG)
- */
 
 #include "parsesh.h"
 
@@ -46,7 +42,7 @@ static void	print_redir(t_io_node *io_node, int indent)
 	else if (io_node->type == TOKEN_REDIR_APPEND)
 		printf(">>");
 	printf(" ");
-	print_token_word(io_node->io_target);
+	printf("%.*s", (int)io_node->io_target->text_len, io_node->io_target->text);
 	printf("\n");
 }
 
@@ -88,6 +84,9 @@ void	traverse_tree(t_ast *ast, int indent)
 		printf("  ");
 	if (ast->type == NODE_CMD)
 	{
+		expand_token_list((t_token **)&ast->args);
+		if (ast->redirs && ast->redirs->type != TOKEN_REDIR_HEREDOC)
+			expand_token_list((t_token **)&ast->redirs->io_target);
 		printf("CMD:\n");
 		print_args(ast, indent + 1);
 		print_redirs(ast, indent + 1);
