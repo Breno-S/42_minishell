@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash_table.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 15:22:01 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/17 15:22:10 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/17 16:07:55 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,8 @@
 
 t_hash_env	**create_hash_env(char **arr, char **argv)
 {
-	t_hash_env		**hash_env;
-	t_hash_env	*new;
+	t_hash_env	**hash_env;
 	int			i;
-	int			aux;
-	char		*str;
 
 	i = 0;
 	hash_env = ft_gc_calloc_root(256, sizeof(void *), "hash_env");
@@ -43,8 +40,8 @@ int	import_argv(char **arr, t_hash_env **hash_env)
 		str[2] = ft_gcfct_register_root(ft_strjoin(str[1], "="), "temp");
 		if (!str[1] || !str[2])
 			return (1);
-		str[0] = ft_gcfct_register_root(ft_strjoin(str[2],arr[i++]), "env");
-		if(!str)
+		str[0] = ft_gcfct_register_root(ft_strjoin(str[2], arr[i++]), "env");
+		if (!str[0])
 			return (1);
 		aux = count_hash(str[0]);
 		new = ft_hashnew(str[0], T_ENV);
@@ -69,7 +66,7 @@ int	import_envp(char **arr, t_hash_env **hash_env)
 	while (arr[i])
 	{
 		str = ft_gcfct_register_root(ft_strdup(arr[i]), "env");
-		if(!str)
+		if (!str)
 			return (1);
 		aux = count_hash(arr[i]);
 		new = ft_hashnew(str, T_ENV);

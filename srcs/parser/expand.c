@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:41:04 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/16 20:58:20 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/17 16:06:07 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*expanded_token_text(t_token_word *t)
 			str = ft_gcfct_register_root(ft_strdup(seg->text), "temp");
 		seg = seg->next;
 	}
-	while(seg)
+	while (seg)
 	{
 		if (seg->text)
 			str = ft_gcfct_register_root(ft_strjoin(str, seg->text), "temp");

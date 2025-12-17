@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   new_glob.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 14:05:19 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/17 15:40:58 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/17 16:07:28 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
 // 	closedir(dir);
 // }
 
-t_list *handle_dir(char *dir)
+t_list	*handle_dir(char *dir)
 {
-	DIR			*o_dir;
-	t_list		*files;
-	struct dirent *ent;
+	DIR				*o_dir;
+	t_list			*files;
+	struct dirent	*ent;
 
 	ent = (struct dirent *){0};
 	o_dir = opendir(dir);

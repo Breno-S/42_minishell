@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 16:57:36 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/16 21:21:37 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/17 14:10:16 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	print_redir(t_io_node *io_node, int indent)
 	else if (io_node->type == TOKEN_REDIR_APPEND)
 		printf(">>");
 	printf(" ");
-	printf("%*s", (int)io_node->io_target->text_len, io_node->io_target->text);
+	printf("%.*s", (int)io_node->io_target->text_len, io_node->io_target->text);
 	printf("\n");
 }
 
