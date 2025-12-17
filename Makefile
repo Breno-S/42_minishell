@@ -33,7 +33,8 @@ SRCS_MANDATORY_EXEC := \
 	print_export.c \
 	env_utils.c \
 	hashpop.c \
-	heredoc.c
+	heredoc.c \
+	hash_table.c
 SRCS_MANDATORY_PARSER := \
 	ast.c \
 	ast_aux.c \
