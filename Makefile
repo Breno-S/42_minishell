@@ -41,6 +41,7 @@ SRCS_MANDATORY_PARSER := \
 	lexer.c \
 	lexer_handle_word.c \
 	lexer_utils.c \
+	log_tree.c \
 	parser.c \
 	parser_utils.c \
 	segment.c \

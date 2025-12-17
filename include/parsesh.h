@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:22:36 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/16 16:10:45 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/16 17:56:35 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ void			io_node_add(t_io_node **io_node_list, t_io_node *new);
 
 // EXPANSION
 
-void	expand_token(t_token_word *t);
-void	expand_token_list(t_token *token_list);
+int		expand_token(t_token_word *t);
+void	expand_token_list(t_token **token_list);
 char	*expanded_token_text(t_token_word *t);
 
 #endif //PARSESH_H
