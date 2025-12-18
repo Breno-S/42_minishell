@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execsh.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/17 16:12:00 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/17 22:59:27 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 # define EXECSH_H
 
 # include "types.h"
+
+typedef enum e_glob
+{
+	OCULT = 0,
+	NO_OCULT = 1
+} t_glob;
 
 // MAIN LOOP
 
