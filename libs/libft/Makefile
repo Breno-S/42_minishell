@@ -30,7 +30,7 @@ SRCS    := ft_isalpha.c                   ft_isdigit.c                  ft_isaln
            ft_size_chrarr.c               ft_isspace.c                  ft_arraylen_chr.c             ft_gcfct_arr_register_root.c \
            ft_gcfct_register_root.c       ft_gc_calloc_root.c           ft_gc_malloc_root.c           ft_atoll.c \
            ft_gc_content_root.c           ft_check_prefix.c             ft_realloc.c                  ft_gc_collect.c \
-		   ft_gc_del_root.c               ft_lstadd_back.c
+		   ft_gc_del_root.c               ft_lstadd_back.c              ft_joinlst.c
 
 SRCS :=  $(addprefix ./srcs/,$(SRCS))
 OBJTS   := $(SRCS:.c=.o)

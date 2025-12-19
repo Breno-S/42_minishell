@@ -34,7 +34,8 @@ SRCS_MANDATORY_EXEC := \
 	env_utils.c \
 	hashpop.c \
 	heredoc.c \
-	hash_table.c
+	hash_table.c\
+	new_glob.c
 SRCS_MANDATORY_PARSER := \
 	ast.c \
 	ast_aux.c \
@@ -46,7 +47,7 @@ SRCS_MANDATORY_PARSER := \
 	parser.c \
 	parser_utils.c \
 	segment.c \
-	token.c 
+	token.c
 
 SRCS_MANDATORY := $(addprefix $(PATH_MANDATORY)/,$(SRCS_MANDATORY_COMMON))
 SRCS_MANDATORY := $(SRCS_MANDATORY) $(addprefix $(PATH_MANDATORY)/$(EXEC_SRC_DIR)/,$(SRCS_MANDATORY_EXEC))

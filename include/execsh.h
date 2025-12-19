@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/17 22:59:27 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/18 13:21:18 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ typedef enum e_glob
 {
 	OCULT = 0,
 	NO_OCULT = 1
-} t_glob;
+}			t_glob;
 
 // MAIN LOOP
 
@@ -74,6 +74,9 @@ void		print_warning(char *eof, int count);
 
 int			aux_exp_glob(DIR **dir, char ***files);
 char		**exp_glob(void);
+char		*glob_exp_new(t_token_word *token);
+int			save_files(struct dirent *ent, int type, t_list **head);
+t_list		*all_files(int type);
 
 // PWD
 // char		*pwd(int fd);

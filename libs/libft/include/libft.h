@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 09:57:31 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/15 17:55:23 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/18 13:39:38 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ int						ft_lstiter(t_list *lst, unsigned int (*f)(void *));
 t_ext_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 							void (*del)(void *));
 void					ft_lstsort(t_list *lst);
+char					*ft_joinlst(t_list *aux);
 
 int						ft_printf(const char *str, ...);
 
