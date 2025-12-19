@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/19 09:53:54 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/19 14:14:36 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	main(int argc, char *argv[], char *envp[])
 
 	ft_gc_init();
 	hash_env = (t_hash_env **)create_hash_env(envp, argv);
-	l = lexer_new(".git", ft_strlen(".git"));
+	l = lexer_new(argv[1], ft_strlen(argv[1]));
 	token_list = lexer_token_list(&l);
-	glob_exp_new(token_list);
+	printf("\n%s\n", glob_exp(token_list));
 	// rl_clear_history();
 	ft_gc_end();
 }

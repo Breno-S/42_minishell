@@ -34,8 +34,8 @@ SRCS_MANDATORY_EXEC := \
 	env_utils.c \
 	hashpop.c \
 	heredoc.c \
-	hash_table.c\
-	new_glob.c
+	hash_table.c \
+	glob_exp.c
 SRCS_MANDATORY_PARSER := \
 	ast.c \
 	ast_aux.c \
