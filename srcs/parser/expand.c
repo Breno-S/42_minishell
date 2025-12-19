@@ -6,34 +6,34 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:41:04 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/17 16:06:07 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/18 21:17:42 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 #include "parsesh.h"
 
-char	*expanded_token_text(t_token_word *t)
-{
-	char		*str;
-	t_segment	*seg;
+// char	*expanded_token_text(t_token_word *t)
+// {
+// 	char		*str;
+// 	t_segment	*seg;
 
-	str = NULL;
-	seg = t->seg_lst;
-	while (seg && !str)
-	{
-		if (seg->text)
-			str = ft_gcfct_register_root(ft_strdup(seg->text), "temp");
-		seg = seg->next;
-	}
-	while (seg)
-	{
-		if (seg->text)
-			str = ft_gcfct_register_root(ft_strjoin(str, seg->text), "temp");
-		seg = seg->next;
-	}
-	return (str);
-}
+// 	str = NULL;
+// 	seg = t->seg_lst;
+// 	while (seg && !str)
+// 	{
+// 		if (seg->text)
+// 			str = ft_gcfct_register_root(ft_strdup(seg->text), "temp");
+// 		seg = seg->next;
+// 	}
+// 	while (seg)
+// 	{
+// 		if (seg->text)
+// 			str = ft_gcfct_register_root(ft_strjoin(str, seg->text), "temp");
+// 		seg = seg->next;
+// 	}
+// 	return (str);
+// }
 
 int	expand_token(t_token_word *t)
 {
@@ -59,44 +59,61 @@ int	expand_token(t_token_word *t)
 	return (status);
 }
 
-static void	replace_token(t_token_word **target, t_token **prev,
-	t_token **token_list)
+static t_token_word	*get_new_tokens(t_segment *seg_lst)
 {
-	t_token		*next;
-	t_token		*aux;
-	char		*new_text;
-	t_lexer		l;
+	t_segment		*new_segs;
+	t_token_word	*new_tokens;
 
-	next = (*target)->next;
-	new_text = expanded_token_text(*target);
-	if (!new_text)
+	new_segs = NULL;
+	new_tokens = NULL;
+	while (seg_lst)
 	{
-		*prev = (t_token *)*target;
-		return ;
+		if (seg_lst == WILDCARD)
+			segment_add(&new_segs, segment(WILDCARD, seg_lst->text, ft_strlen(seg_lst->text)));
+		else if (seg_lst->type != VAR_SPLIT && seg_lst->type != CMD_SPLIT)
+		{
+			if (new_segs->type == LITERAL && new_segs->text && seg_lst->text)
+				new_segs->text = ft_gcfct_register_root(ft_strjoin(new_segs->text, seg_lst->text), "temp");
+			else if (seg_lst->text)
+				segment_add(&new_segs, segment(seg_lst->type, seg_lst->text, ft_strlen(seg_lst->text)));
+		}
+		else if (seg_lst->text)
+		{
+			ft_substr(seg_lst->text, 0, ft_strchr(seg_lst->text, ' ') - &seg_lst->text[0]);
+			new_segs->text = ft_gcfct_register_root(ft_strjoin(new_segs->text, seg_lst->text), "temp");
+		}
+		seg_lst = seg_lst->next;
 	}
-	l = lexer_new(new_text, ft_strlen((const char *)new_text));
-	aux = lexer_token_list(&l);
+	return (new_tokens);
+}
+
+static void	replace_tokens(t_token_word **target, t_token **prev,
+	t_token *next, t_token **token_list)
+{
+	t_token_word	*new_tokens;
+
+	new_tokens = get_new_tokens((*target)->seg_lst);
 	if (*prev)
-		(*prev)->next = aux;
+		(*prev)->next = new_tokens;
 	else
-		*token_list = aux;
-	while (aux->next)
-		aux = aux->next;
-	aux->next = next;
-	*prev = aux;
+		*token_list = new_tokens;
+	while (new_tokens->next)
+		new_tokens = new_tokens->next;
+	new_tokens->next = next;
+	*prev = new_tokens;
 }
 
 void	expand_token_list(t_token **token_list)
 {
-	t_token		*head;
-	t_token		*prev;
+	t_token	*head;
+	t_token	*prev;
 
 	head = *token_list;
 	prev = NULL;
 	while (head)
 	{
 		if (head->class == TOKEN_WORD && expand_token((t_token_word *)head))
-			replace_token((t_token_word **)&head, &prev, token_list);
+			replace_tokens((t_token_word **)&head, &prev, head->next, token_list);
 		else
 			prev = head;
 		head = head->next;
