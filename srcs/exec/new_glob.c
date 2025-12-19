@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 14:05:19 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/18 21:08:43 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/19 09:51:33 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*glob_exp_new(t_token_word *token)
 
 	if (!token)
 		return (NULL);
-	type = (ft_strcmp(token->seg_lst->text, ".") != 0);
+	type = (ft_strncmp(token->seg_lst->text, ".",1) != 0);
 	files = all_files(type);
 	if (!files)
 		return (NULL);
