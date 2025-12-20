@@ -6,34 +6,166 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:41:04 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/18 21:17:42 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/19 20:45:52 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 #include "parsesh.h"
 
-// char	*expanded_token_text(t_token_word *t)
-// {
-// 	char		*str;
-// 	t_segment	*seg;
+static void	remove_segment(t_segment *seg_lst, t_segment *target, t_segment *prev)
+{
+	if (prev)
+		prev->next = target->next;
+	else
+		seg_lst = target->next;
+}
 
-// 	str = NULL;
-// 	seg = t->seg_lst;
-// 	while (seg && !str)
-// 	{
-// 		if (seg->text)
-// 			str = ft_gcfct_register_root(ft_strdup(seg->text), "temp");
-// 		seg = seg->next;
-// 	}
-// 	while (seg)
-// 	{
-// 		if (seg->text)
-// 			str = ft_gcfct_register_root(ft_strjoin(str, seg->text), "temp");
-// 		seg = seg->next;
-// 	}
-// 	return (str);
-// }
+static void	remove_null_segs(t_token_word *t)
+{
+	t_segment	*head;
+	t_segment	*prev;
+
+	head = t->seg_lst;
+	prev = NULL;
+	while (head)
+	{
+		if ((head->type >= 1 && head->type <= 4)
+			&& (!head->text || head->text[0] == '\0'))
+			remove_segment(t->seg_lst, head, prev);
+		else 
+			prev = head;
+		head = head->next;
+	}
+}
+
+static void join_fixed_segs(t_token_word *t)
+{
+	t_segment	*head;
+	t_segment	*prev;
+
+	head = t->seg_lst;
+	prev = NULL;
+	while (head->next)
+	{
+		if ((head->type == LITERAL || head->type == VAR_FIXED
+				|| head->type == CMD_FIXED) && (head->next->type == LITERAL
+					|| head->next->type == VAR_FIXED
+					|| head->next->type == CMD_FIXED))
+		{
+				head->type = LITERAL;
+				head->text = ft_gcfct_register_root(
+					ft_strjoin(head->text, head->next->text), "temp");
+				remove_segment(t->seg_lst, head->next, head);
+				continue ;
+		}
+		else 
+			prev = head;
+		head = head->next;
+	}
+}
+
+static void split_first_segs(t_token_word *t)
+{
+	t_segment	*head;
+	t_segment	*prev;
+	t_lexer		l;
+
+	head = t->seg_lst;
+	prev = NULL;
+	while (head)
+	{
+		if (head->type == VAR_SPLIT || head->type == CMD_SPLIT)
+		{
+			l = lexer_new(head->text, ft_strlen(head->text));
+			if (!ft_isspace(head->text[0]))
+			{
+				// create new first segment of LITERAL type
+				size_t		lit_len;
+				size_t		trim_len;
+				char		*lit;
+				t_segment	*new_seg;
+
+				lit_len = lexer_chop_til(&l, " ", l.str_len, NULL);
+				lit = ft_gcfct_register_root(
+					ft_substr(head->text, 0, lit_len), "temp");
+
+				new_seg = ft_gc_calloc_root(1, sizeof(*new_seg), "temp");
+				*new_seg = (t_segment){LITERAL, lit, head};
+
+				// add new literal segment before current segment
+				if (prev)
+					prev->next = new_seg;
+				else
+					t->seg_lst = new_seg;
+
+				// trim this word and proceding spaces from current segment
+				trim_len = lexer_chop_while(&l, " ", l.str_len, NULL);
+				head->text = ft_substr(head->text, lit_len + trim_len,
+					l.str_len);
+				if (head->text[0] == '\0')
+					new_seg->next = head->next;
+				prev = head;
+			}
+		}
+		else 
+			prev = head;
+		head = head->next;
+	}
+}
+
+static void split_last_segs(t_token_word *t)
+{
+	t_segment	*head;
+	t_segment	*prev;
+
+	head = t->seg_lst;
+	prev = NULL;
+	while (head)
+	{
+		if (head->type == VAR_SPLIT || head->type == CMD_SPLIT)
+		{
+			if (!ft_isspace(head->text[ft_strlen(head->text) - 1]))
+			{
+				// create following segment of LITERAL type
+				size_t		lit_len;
+				size_t		trim_len;
+				char		*lit;
+				t_segment	*new_seg;
+				char		*last_space;
+
+				last_space = ft_strrchr(head->text, ' ');
+				lit_len = ft_strlen(head->text);
+				if (!last_space && head->next)
+				{
+						head->next->text = ft_gcfct_register_root(
+						ft_strjoin(head->text, head->next->text), "temp");
+						remove_segment(t->seg_lst, head, prev);
+				}
+				else if (last_space)
+				{
+					lit_len = &head->text[lit_len - 1] - last_space;
+					lit = ft_gcfct_register_root(
+						ft_substr(last_space, 1, lit_len), "temp");
+
+					new_seg = ft_gc_calloc_root(1, sizeof(*new_seg), "temp");
+					*new_seg = (t_segment){LITERAL, lit, head->next};
+
+					// add new literal segment after current segment
+					head->next = new_seg;
+
+					// trim this word and preceding spaces from current segment
+					head->text = ft_gcfct_register_root(ft_substr(head->text, 0, last_space - head->text), "temp");
+					if (head->text[0] == '\0')
+						remove_segment(t->seg_lst, head, prev);
+				}
+			}
+		}
+		else 
+			prev = head;
+		head = head->next;
+	}
+}
 
 int	expand_token(t_token_word *t)
 {
@@ -59,63 +191,25 @@ int	expand_token(t_token_word *t)
 	return (status);
 }
 
-static t_token_word	*get_new_tokens(t_segment *seg_lst)
-{
-	t_segment		*new_segs;
-	t_token_word	*new_tokens;
-
-	new_segs = NULL;
-	new_tokens = NULL;
-	while (seg_lst)
-	{
-		if (seg_lst == WILDCARD)
-			segment_add(&new_segs, segment(WILDCARD, seg_lst->text, ft_strlen(seg_lst->text)));
-		else if (seg_lst->type != VAR_SPLIT && seg_lst->type != CMD_SPLIT)
-		{
-			if (new_segs->type == LITERAL && new_segs->text && seg_lst->text)
-				new_segs->text = ft_gcfct_register_root(ft_strjoin(new_segs->text, seg_lst->text), "temp");
-			else if (seg_lst->text)
-				segment_add(&new_segs, segment(seg_lst->type, seg_lst->text, ft_strlen(seg_lst->text)));
-		}
-		else if (seg_lst->text)
-		{
-			ft_substr(seg_lst->text, 0, ft_strchr(seg_lst->text, ' ') - &seg_lst->text[0]);
-			new_segs->text = ft_gcfct_register_root(ft_strjoin(new_segs->text, seg_lst->text), "temp");
-		}
-		seg_lst = seg_lst->next;
-	}
-	return (new_tokens);
-}
-
-static void	replace_tokens(t_token_word **target, t_token **prev,
-	t_token *next, t_token **token_list)
-{
-	t_token_word	*new_tokens;
-
-	new_tokens = get_new_tokens((*target)->seg_lst);
-	if (*prev)
-		(*prev)->next = new_tokens;
-	else
-		*token_list = new_tokens;
-	while (new_tokens->next)
-		new_tokens = new_tokens->next;
-	new_tokens->next = next;
-	*prev = new_tokens;
-}
-
 void	expand_token_list(t_token **token_list)
 {
-	t_token	*head;
+	t_token	*t;
 	t_token	*prev;
 
-	head = *token_list;
+	t = *token_list;
 	prev = NULL;
-	while (head)
+	while (t)
 	{
-		if (head->class == TOKEN_WORD && expand_token((t_token_word *)head))
-			replace_tokens((t_token_word **)&head, &prev, head->next, token_list);
+		if (t->class == TOKEN_WORD && expand_token((t_token_word *)t))
+		{
+			remove_null_segs((t_token_word *)t);
+			split_first_segs((t_token_word *)t);
+			split_last_segs((t_token_word *)t);
+			join_fixed_segs((t_token_word *)t);
+			// generate_new_tokens((t_token_word *)t);
+		}
 		else
-			prev = head;
-		head = head->next;
+			prev = t;
+		t = t->next;
 	}
 }
