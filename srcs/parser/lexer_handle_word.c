@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:47:03 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/16 14:32:10 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/20 20:01:53 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,11 @@ static t_segment	*handle_var(t_lexer *l, size_t *text_len)
 		seg_len++;
 		type = LITERAL;
 	}
-	seg_len += lexer_chop_til(l, METACHARS "\"\'$\0", l->str_len, text_len);
+	while (ft_isalnum(l->str[l->idx]) || l->str[l->idx] == '_')
+	{
+		seg_len += lexer_chop_chars(l, 1);
+		*text_len += 1;
+	}
 	return (segment(type, seg_start, seg_len));
 }
 

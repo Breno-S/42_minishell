@@ -39,6 +39,8 @@ SRCS_MANDATORY_PARSER := \
 	ast.c \
 	ast_aux.c \
 	expand.c \
+	expand_aux.c \
+	expand_utils.c \
 	lexer.c \
 	lexer_handle_word.c \
 	lexer_utils.c \
