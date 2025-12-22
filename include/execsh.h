@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execsh.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/17 16:05:32 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/19 14:20:21 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,14 @@ void		print_warning(char *eof, int count);
 
 // GLOB
 
-int			aux_exp_glob(DIR **dir, char ***files);
-char		**exp_glob(void);
+char		*glob_exp(t_token *token_o);
+int			save_files(struct dirent *ent, int type, t_list **head,
+				t_segment *seg_lst);
+t_list		*all_files(int type, t_segment *seg_lst);
+int			match_pattern(t_segment *seg_lst, char *content,
+				t_segment *head_seg);
+int			check_literal_match(t_segment *aux_seg, char *content,
+				unsigned long i);
 
 // PWD
 // char		*pwd(int fd);

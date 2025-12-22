@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 18:23:28 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/16 12:50:14 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/19 14:03:18 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_export(t_hash_env **hash_table, const char *var, int fd)
 				T_ENV));
 	else
 		ft_gc_collect();
-	return (fd);
+	return (0);
 }
 
 int	ft_remove_var(void *content, t_ext_list *root)

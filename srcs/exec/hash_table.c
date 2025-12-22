@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hash_table.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 15:22:01 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/17 16:07:55 by brensant         ###   ########.fr       */
+/*   Updated: 2025/12/19 14:08:14 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	import_argv(char **arr, t_hash_env **hash_env)
 		if (!str[0])
 			return (1);
 		aux = count_hash(str[0]);
-		new = ft_hashnew(str[0], T_ENV);
+		new = ft_hashnew(str[0], T_INTERNAL);
 		if (!new)
 			return (1);
 		if (hash_env[aux])
