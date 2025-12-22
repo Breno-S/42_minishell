@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 14:16:04 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/19 14:15:11 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/22 15:16:23 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,27 +32,25 @@ char	*glob_exp(t_token *token_o)
 
 int	match_pattern(t_segment *seg_lst, char *content, t_segment *head_seg)
 {
-	int	i[2];
+	int	i;
 
-	i[0] = 0;
-	i[1] = 0;
-	while (content[i[0]])
+	i = 0;
+	while (content[i])
 	{
 		if (seg_lst->type == LITERAL)
 		{
-			i[1] = check_literal_match(seg_lst, content, i[0]);
-			if (i[1])
-				i[0] += ft_strlen(seg_lst->text);
+			if (check_literal_match(seg_lst, content, i))
+			{
+				i += ft_strlen(seg_lst->text);
+				seg_lst = seg_lst->next;
+			}
 			else if (!seg_lst->next || seg_lst == head_seg)
 				return (1);
+			else
+				i++;
 		}
-		if (!i[1] && seg_lst->type == LITERAL)
-			i[0]++;
-		while (seg_lst && (seg_lst->type != LITERAL || i[1]))
-		{
-			i[1] = 0;
+		if (seg_lst && (seg_lst->type != LITERAL))
 			seg_lst = seg_lst->next;
-		}
 		if (!seg_lst)
 			return (0);
 	}
@@ -61,13 +59,16 @@ int	match_pattern(t_segment *seg_lst, char *content, t_segment *head_seg)
 
 int	check_literal_match(t_segment *aux_seg, char *content, unsigned long i)
 {
+	int	len_s1;
+	int	len_s2;
+
 	if (aux_seg->type == LITERAL)
 	{
-		if (!aux_seg->next && (ft_strlen(content)
-				- ft_strlen(aux_seg->text)) >= i)
-			i = ft_strlen(content) - ft_strlen(aux_seg->text);
-		if (i >= 0 && !ft_strncmp(&content[i], aux_seg->text,
-				ft_strlen(aux_seg->text)))
+		len_s1 = ft_strlen(content);
+		len_s2 = ft_strlen(aux_seg->text);
+		if (!aux_seg->next && (len_s1 - len_s2) >= i)
+			i = len_s1 - len_s2;
+		if (i >= 0 && !ft_strncmp(&content[i], aux_seg->text, len_s2))
 			return (1);
 	}
 	return (0);
