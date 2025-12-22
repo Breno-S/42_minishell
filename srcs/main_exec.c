@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/22 15:07:32 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2025/12/22 18:51:30 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,10 @@ int	main(int argc, char *argv[], char *envp[])
 		add_history(line);
 		l = lexer_new(line, ft_strlen(line));
 		token_list = lexer_token_list(&l);
-		// p = parser_new(token_list);
-		printf("\n%s\n",glob_exp(token_list));
-		// ast = parser_parse(&p);
-		// exec = ft_gc_calloc_root(1, sizeof(t_exec), "temp");
-		// exec_cmd(ast, &exec);
-		// traverse_tree(ast, 0);
+		p = parser_new(token_list);
+		// printf("\n%s\n",glob_exp(token_list));
+		ast = parser_parse(&p);
+		traverse_tree(ast, 0);
 		ft_gc_del_root("temp");
 		ft_gc_collect();
 	}
