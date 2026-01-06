@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 14:16:04 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/22 15:16:23 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/05 13:08:25 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	check_literal_match(t_segment *aux_seg, char *content, unsigned long i)
 	{
 		len_s1 = ft_strlen(content);
 		len_s2 = ft_strlen(aux_seg->text);
-		if (!aux_seg->next && (len_s1 - len_s2) >= i)
+		if (!aux_seg->next && (len_s1 - len_s2) >= (int)i)
 			i = len_s1 - len_s2;
 		if (i >= 0 && !ft_strncmp(&content[i], aux_seg->text, len_s2))
 			return (1);

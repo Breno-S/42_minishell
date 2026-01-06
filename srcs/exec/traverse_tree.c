@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   traverse_tree.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/02 23:10:32 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/05 13:32:03 by rgomes-d         ###   ########.fr       */
+/*   Created: 2026/01/05 21:01:28 by rgomes-d          #+#    #+#             */
+/*   Updated: 2026/01/05 21:07:21 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 
-int	ft_env(void **hash_env, int fd)
+int	traverse_tree(t_ast *ast)
 {
-	int			i;
-	t_hash_env	*var;
+	int	rtn;
 
-	if (!hash_env)
-		return (-1);
-	i = 0;
-	while (i < 256)
-	{
-		var = hash_env[i++];
-		while (var)
-		{
-			if (var->type_var == T_ENV && var->has_content)
-				ft_putendl_fd(var->content, fd);
-			var = var->next;
-		}
-	}
-	ft_putendl_fd("_=/usr/bin/env", fd);
-	return (0);
+	rtn = 1;
+	if (ast->type == NODE_CMD)
+		rtn = handle_pre_exec(ast);
+	else if (ast->type == NODE_AND)
+		rtn = handle_pre_exec(ast);
+	else if (ast->type == NODE_OR)
+		rtn = handle_pre_exec(ast);
+	else if (ast->type == NODE_PIPE)
+		rtn = handle_pre_exec(ast);
+	else if (ast->type == NODE_SUB)
+		rtn = handle_pre_exec(ast);
+
 }

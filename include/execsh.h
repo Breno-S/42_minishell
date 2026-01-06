@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/19 14:20:21 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/05 21:00:09 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,24 @@ int			match_pattern(t_segment *seg_lst, char *content,
 int			check_literal_match(t_segment *aux_seg, char *content,
 				unsigned long i);
 
+// EXEC
+
+int			handle_pre_exec(t_ast *ast);
+int			ft_sizeseg(t_segment *segment);
+t_exec		*build_exec(t_ast *ast);
+
+char		**find_path(void);
+char		*find_executable(char *arg, char **path);
+char		*handle_search(char *arg);
+void		print_error_find(int type, char *arg);
+
+// REDIRS
+
+int			handle_redirects(t_io_node *redirs, t_exec **exec);
+int			*open_pipeline(t_exec **exec);
+int			open_infile(char *infile, t_exec **exec);
+int			open_outfile(char *outfile, t_exec **exec, int type);
+int			open_heredoc(char *eof, t_exec **exec);
 // PWD
 // char		*pwd(int fd);
 

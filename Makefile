@@ -20,7 +20,7 @@ PATH_MANDATORY := ./srcs
 EXEC_SRC_DIR   := exec
 PARSER_SRC_DIR := parser
 
-SRCS_MANDATORY_COMMON := main.c
+SRCS_MANDATORY_COMMON := main_exec.c
 
 SRCS_MANDATORY_EXEC := \
 	ft_main_loop.c \
@@ -35,7 +35,10 @@ SRCS_MANDATORY_EXEC := \
 	hashpop.c \
 	heredoc.c \
 	hash_table.c \
-	glob_exp.c
+	glob_exp.c \
+	find_exec.c \
+	redirect.c \
+	exec.c
 SRCS_MANDATORY_PARSER := \
 	ast.c \
 	ast_aux.c \

@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/19 17:54:47 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/05 17:10:53 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,11 +141,19 @@ typedef struct s_hash_env
 
 typedef struct s_exec
 {
-	int					prev_fd;
-	int					pipefd[2];
-	int					redirect;
-	int					result;
-	t_list				*all_fds;
-}						t_exec;
+	t_redirect	*infile;
+	t_redirect	*outfile;
+	char		*cmd;
+	char		**args;
+}				t_exec;
+
+// typedef struct s_exec
+// {
+// 	int					prev_fd;
+// 	int					pipefd[2];
+// 	int					redirect;
+// 	int					result;
+// 	t_list				*all_fds;
+// }						t_exec;
 
 #endif // TYPES_H
