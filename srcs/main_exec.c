@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/05 17:49:27 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/06 13:07:00 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int argc, char *argv[], char *envp[])
 		p = parser_new(token_list);
 		// printf("\n%s\n",glob_exp(token_list));
 		ast = parser_parse(&p);
-		handle_exec(ast);
+		handle_pre_exec(ast);
 		// ft_printf("%s\n", handle_search("teste.sh"));
 		// ft_printf("%s\n", handle_search("./teste.sh"));
 		// ft_printf("%s\n", handle_search("ghhkjsdhf"));

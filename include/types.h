@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/05 17:10:53 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/06 14:19:26 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ typedef struct s_ast
 	struct s_ast		*right;
 	t_token_word		*args;
 	t_io_node			*redirs;
+	t_exec				*cmd;
+	int					is_head;
 }						t_ast;
 
 // EXEC STRUCTS
@@ -145,6 +147,7 @@ typedef struct s_exec
 	t_redirect	*outfile;
 	char		*cmd;
 	char		**args;
+	int			error;
 }				t_exec;
 
 // typedef struct s_exec
