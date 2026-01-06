@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:22:36 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/21 19:09:14 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/06 17:58:14 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,16 +73,16 @@ void			io_node_add(t_io_node **io_node_list, t_io_node *new);
 
 // EXPANSION
 
-int				expand_token(t_token_word *t);
+int				expand_vars(t_token_word *token);
 void			expand_token_list(t_token **token_list);
 
-void			remove_null_segs(t_token_word *t);
+void			remove_null_segs(t_token_word *token);
 void			replace_tokens(t_token_word *target, t_token **prev,
 					t_token *next, t_token **token_list);
 
-void			split_first_segs(t_token_word *t);
-void			split_last_segs(t_token_word *t);
-void			join_fixed_segs(t_token_word *t);
+void			split_first_segs(t_token_word *token);
+void			split_last_segs(t_token_word *token);
+void			join_fixed_segs(t_token_word *token);
 
 void			remove_segment(t_segment **seg_lst, t_segment *target,
 					t_segment *prev);

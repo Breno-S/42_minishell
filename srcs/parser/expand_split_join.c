@@ -6,120 +6,120 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 18:10:00 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/21 19:05:15 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/06 17:55:09 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 #include "parsesh.h"
 
-static void	split_before(t_segment *head, t_segment **prev, t_segment **seg_lst)
+static void	split_before(t_segment *curr, t_segment **prev, t_segment **seg_lst)
 {
 	size_t		lit_len;
 	char		*lit;
 	t_segment	*new_seg;
 	t_lexer		l;
 
-	l = lexer_new(head->text, ft_strlen(head->text));
+	l = lexer_new(curr->text, ft_strlen(curr->text));
 	lit_len = lexer_chop_til(&l, " ", l.str_len, NULL);
 	lit = ft_gcfct_register_root(
-			ft_substr(head->text, 0, lit_len), "temp");
+			ft_substr(curr->text, 0, lit_len), "temp");
 	new_seg = ft_gc_calloc_root(1, sizeof(*new_seg), "temp");
-	*new_seg = (t_segment){LITERAL, lit, head};
+	*new_seg = (t_segment){LITERAL, lit, curr};
 	if (*prev)
 		(*prev)->next = new_seg;
 	else
 		*seg_lst = new_seg;
-	head->text = ft_substr(head->text, lit_len, l.str_len);
-	*prev = head;
+	curr->text = ft_substr(curr->text, lit_len, l.str_len);
+	*prev = curr;
 }
 
-static void	split_after(t_segment *head)
+static void	split_after(t_segment *curr)
 {
 	size_t		lit_len;
 	char		*lit;
 	t_segment	*new_seg;
 	char		*last_space;
 
-	last_space = ft_strrchr(head->text, ' ');
-	lit_len = ft_strlen(head->text);
+	last_space = ft_strrchr(curr->text, ' ');
+	lit_len = ft_strlen(curr->text);
 	if (last_space)
 	{
-		lit_len = &head->text[lit_len - 1] - last_space;
+		lit_len = &curr->text[lit_len - 1] - last_space;
 		lit = ft_gcfct_register_root(
 				ft_substr(last_space, 1, lit_len), "temp");
 		new_seg = ft_gc_calloc_root(1, sizeof(*new_seg), "temp");
-		*new_seg = (t_segment){LITERAL, lit, head->next};
-		head->next = new_seg;
-		head->text = ft_gcfct_register_root(ft_substr(head->text, 0,
-					-(head->text - (last_space + 1))), "temp");
+		*new_seg = (t_segment){LITERAL, lit, curr->next};
+		curr->next = new_seg;
+		curr->text = ft_gcfct_register_root(ft_substr(curr->text, 0,
+					-(curr->text - (last_space + 1))), "temp");
 	}
 }
 
-void	split_first_segs(t_token_word *t)
+void	split_first_segs(t_token_word *token)
 {
-	t_segment	*head;
+	t_segment	*seg;
 	t_segment	*prev;
 
-	head = t->seg_lst;
+	seg = token->seg_lst;
 	prev = NULL;
-	while (head)
+	while (seg)
 	{
-		if (head->type == VAR_SPLIT || head->type == CMD_SPLIT)
+		if (seg->type == VAR_SPLIT || seg->type == CMD_SPLIT)
 		{
-			if (!ft_isspace(head->text[0]))
+			if (!ft_isspace(seg->text[0]))
 			{
-				if (ft_strrchr(head->text, ' '))
-					split_before(head, &prev, &t->seg_lst);
+				if (ft_strrchr(seg->text, ' '))
+					split_before(seg, &prev, &token->seg_lst);
 				else
-					head->type = LITERAL;
+					seg->type = LITERAL;
 			}
 		}
 		else
-			prev = head;
-		head = head->next;
+			prev = seg;
+		seg = seg->next;
 	}
 }
 
-void	split_last_segs(t_token_word *t)
+void	split_last_segs(t_token_word *token)
 {
-	t_segment	*head;
+	t_segment	*seg;
 
-	head = t->seg_lst;
-	while (head)
+	seg = token->seg_lst;
+	while (seg)
 	{
-		if (head->type == VAR_SPLIT || head->type == CMD_SPLIT)
+		if (seg->type == VAR_SPLIT || seg->type == CMD_SPLIT)
 		{
-			if (!ft_isspace(head->text[ft_strlen(head->text) - 1]))
+			if (!ft_isspace(seg->text[ft_strlen(seg->text) - 1]))
 			{
-				if (ft_strchr(head->text, ' '))
-					split_after(head);
+				if (ft_strchr(seg->text, ' '))
+					split_after(seg);
 				else
-					head->type = LITERAL;
+					seg->type = LITERAL;
 			}
 		}
-		head = head->next;
+		seg = seg->next;
 	}
 }
 
-void	join_fixed_segs(t_token_word *t)
+void	join_fixed_segs(t_token_word *token)
 {
-	t_segment	*head;
+	t_segment	*seg;
 
-	head = t->seg_lst;
-	while (head && head->next)
+	seg = token->seg_lst;
+	while (seg && seg->next)
 	{
-		if ((head->type == LITERAL || head->type == VAR_FIXED
-				|| head->type == CMD_FIXED) && (head->next->type == LITERAL
-				|| head->next->type == VAR_FIXED
-				|| head->next->type == CMD_FIXED))
+		if ((seg->type == LITERAL || seg->type == VAR_FIXED
+				|| seg->type == CMD_FIXED) && (seg->next->type == LITERAL
+				|| seg->next->type == VAR_FIXED
+				|| seg->next->type == CMD_FIXED))
 		{
-			head->type = LITERAL;
-			head->text = ft_gcfct_register_root(
-					ft_strjoin(head->text, head->next->text), "temp");
-			remove_segment(&t->seg_lst, head->next, head);
+			seg->type = LITERAL;
+			seg->text = ft_gcfct_register_root(
+					ft_strjoin(seg->text, seg->next->text), "temp");
+			remove_segment(&token->seg_lst, seg->next, seg);
 			continue ;
 		}
-		head = head->next;
+		seg = seg->next;
 	}
 }
