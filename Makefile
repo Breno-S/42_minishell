@@ -20,7 +20,9 @@ PATH_MANDATORY := ./srcs
 EXEC_SRC_DIR   := exec
 PARSER_SRC_DIR := parser
 
-SRCS_MANDATORY_COMMON := main.c
+SRCS_MANDATORY_COMMON := \
+	main.c \
+	error.c
 
 SRCS_MANDATORY_EXEC := \
 	ft_main_loop.c \

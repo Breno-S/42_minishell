@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:41:04 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/06 21:34:42 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/07 15:42:46 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,30 @@ int	expand_vars(t_token_word *token)
 	return (status);
 }
 
-void	expand_wildcard(t_token_word **token)
+void	expand_wildcard(t_token_word *target, t_token **prev, t_token *next,
+	t_token **token_list)
 {
 	char	*str;
+	t_lexer	l;
+	t_token	*new_tokens;
 
-	str = exp_glob(token);
-	if ()
+	str = glob_exp(target);
+	if (str)
+	{
+		l = lexer_new(str, ft_strlen(str));
+		new_tokens = lexer_token_list(&l);
+		if (new_tokens)
+		{
+			if (*prev)
+				(*prev)->next = new_tokens;
+			else
+				(*token_list)->next = new_tokens;
+			while (new_tokens->next)
+				new_tokens = new_tokens->next;
+			new_tokens->next = next;
+			*prev = new_tokens;
+		}
+	}
 }
 
 void	expand_token_list(t_token **token_list)
@@ -83,6 +101,8 @@ void	expand_token_list(t_token **token_list)
 				split_last_segs((t_token_word *)token);
 				join_fixed_segs((t_token_word *)token);
 				replace_tokens((t_token_word *)token, &prev, token->next,
+					token_list);
+				expand_wildcard((t_token_word *)token, &prev, token->next,
 					token_list);
 			}
 		}

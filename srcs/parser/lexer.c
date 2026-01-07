@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 16:59:17 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/06 21:32:20 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/07 16:18:59 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_token	*handle_metachar(t_lexer *l)
 	else if (lexer_starts_with(l, ")"))
 		t = token(TOKEN_CLOSE_PAREN, &l->str[l->idx], 1);
 	else
-		// ERROR: invalid token
+		t = token(TOKEN_INVALID, &l->str[l->idx], 1);
 	lexer_chop_chars(l, t->text_len);
 	return (t);
 }

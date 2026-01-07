@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/17 15:48:34 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/07 15:32:55 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,17 @@ typedef struct s_msh
 	char				*cmd;
 	int					ret;
 }						t_msh;
+
+typedef enum e_error_type
+{
+	ERR_DEFAULT,
+	ERR_SYNTAX,
+	ERR_CMD_NOT_FOUND,
+	ERR_FILE_NOT_FOUND,
+	ERR_PERMISSION,
+	ERR_IS_DIR,
+	ERR_AMBIG_REDIR,
+}	t_error_type;
 
 typedef enum e_token_class
 {
