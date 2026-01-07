@@ -6,11 +6,12 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:41:04 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/07 16:32:00 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/07 16:43:43 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsesh.h"
+#include "execsh.h"
 
 void	remove_null_segs(t_token_word *token)
 {
@@ -54,7 +55,7 @@ int	expand_vars(t_token_word *token)
 	return (status);
 }
 
-void	expand_wildcard(t_token_word *target, t_token **prev, t_token *next,
+t_token	*expand_wildcard(t_token_word *target, t_token **prev, t_token *next,
 	t_token **token_list)
 {
 	char	*str;
@@ -101,12 +102,11 @@ void	expand_token_list(t_token **token_list)
 				join_fixed_segs((t_token_word *)token);
 				replace_tokens((t_token_word *)token, &prev, token->next,
 					token_list);
-				expand_wildcard((t_token_word *)token, &prev, token->next,
-					token_list);
 			}
 		}
 		else
 			prev = token;
+		expand_wildcard((t_token_word *)token, &prev, token->next, token_list);
 		token = token->next;
 	}
 }
