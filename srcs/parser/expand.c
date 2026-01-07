@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:41:04 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/06 17:54:31 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/06 21:34:42 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,14 @@ int	expand_vars(t_token_word *token)
 		seg = seg->next;
 	}
 	return (status);
+}
+
+void	expand_wildcard(t_token_word **token)
+{
+	char	*str;
+
+	str = exp_glob(token);
+	if ()
 }
 
 void	expand_token_list(t_token **token_list)
