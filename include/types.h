@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/19 17:54:47 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/07 15:02:18 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,22 @@ typedef struct s_io_node
 	struct s_io_node	*next;
 }						t_io_node;
 
+typedef struct s_redirect
+{
+	int					fd_tmp;
+	char				*path;
+}						t_redirect;
+
+typedef struct s_exec
+{
+	t_redirect			*infile;
+	t_redirect			*outfile;
+	char				*cmd;
+	char				**args;
+	int					pipefd[2];
+	int					error;
+}						t_exec;
+
 typedef struct s_ast
 {
 	t_node_type			type;
@@ -114,6 +130,8 @@ typedef struct s_ast
 	struct s_ast		*right;
 	t_token_word		*args;
 	t_io_node			*redirs;
+	t_exec				*cmd;
+	int					is_head;
 }						t_ast;
 
 // EXEC STRUCTS
@@ -125,12 +143,6 @@ typedef enum e_env_type
 	T_INTERNAL,
 }						t_env_type;
 
-typedef struct s_redirect
-{
-	int					fd_tmp;
-	char				*path;
-}						t_redirect;
-
 typedef struct s_hash_env
 {
 	char				*content;
@@ -139,13 +151,13 @@ typedef struct s_hash_env
 	struct s_hash_env	*next;
 }						t_hash_env;
 
-typedef struct s_exec
-{
-	int					prev_fd;
-	int					pipefd[2];
-	int					redirect;
-	int					result;
-	t_list				*all_fds;
-}						t_exec;
+// typedef struct s_exec
+// {
+// 	int					prev_fd;
+// 	int					pipefd[2];
+// 	int					redirect;
+// 	int					result;
+// 	t_list				*all_fds;
+// }						t_exec;
 
 #endif // TYPES_H

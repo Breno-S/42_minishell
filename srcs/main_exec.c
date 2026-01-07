@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_exec.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/22 18:51:30 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/07 14:06:49 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	main(int argc, char *argv[], char *envp[])
 	t_parser	p;
 	char		*line;
 	t_ast		*ast;
-	// t_exec		*exec;
 
+	// t_exec		*exec;
 	ft_gc_init();
 	hash_env = (t_hash_env **)create_hash_env(envp, argv);
 	while (1)
@@ -41,6 +41,10 @@ int	main(int argc, char *argv[], char *envp[])
 		p = parser_new(token_list);
 		// printf("\n%s\n",glob_exp(token_list));
 		ast = parser_parse(&p);
+		build_cmd(ast, hash_env);
+		// ft_printf("%s\n", handle_search("teste.sh"));
+		// ft_printf("%s\n", handle_search("./teste.sh"));
+		// ft_printf("%s\n", handle_search("ghhkjsdhf"));
 		traverse_tree(ast, 0);
 		ft_gc_del_root("temp");
 		ft_gc_collect();

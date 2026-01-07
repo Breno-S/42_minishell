@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/19 14:20:21 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/07 15:13:08 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,27 @@ int			match_pattern(t_segment *seg_lst, char *content,
 int			check_literal_match(t_segment *aux_seg, char *content,
 				unsigned long i);
 
+// EXEC
+
+t_exec		*build_cmd(t_ast *ast, t_hash_env **hash_env);
+int			ft_sizeseg(t_token_word *args);
+t_exec		*build_exec(t_ast *ast);
+void		copy_args(t_token_word *args, t_exec **cmd);
+
+int			exec(t_exec *exec, t_hash_env **hash_env);
+
+char		**find_path(void);
+char		*find_executable(char *arg, char **path, t_exec **exec);
+char		*handle_search(char *arg, t_exec **exec);
+void		print_error_find(int type, char *arg, t_exec **exec);
+
+// REDIRS
+
+int			handle_redirects(t_io_node *redirs, t_exec **exec);
+int			*open_pipeline(t_exec **exec);
+int			open_infile(char *infile, t_exec **exec);
+int			open_outfile(char *outfile, t_exec **exec, int type);
+int			open_heredoc(char *eof, t_exec **exec);
 // PWD
 // char		*pwd(int fd);
 
