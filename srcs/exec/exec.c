@@ -6,28 +6,41 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:33:11 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/05 20:47:19 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/06 21:36:08 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 
-int	handle_pre_exec(t_ast *ast)
+int	handle_pre_exec(t_ast *ast, t_hash_env **hash_env)
 {
 	t_exec	*exec_cmd;
 	int		i;
+	pid_t	teste;
 
 	i = 0;
 	exec_cmd = build_exec(ast);
 	if (!exec_cmd)
 		return (1);
-	exec_cmd->cmd = handle_search(ast->args->seg_lst->text);
-	if (!exec_cmd->cmd)
-		return (1);
 	if (ast->redirs)
 		handle_redirects(ast->redirs, &exec_cmd);
+	exec_cmd->cmd = handle_search(ast->args->seg_lst->text, &exec_cmd);
+	if (!exec_cmd->cmd)
+	{
+		if (exec_cmd->infile->fd_tmp != -1)
+			close(exec_cmd->infile->fd_tmp);
+		if (exec_cmd->outfile->fd_tmp != -1)
+			close(exec_cmd->infile->fd_tmp);
+		return (1);
+	}
+	// teste = fork();
+	// if (teste == 0)
+	exec(exec_cmd, hash_env);
+	// else
+	// 	waitpid(teste);
 	return (0);
 }
+
 int	ft_sizeseg(t_segment *segment)
 {
 	int	i;
@@ -68,30 +81,33 @@ t_exec	*build_exec(t_ast *ast)
 	return (new_exec);
 }
 
-// int	exec(t_fork info, char *argv, char **path, char **envp)
-// {
-// 	char	*exec_path;
-// 	char	**newargv;
+int	exec(t_exec *exec, t_hash_env **hash_env)
+{
+	char	**envp;
 
-// 	newargv = ft_gcfct_arr_register_root((void **)ft_split(argv, ' '), GC_DATA,
-// 			"split");
-// 	exec_path = find_executable(newargv[0], path);
-// 	if (!exec_path || info.old_stdout == -1)
-// 		close_fds(info, ALL);
-// 	if (!exec_path || info.old_stdout == -1)
-// 		control_gc(127);
-// 	if (dup2(info.old_stdout, STDIN_FILENO) == -1)
-// 		perror("dup2");
-// 	if (info.index == info.argc)
-// 	{
-// 		if (dup2(info.fd[OUTFILE], STDOUT_FILENO) == -1)
-// 			perror("dup2");
-// 	}
-// 	else if (dup2(info.pipefd[1], STDOUT_FILENO) == -1)
-// 		perror("dup2");
-// 	close_fds(info, CHILD);
-// 	execve(exec_path, newargv, envp);
-// 	perror("execve");
-// 	control_gc(1);
-// 	return (1);
-// }
+	envp = ft_calloc(1, 8);
+	aux_print_export(hash_env, &envp);
+	if (!exec->cmd)
+	{
+		ft_gc_end();
+		return (1);
+	}
+	if (exec->infile->fd_tmp != -1)
+	{
+		if (dup2(exec->infile->fd_tmp, STDIN_FILENO) == -1)
+			perror("dup2");
+		else
+			close(exec->infile->fd_tmp);
+	}
+	if (exec->outfile->fd_tmp != -1)
+	{
+		if (dup2(exec->outfile->fd_tmp, STDOUT_FILENO) == -1)
+			perror("dup2");
+		else
+			close(exec->outfile->fd_tmp);
+	}
+	execve(exec->cmd, exec->args, envp);
+	perror("Minishell");
+	ft_gc_end();
+	exit(1);
+}

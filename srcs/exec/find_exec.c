@@ -6,27 +6,29 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 13:09:22 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/05 14:52:50 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/06 19:04:19 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 
-void	print_error_find(int type, char *arg)
+void	print_error_find(int type, char *arg, t_exec **exec)
 {
 	if (type == 1)
 	{
 		ft_putstr_fd("Minishell: ", 0);
 		perror(arg);
+		exec[0]->error = 126;
 	}
 	if (type == 2)
 	{
 		ft_putstr_fd(arg, 0);
 		ft_putendl_fd(": command not found", 0);
+		exec[0]->error = 127;
 	}
 }
 
-char	*handle_search(char *arg)
+char	*handle_search(char *arg, t_exec **exec)
 {
 	char	**path;
 
@@ -35,21 +37,21 @@ char	*handle_search(char *arg)
 		if (access(arg, X_OK) == 0)
 			return (arg);
 		else if (errno == 13)
-			print_error_find(1, arg);
+			print_error_find(1, arg, exec);
 		else
-			print_error_find(2, arg);
+			print_error_find(2, arg, exec);
 	}
 	else
 	{
 		path = find_path();
 		if (!path)
 			return (NULL);
-		return (find_executable(arg, path));
+		return (find_executable(arg, path, exec));
 	}
 	return (NULL);
 }
 
-char	*find_executable(char *arg, char **path)
+char	*find_executable(char *arg, char **path, t_exec **exec)
 {
 	int		i;
 	char	*str;
@@ -64,12 +66,12 @@ char	*find_executable(char *arg, char **path)
 			return (str);
 		else if (errno == 13)
 		{
-			print_error_find(1, str);
+			print_error_find(1, str, exec);
 			return (NULL);
 		}
 		i++;
 	}
-	print_error_find(2, arg);
+	print_error_find(2, arg, exec);
 	return (NULL);
 }
 

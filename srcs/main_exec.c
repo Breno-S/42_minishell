@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/06 13:07:00 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/06 21:25:23 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include "includes.h"
 #include "parsesh.h"
 
-int		handle_pipes(t_exec **exec);
-int		exec_cmd(t_ast *ast, t_exec **exec);
+int	handle_pipes(t_exec **exec);
+int	exec_cmd(t_ast *ast, t_exec **exec);
 
 int	main(int argc, char *argv[], char *envp[])
 {
@@ -41,7 +41,7 @@ int	main(int argc, char *argv[], char *envp[])
 		p = parser_new(token_list);
 		// printf("\n%s\n",glob_exp(token_list));
 		ast = parser_parse(&p);
-		handle_pre_exec(ast);
+		handle_pre_exec(ast, hash_env);
 		// ft_printf("%s\n", handle_search("teste.sh"));
 		// ft_printf("%s\n", handle_search("./teste.sh"));
 		// ft_printf("%s\n", handle_search("ghhkjsdhf"));
@@ -52,8 +52,6 @@ int	main(int argc, char *argv[], char *envp[])
 	rl_clear_history();
 	ft_gc_end();
 }
-
-
 
 // int	exec_cmd(t_ast *ast, t_exec **exec)
 // {
