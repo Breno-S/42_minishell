@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/06 18:42:48 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/07 15:02:18 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ typedef struct s_exec
 	t_redirect			*outfile;
 	char				*cmd;
 	char				**args;
+	int					pipefd[2];
 	int					error;
 }						t_exec;
 

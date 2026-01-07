@@ -38,7 +38,8 @@ SRCS_MANDATORY_EXEC := \
 	glob_exp.c \
 	find_exec.c \
 	redirect.c \
-	exec.c
+	exec.c \
+	build_cmd.c
 SRCS_MANDATORY_PARSER := \
 	ast.c \
 	ast_aux.c \
