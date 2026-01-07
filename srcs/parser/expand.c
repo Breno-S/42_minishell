@@ -3,39 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:41:04 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/22 19:49:00 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/07 16:32:00 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsesh.h"
 
-void	remove_null_segs(t_token_word *t)
+void	remove_null_segs(t_token_word *token)
 {
-	t_segment	*head;
+	t_segment	*seg;
 	t_segment	*prev;
 
-	head = t->seg_lst;
+	seg = token->seg_lst;
 	prev = NULL;
-	while (head)
+	while (seg)
 	{
-		if ((head->type >= 1 && head->type <= 4)
-			&& (!head->text || head->text[0] == '\0'))
-			remove_segment(&t->seg_lst, head, prev);
+		if ((seg->type >= 1 && seg->type <= 4)
+			&& (!seg->text || seg->text[0] == '\0'))
+			remove_segment(&token->seg_lst, seg, prev);
 		else
-			prev = head;
-		head = head->next;
+			prev = seg;
+		seg = seg->next;
 	}
 }
 
-int	expand_token(t_token_word *t)
+int	expand_vars(t_token_word *token)
 {
 	t_segment	*seg;
 	int			status;
 
-	seg = t->seg_lst;
+	seg = token->seg_lst;
 	status = 0;
 	while (seg)
 	{
@@ -54,31 +54,59 @@ int	expand_token(t_token_word *t)
 	return (status);
 }
 
+void	expand_wildcard(t_token_word *target, t_token **prev, t_token *next,
+	t_token **token_list)
+{
+	char	*str;
+	t_lexer	l;
+	t_token	*new_tokens;
+
+	str = glob_exp(target);
+	if (str)
+	{
+		l = lexer_new(str, ft_strlen(str));
+		new_tokens = lexer_token_list(&l);
+		if (new_tokens)
+		{
+			if (*prev)
+				(*prev)->next = new_tokens;
+			else
+				(*token_list)->next = new_tokens;
+			while (new_tokens->next)
+				new_tokens = new_tokens->next;
+			new_tokens->next = next;
+			*prev = new_tokens;
+		}
+	}
+}
+
 void	expand_token_list(t_token **token_list)
 {
-	t_token	*head;
+	t_token	*token;
 	t_token	*prev;
 
-	head = *token_list;
+	token = *token_list;
 	prev = NULL;
-	while (head)
+	while (token)
 	{
-		if (head->class == TOKEN_WORD && expand_token((t_token_word *)head))
+		if (token->class == TOKEN_WORD && expand_vars((t_token_word *)token))
 		{
-			remove_null_segs((t_token_word *)head);
-			if (((t_token_word *)head)->seg_lst == NULL)
-				remove_token(token_list, head, prev);
+			remove_null_segs((t_token_word *)token);
+			if (((t_token_word *)token)->seg_lst == NULL)
+				remove_token(token_list, token, prev);
 			else
 			{
-				split_first_segs((t_token_word *)head);
-				split_last_segs((t_token_word *)head);
-				join_fixed_segs((t_token_word *)head);
-				replace_tokens((t_token_word *)head, &prev, head->next,
+				split_first_segs((t_token_word *)token);
+				split_last_segs((t_token_word *)token);
+				join_fixed_segs((t_token_word *)token);
+				replace_tokens((t_token_word *)token, &prev, token->next,
+					token_list);
+				expand_wildcard((t_token_word *)token, &prev, token->next,
 					token_list);
 			}
 		}
 		else
-			prev = head;
-		head = head->next;
+			prev = token;
+		token = token->next;
 	}
 }
