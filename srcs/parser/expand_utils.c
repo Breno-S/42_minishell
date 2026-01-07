@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 19:03:05 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/21 18:08:48 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/07 20:33:48 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,24 @@ void	remove_segment(t_segment **seg_lst, t_segment *target,
 		prev->next = target->next;
 	else
 		*seg_lst = target->next;
+}
+
+void	remove_null_segs(t_token_word *token)
+{
+	t_segment	*seg;
+	t_segment	*prev;
+
+	seg = token->seg_lst;
+	prev = NULL;
+	while (seg)
+	{
+		if ((seg->type >= 1 && seg->type <= 4)
+			&& (!seg->text || seg->text[0] == '\0'))
+			remove_segment(&token->seg_lst, seg, prev);
+		else
+			prev = seg;
+		seg = seg->next;
+	}
 }
 
 void	remove_token(t_token **token_list, t_token *target, t_token *prev)

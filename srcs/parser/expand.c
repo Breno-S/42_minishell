@@ -6,32 +6,14 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:41:04 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/07 16:43:43 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/07 20:34:06 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsesh.h"
 #include "execsh.h"
 
-void	remove_null_segs(t_token_word *token)
-{
-	t_segment	*seg;
-	t_segment	*prev;
-
-	seg = token->seg_lst;
-	prev = NULL;
-	while (seg)
-	{
-		if ((seg->type >= 1 && seg->type <= 4)
-			&& (!seg->text || seg->text[0] == '\0'))
-			remove_segment(&token->seg_lst, seg, prev);
-		else
-			prev = seg;
-		seg = seg->next;
-	}
-}
-
-int	expand_vars(t_token_word *token)
+int	expand_var_segs(t_token_word *token)
 {
 	t_segment	*seg;
 	int			status;
@@ -55,8 +37,8 @@ int	expand_vars(t_token_word *token)
 	return (status);
 }
 
-t_token	*expand_wildcard(t_token_word *target, t_token **prev, t_token *next,
-	t_token **token_list)
+static void	expand_globs(t_token *target, t_token **prev,
+	t_token *next, t_token **token_list)
 {
 	char	*str;
 	t_lexer	l;
@@ -72,7 +54,7 @@ t_token	*expand_wildcard(t_token_word *target, t_token **prev, t_token *next,
 			if (*prev)
 				(*prev)->next = new_tokens;
 			else
-				(*token_list)->next = new_tokens;
+				(*token_list) = new_tokens;
 			while (new_tokens->next)
 				new_tokens = new_tokens->next;
 			new_tokens->next = next;
@@ -81,7 +63,7 @@ t_token	*expand_wildcard(t_token_word *target, t_token **prev, t_token *next,
 	}
 }
 
-void	expand_token_list(t_token **token_list)
+static void	expand_var(t_token **token_list)
 {
 	t_token	*token;
 	t_token	*prev;
@@ -90,7 +72,7 @@ void	expand_token_list(t_token **token_list)
 	prev = NULL;
 	while (token)
 	{
-		if (token->class == TOKEN_WORD && expand_vars((t_token_word *)token))
+		if (expand_var_segs((t_token_word *)token))
 		{
 			remove_null_segs((t_token_word *)token);
 			if (((t_token_word *)token)->seg_lst == NULL)
@@ -106,7 +88,26 @@ void	expand_token_list(t_token **token_list)
 		}
 		else
 			prev = token;
-		expand_wildcard((t_token_word *)token, &prev, token->next, token_list);
 		token = token->next;
 	}
+}
+
+static void	expand_wildcard(t_token **token_list)
+{
+	t_token	*token;
+	t_token	*prev;
+
+	token = *token_list;
+	prev = NULL;
+	while (token)
+	{
+		expand_globs(token, &prev, token->next, token_list);
+		token = token->next;
+	}
+}
+
+void	expand_token_list(t_token **token_list)
+{
+	expand_var(token_list);
+	expand_wildcard(token_list);
 }
