@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:33:11 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/06 21:36:08 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/06 21:36:40 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ int	handle_pre_exec(t_ast *ast, t_hash_env **hash_env)
 			close(exec_cmd->infile->fd_tmp);
 		return (1);
 	}
-	// teste = fork();
-	// if (teste == 0)
+	teste = fork();
+	if (teste == 0)
 	exec(exec_cmd, hash_env);
-	// else
-	// 	waitpid(teste);
+	else
+		waitpid(teste);
 	return (0);
 }
 
