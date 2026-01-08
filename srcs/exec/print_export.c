@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 18:07:37 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/16 13:08:15 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/07 17:46:48 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@ int	ft_print_export(t_hash_env **hash_table, int fd)
 	if (!hash_table)
 		return (-1);
 	count = 1;
-	envs = ft_calloc(count, 8);
-	if (!envs)
-		return (1);
 	if (aux_print_export(hash_table, &envs))
 		return (1);
 	sort_print(envs);
@@ -78,24 +75,26 @@ int	sort_print(char **envs)
 
 int	aux_print_export(t_hash_env **hash_table, char ***envs)
 {
-	int			count;
-	int			i;
+	int			i[2];
 	t_hash_env	*var;
 
-	i = 0;
-	count = 1;
-	while (i < 256)
+	i[0] = 0;
+	i[1] = 1;
+	envs[0] = ft_calloc(i[1], 8);
+	if (!envs[0])
+		return (1);
+	while (i[0] < 256)
 	{
-		var = hash_table[i++];
+		var = hash_table[i[0]++];
 		while (var)
 		{
 			if (var->type_var == T_ENV)
 			{
-				ft_realloc((void **)envs, count + 1, 8, count * 8);
+				ft_realloc((void **)envs, i[1] + 1, 8, i[1] * 8);
 				if (!envs[0])
 					return (1);
-				envs[0][count - 1] = var->content;
-				count++;
+				envs[0][i[1] - 1] = var->content;
+				i[1]++;
 			}
 			var = var->next;
 		}

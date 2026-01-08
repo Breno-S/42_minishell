@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/07 16:30:45 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/07 20:22:26 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef enum e_error_type
 	ERR_PERMISSION,
 	ERR_IS_DIR,
 	ERR_AMBIG_REDIR,
-}	t_error_type;
+}						t_error_type;
 
 typedef enum e_token_class
 {
@@ -152,6 +152,7 @@ typedef enum e_env_type
 	T_ENV,
 	T_SET,
 	T_INTERNAL,
+	T_EXEC
 }						t_env_type;
 
 typedef struct s_hash_env
@@ -161,6 +162,12 @@ typedef struct s_hash_env
 	int					has_content;
 	struct s_hash_env	*next;
 }						t_hash_env;
+
+typedef struct s_pids
+{
+	pid_t				*pids;
+	int					total;
+}						t_pids;
 
 // typedef struct s_exec
 // {

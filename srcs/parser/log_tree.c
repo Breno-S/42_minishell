@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   log_tree.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 16:57:36 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/06 21:32:18 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/07 19:32:33 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsesh.h"
+#include "execsh.h"
 
 static void	print_token(t_token *t)
 {
@@ -78,13 +79,14 @@ static void	print_args(t_ast *ast, int indent)
 		printf("\n");
 }
 
-void	traverse_tree(t_ast *ast, int indent)
+void	traverse_tree(t_ast *ast, int indent, t_hash_env **hash_env)
 {
 	for (int i = 0; i < indent; i++)
 		printf("  ");
 	if (ast->type == NODE_CMD)
 	{
 		expand_token_list((t_token **)&ast->args);
+		ast->cmd = build_cmd(ast);
 
 		if (ast->redirs && ast->redirs->type != TOKEN_REDIR_HEREDOC)
 		{
@@ -107,24 +109,24 @@ void	traverse_tree(t_ast *ast, int indent)
 	else if (ast->type == NODE_AND)
 	{
 		printf("AND:\n");
-		traverse_tree(ast->left, indent + 1);
-		traverse_tree(ast->right, indent + 1);
+		traverse_tree(ast->left, indent + 1, hash_env);
+		traverse_tree(ast->right, indent + 1, hash_env);
 	}
 	else if (ast->type == NODE_OR)
 	{
 		printf("OR:\n");
-		traverse_tree(ast->left, indent + 1);
-		traverse_tree(ast->right, indent + 1);
+		traverse_tree(ast->left, indent + 1, hash_env);
+		traverse_tree(ast->right, indent + 1, hash_env);
 	}
 	else if (ast->type == NODE_PIPE)
 	{
 		printf("PIPE:\n");
-		traverse_tree(ast->left, indent + 1);
-		traverse_tree(ast->right, indent + 1);
+		traverse_tree(ast->left, indent + 1, hash_env);
+		traverse_tree(ast->right, indent + 1, hash_env);
 	}
 	else if (ast->type == NODE_SUB)
 	{
 		printf("SUB:\n");
-		traverse_tree(ast->left, indent + 1);
+		traverse_tree(ast->left, indent + 1, hash_env);
 	}
 }

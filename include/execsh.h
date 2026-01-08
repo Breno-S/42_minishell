@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/07 15:13:08 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/07 20:31:47 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,15 @@ int			check_literal_match(t_segment *aux_seg, char *content,
 
 // EXEC
 
-t_exec		*build_cmd(t_ast *ast, t_hash_env **hash_env);
+t_exec		*build_cmd(t_ast *ast);
 int			ft_sizeseg(t_token_word *args);
 t_exec		*build_exec(t_ast *ast);
 void		copy_args(t_token_word *args, t_exec **cmd);
 
-int			exec(t_exec *exec, t_hash_env **hash_env);
+int			exec_tree(t_ast *ast, char **envp, t_pids **pids);
+int			pipe_exec(t_ast *ast, char **envp, t_pids **pids);
+int			exec(t_exec *exec, char **envp);
+int			fork_exec(t_exec *cmd, char **envp, t_pids **pids);
 
 char		**find_path(void);
 char		*find_executable(char *arg, char **path, t_exec **exec);

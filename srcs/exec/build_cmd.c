@@ -6,17 +6,16 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:00:07 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/07 15:13:00 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/07 19:31:56 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 
-t_exec	*build_cmd(t_ast *ast, t_hash_env **hash_env)
+t_exec	*build_cmd(t_ast *ast)
 {
 	t_exec	*exec_cmd;
 	int		i;
-	pid_t	teste;
 
 	i = 0;
 	exec_cmd = build_exec(ast);
@@ -31,7 +30,6 @@ t_exec	*build_cmd(t_ast *ast, t_hash_env **hash_env)
 			close(exec_cmd->infile->fd_tmp);
 		if (exec_cmd->outfile->fd_tmp != -1)
 			close(exec_cmd->infile->fd_tmp);
-		return (1);
 	}
 	return (exec_cmd);
 }

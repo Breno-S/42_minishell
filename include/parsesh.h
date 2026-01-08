@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsesh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:22:36 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/07 16:30:11 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/07 17:17:14 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,6 @@ void			remove_token(t_token **token_list, t_token *target,
 					t_token *prev);
 char			*text_from_segments(t_segment *seg_lst);
 
-void			traverse_tree(t_ast *ast, int indent);
+void			traverse_tree(t_ast *ast, int indent, t_hash_env **hash_env);
 
 #endif //PARSESH_H
