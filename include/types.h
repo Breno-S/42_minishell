@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/07 20:22:26 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/08 19:53:24 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ typedef enum e_node_type
 	NODE_OR,
 	NODE_CMD,
 	NODE_SUB,
+	//TODO NODE_CMD_BUILTIN,
 }						t_node_type;
 
 typedef struct s_io_node
@@ -130,8 +131,8 @@ typedef struct s_exec
 	t_redirect			*outfile;
 	char				*cmd;
 	char				**args;
-	int					pipefd[2];
 	int					error;
+	int					pipefd[2];
 }						t_exec;
 
 typedef struct s_ast
@@ -142,6 +143,7 @@ typedef struct s_ast
 	t_token_word		*args;
 	t_io_node			*redirs;
 	t_exec				*cmd;
+	int					chan_com;
 	int					is_head;
 }						t_ast;
 

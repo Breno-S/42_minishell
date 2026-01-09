@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:00:07 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/07 19:31:56 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/08 19:49:21 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ft_sizeseg(t_token_word *args)
 			i++;
 			aux = aux->next;
 		}
-		args = args->next;
+		args = (t_token_word *)args->next;
 	}
 	return (i);
 }
@@ -90,7 +90,7 @@ void	copy_args(t_token_word *args, t_exec **cmd)
 			cmd[0]->args[i++] = args->seg_lst->text;
 			aux = aux->next;
 		}
-		args = args->next;
+		args = (t_token_word *)args->next;
 	}
 	return ;
 }

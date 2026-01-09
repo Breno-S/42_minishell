@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 14:16:04 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/05 13:08:25 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/08 14:54:55 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,20 @@ char	*glob_exp(t_token *token_o)
 	int				type;
 	t_list			*files;
 	t_token_word	*token;
+	t_segment		*aux;
 	char			*rtn;
 
 	token = (t_token_word *)token_o;
-	if (!token)
+	if (!token || token_o->class != 2)
+		return (NULL);
+	aux = token->seg_lst;
+	while (aux)
+	{
+		if (aux->type == WILDCARD)
+			break ;
+		aux = aux->next;
+	}
+	if (!aux)
 		return (NULL);
 	type = (ft_strncmp(token->seg_lst->text, ".", 1) != 0);
 	files = all_files(type, token->seg_lst);

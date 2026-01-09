@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/07 21:26:51 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/08 17:34:19 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int argc, char *argv[], char *envp[])
 		{
 			ft_gcfct_arr_register((void *)new_envp, "temp");
 			traverse_tree(ast, 0, hash_env);
-			exec_tree(ast, new_envp, NULL);
+			ft_putnbr_fd(exec_tree(ast, new_envp, NULL), 0);
 		}
 		ft_gc_del_root("temp");
 		ft_gc_collect();

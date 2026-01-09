@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:58:20 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/07 18:23:38 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/08 13:25:16 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,6 @@ int	handle_redirects(t_io_node *redirs, t_exec **exec)
 		redirs = redirs->next;
 	}
 	return (0);
-}
-
-int	*open_pipeline(t_exec **exec)
-{
-	int	*pipefd;
-
-	pipefd = ft_gc_malloc(8, GC_DATA)->content;
-	if (!pipefd)
-	{
-		perror("Minishell");
-		return (NULL);
-	}
-	if (pipe(pipefd) == -1)
-	{
-		perror("Minishell");
-		return (NULL);
-	}
-	return (pipefd);
 }
 
 int	open_infile(char *infile, t_exec **exec)

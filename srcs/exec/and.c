@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_gc_calloc_root.c                                :+:      :+:    :+:   */
+/*   and.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/16 11:24:58 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/08 19:05:03 by rgomes-d         ###   ########.fr       */
+/*   Created: 2026/01/08 16:43:34 by rgomes-d          #+#    #+#             */
+/*   Updated: 2026/01/08 20:12:30 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "execsh.h"
 
-/*
-Simular to original Calloc but allocs is inside of GC.
-root: categ for data
-*/
-void	*ft_gc_calloc_root(size_t nmemb, size_t size, char *root)
+int exec_and(t_ast *ast, char **envp, t_pids **pids)
 {
-	t_gc_list	*new;
+	int	rtn;
 
-	new = ft_gc_calloc(nmemb, size, GC_DATA);
-	if (!new)
-		return (NULL);
-	ft_gc_register_root(new, root);
-	return (new->content);
+	rtn = 1;
+	rtn = exec_tree(ast->left, envp, NULL);
+	if (rtn)
+		return (rtn);
+	rtn = exec_tree(ast->right, envp, NULL);
+	return (rtn);
 }
