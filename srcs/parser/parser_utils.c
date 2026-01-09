@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 19:09:18 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/08 23:11:43 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/09 16:23:39 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ t_io_node	*io_node(t_token_class type, t_token_word *io_target)
 		return (NULL);
 	io_node->type = type;
 	io_node->io_target = io_target;
+	io_node->is_quoted_here = (io_node->type == TOKEN_REDIR_HEREDOC
+			&& (ft_strchr((char *)io_node->io_target->text, '\"')
+				|| ft_strchr((char *)io_node->io_target->text, '\'')));
 	return (io_node);
 }
 

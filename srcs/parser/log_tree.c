@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 16:57:36 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/07 20:15:55 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/09 15:24:19 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,18 @@ static void	print_args(t_ast *ast, int indent)
 		printf("\n");
 }
 
+static void	normalize_here_target(t_token_word *io_target)
+{
+	char	*new_text;
+
+	new_text = text_from_segments(io_target->seg_lst);
+	io_target->text = new_text;
+	io_target->text_len = ft_strlen(new_text);
+	io_target->seg_lst->text = new_text;
+	remove_null_segs(io_target);
+	io_target->seg_lst->next = NULL;
+}
+
 void	traverse_tree(t_ast *ast, int indent)
 {
 	for (int i = 0; i < indent; i++)
@@ -87,18 +99,22 @@ void	traverse_tree(t_ast *ast, int indent)
 	{
 		expand_token_list((t_token **)&ast->args);
 
-		if (ast->redirs && ast->redirs->type != TOKEN_REDIR_HEREDOC)
+		if (ast->redirs)
 		{
-			char *curr_text;
+			if (ast->redirs->type != TOKEN_REDIR_HEREDOC)
+			{
+				char *curr_text;
 
-			curr_text = ft_substr(ast->redirs->io_target->text, 0, ast->redirs->io_target->text_len);
-			expand_token_list((t_token **)&ast->redirs->io_target);
-			if (!ast->redirs->io_target || ast->redirs->io_target->next)
-				log_error(curr_text, ERR_AMBIG_REDIR);
-		}
-		else
-		{
-			// Check for quotes on token->text
+				curr_text = ft_substr(ast->redirs->io_target->text, 0, ast->redirs->io_target->text_len);
+				expand_token_list((t_token **)&ast->redirs->io_target);
+				if (!ast->redirs->io_target || ast->redirs->io_target->next)
+					log_error(curr_text, ERR_AMBIG_REDIR);
+			}
+			else
+			{
+				normalize_here_target(ast->redirs->io_target);
+				// Check for quotes on token->text
+			}
 		}
 
 		printf("CMD:\n");

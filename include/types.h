@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/07 16:30:45 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/09 14:49:31 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ typedef struct s_io_node
 	t_token_class		type;
 	t_token_word		*io_target;
 	struct s_io_node	*next;
+	int					is_quoted_here;
 }						t_io_node;
 
 typedef struct s_redirect
