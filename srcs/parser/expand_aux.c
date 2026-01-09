@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 18:56:27 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/21 19:09:51 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/08 21:18:10 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,32 @@ static t_segment	*consume_literal_wildcard(t_segment **seg)
 	return (new_seg_lst);
 }
 
+static t_token	*handle_split_seg(t_segment *seg)
+{
+	t_lexer		l;
+	size_t		text_len;
+	t_segment	*new_segs;
+	t_token		*new_tokens;
+
+	new_segs = NULL;
+	text_len = 0;
+	l = lexer_new(seg->text, ft_strlen(seg->text));
+	while (l.str[l.idx])
+	{
+		lexer_chop_while(&l, WHITESPACE, l.str_len, NULL);
+		// if (l.idx >= l.str_len)
+		// 	return (NULL);
+		segment_add(&new_segs, segment(LITERAL, &l.str[l.idx], lexer_chop_til(&l, WHITESPACE, l.str_len, &text_len)));
+		token_add(&new_tokens, token_word(new_segs->text, text_len, new_segs));
+	}
+	return (new_tokens);
+}
+
 t_token	*get_new_tokens(t_segment **seg)
 {
 	t_segment	*new_segs;
 	t_token		*new_tokens;
 	char		*text;
-	t_lexer		l;
 
 	new_segs = NULL;
 	if ((*seg)->type == LITERAL || (*seg)->type == WILDCARD)
@@ -46,8 +66,7 @@ t_token	*get_new_tokens(t_segment **seg)
 	}
 	else
 	{
-		l = lexer_new((*seg)->text, ft_strlen((*seg)->text));
-		new_tokens = lexer_token_list(&l);
+		new_tokens = handle_split_seg(*seg);
 		*seg = (*seg)->next;
 	}
 	return (new_tokens);
