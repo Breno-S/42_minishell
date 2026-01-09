@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 18:56:27 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/08 21:18:10 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/09 14:35:33 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,37 @@ static t_segment	*consume_literal_wildcard(t_segment **seg)
 	return (new_seg_lst);
 }
 
+static t_token	*lexer_next_dumb(t_lexer *l)
+{
+	const char	*text_start;
+	size_t		text_len;
+	t_segment	*seg;
+
+	lexer_chop_while(l, WHITESPACE, l->str_len, NULL);
+	if (l->idx >= l->str_len)
+		return (token(TOKEN_END, &l->str[l->idx], 1));
+	text_start = &l->str[l->idx];
+	text_len = 0;
+	seg = segment(LITERAL, text_start, lexer_chop_til(l, WHITESPACE, l->str_len,
+				&text_len));
+	return (token_word(seg->text, text_len, seg));
+}
+
 static t_token	*handle_split_seg(t_segment *seg)
 {
 	t_lexer		l;
 	size_t		text_len;
-	t_segment	*new_segs;
+	t_token		*t;
 	t_token		*new_tokens;
 
-	new_segs = NULL;
+	new_tokens = NULL;
 	text_len = 0;
 	l = lexer_new(seg->text, ft_strlen(seg->text));
-	while (l.str[l.idx])
+	t = lexer_next_dumb(&l);
+	while (t && t->class != TOKEN_END)
 	{
-		lexer_chop_while(&l, WHITESPACE, l.str_len, NULL);
-		// if (l.idx >= l.str_len)
-		// 	return (NULL);
-		segment_add(&new_segs, segment(LITERAL, &l.str[l.idx], lexer_chop_til(&l, WHITESPACE, l.str_len, &text_len)));
-		token_add(&new_tokens, token_word(new_segs->text, text_len, new_segs));
+		token_add(&new_tokens, t);
+		t = lexer_next_dumb(&l);
 	}
 	return (new_tokens);
 }

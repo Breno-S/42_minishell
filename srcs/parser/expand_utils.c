@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 19:03:05 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/08 19:47:24 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/09 14:44:08 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ void	remove_null_segs(t_token_word *token)
 	prev = NULL;
 	while (seg)
 	{
-		if (/* (seg->type >= 1 && seg->type <= 4)
-			&&  */(!seg->text || seg->text[0] == '\0'))
+		if ((!seg->text || seg->text[0] == '\0'))
 			remove_segment(&token->seg_lst, seg, prev);
 		else
 			prev = seg;
@@ -65,4 +64,29 @@ char	*text_from_segments(t_segment *seg_lst)
 		seg_lst = seg_lst->next;
 	}
 	return (str);
+}
+
+int	expand_var_segs(t_token_word *token)
+{
+	t_segment	*seg;
+	int			status;
+
+	seg = token->seg_lst;
+	status = 0;
+	while (seg)
+	{
+		if (seg->type == VAR_FIXED || seg->type == VAR_SPLIT)
+		{
+			seg->text = var_exp(seg->text);
+			status = 1;
+		}
+		else if (seg->type == CMD_FIXED || seg->type == CMD_SPLIT)
+		{
+			// TODO: expandir comando no subshell
+			status = 1;
+		}
+		seg = seg->next;
+	}
+	remove_null_segs(token);
+	return (status);
 }

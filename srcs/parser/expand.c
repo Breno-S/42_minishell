@@ -6,39 +6,14 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:41:04 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/08 19:47:08 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/09 14:45:26 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsesh.h"
 #include "execsh.h"
 
-int	expand_var_segs(t_token_word *token)
-{
-	t_segment	*seg;
-	int			status;
-
-	seg = token->seg_lst;
-	status = 0;
-	while (seg)
-	{
-		if (seg->type == VAR_FIXED || seg->type == VAR_SPLIT)
-		{
-			seg->text = var_exp(seg->text);
-			status = 1;
-		}
-		else if (seg->type == CMD_FIXED || seg->type == CMD_SPLIT)
-		{
-			// TODO: expandir comando no subshell
-			status = 1;
-		}
-		seg = seg->next;
-	}
-	remove_null_segs(token);
-	return (status);
-}
-
-static void	expand_globs(t_token *target, t_token **prev,
+static int	expand_globs(t_token *target, t_token **prev,
 	t_token *next, t_token **token_list)
 {
 	char	*str;
@@ -60,8 +35,10 @@ static void	expand_globs(t_token *target, t_token **prev,
 				new_tokens = new_tokens->next;
 			new_tokens->next = next;
 			*prev = new_tokens;
+			return (1);
 		}
 	}
+	return (0);
 }
 
 static void	insert_wildcard_seg(t_segment *curr, t_segment *next)
@@ -83,7 +60,8 @@ static void	insert_wildcard_seg(t_segment *curr, t_segment *next)
 			w_seg = segment(WILDCARD, &curr->text[i], 1);
 			curr->text[i] = '\0';
 			curr->next = w_seg;
-			new_seg = segment(LITERAL, &curr->text[i + 1], ft_strlen(&curr->text[i + 1]));
+			new_seg = segment(LITERAL, &curr->text[i + 1],
+					ft_strlen(&curr->text[i + 1]));
 			w_seg->next = new_seg;
 			new_seg->next = next;
 			return ;
@@ -123,7 +101,7 @@ static void	expand_var(t_token **token_list)
 			{
 				split_first_segs((t_token_word *)token);
 				split_last_segs((t_token_word *)token);
-				isolate_wildcards((t_token_word*)token);
+				isolate_wildcards((t_token_word *)token);
 				join_fixed_segs((t_token_word *)token);
 				replace_tokens((t_token_word *)token, &prev, token->next,
 					token_list);
@@ -135,25 +113,19 @@ static void	expand_var(t_token **token_list)
 	}
 }
 
-static void	expand_wildcard(t_token **token_list)
+void	expand_token_list(t_token **token_list)
 {
 	t_token	*token;
 	t_token	*prev;
 
+	expand_var(token_list);
 	token = *token_list;
 	prev = NULL;
 	while (token)
 	{
-		if (token->class == TOKEN_WORD)
-			expand_globs(token, &prev, token->next, token_list);
-		else
+		if (token->class != TOKEN_WORD
+			|| !expand_globs(token, &prev, token->next, token_list))
 			prev = token;
 		token = token->next;
 	}
-}
-
-void	expand_token_list(t_token **token_list)
-{
-	expand_var(token_list);
-	expand_wildcard(token_list);
 }
