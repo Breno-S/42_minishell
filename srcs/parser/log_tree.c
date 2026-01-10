@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 16:57:36 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/09 15:24:19 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/09 18:54:17 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	traverse_tree(t_ast *ast, int indent)
 				curr_text = ft_substr(ast->redirs->io_target->text, 0, ast->redirs->io_target->text_len);
 				expand_token_list((t_token **)&ast->redirs->io_target);
 				if (!ast->redirs->io_target || ast->redirs->io_target->next)
-					log_error(curr_text, ERR_AMBIG_REDIR);
+					log_ambiguous_redir_error(curr_text);
 			}
 			else
 			{

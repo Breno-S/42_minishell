@@ -6,12 +6,13 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/07 16:34:59 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/09 18:32:07 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsesh.h"
 #include "execsh.h"
+#include "errorsh.h"
 #include "types.h"
 
 void	traverse_tree(t_ast *ast, int indent);
@@ -35,6 +36,7 @@ int	main(int argc, char *argv[], char *envp[])
 		add_history(line);
 		l = lexer_new(line, ft_strlen(line));
 		token_list = lexer_token_list(&l);
+		syntax_check(token_list);
 		p = parser_new(token_list);
 		ast = parser_parse(&p);
 		traverse_tree(ast, 0);
