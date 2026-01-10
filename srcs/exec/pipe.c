@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:17:04 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/08 19:49:40 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/09 21:03:12 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	pipe_exec(t_ast *ast, char **envp, t_pids **pids)
 	rtn = exec_tree(ast->right, envp, pids);
 	return (rtn);
 }
+
 int	open_pipeline(t_exec **cmd)
 {
 	if (pipe(cmd[0]->pipefd) == -1)
@@ -45,4 +46,3 @@ int	open_pipeline(t_exec **cmd)
 	}
 	return (0);
 }
-

@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/08 17:34:19 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/09 17:25:23 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int argc, char *argv[], char *envp[])
 		ast = parser_parse(&p);
 		if (!aux_print_export(hash_env, &new_envp))
 		{
-			ft_gcfct_arr_register((void *)new_envp, "temp");
+			ft_gcfct_register((void *)new_envp, GC_DATA);
 			traverse_tree(ast, 0, hash_env);
 			ft_putnbr_fd(exec_tree(ast, new_envp, NULL), 0);
 		}

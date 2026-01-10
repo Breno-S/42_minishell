@@ -45,7 +45,10 @@ SRCS_MANDATORY_EXEC := \
 	pipe.c \
 	cmd.c \
 	and.c \
-	or.c
+	or.c \
+	ft_pwd.c \
+	builtins.c \
+	ft_echo.c
 SRCS_MANDATORY_PARSER := \
 	ast.c \
 	ast_aux.c \

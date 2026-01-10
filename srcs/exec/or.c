@@ -6,15 +6,15 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:43:51 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/08 20:21:39 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/09 21:02:46 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 
-int exec_or(t_ast *ast, char **envp, t_pids **pids)
+int	exec_or(t_ast *ast, char **envp)
 {
-		int	rtn;
+	int	rtn;
 
 	rtn = 1;
 	rtn = exec_tree(ast->left, envp, NULL);

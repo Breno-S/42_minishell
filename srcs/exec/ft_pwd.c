@@ -1,25 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   and.c                                              :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/08 16:43:34 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/09 21:02:50 by rgomes-d         ###   ########.fr       */
+/*   Created: 2026/01/09 14:07:18 by rgomes-d          #+#    #+#             */
+/*   Updated: 2026/01/09 15:16:51 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 
-int	exec_and(t_ast *ast, char **envp)
+int	ft_pwd(int fd)
 {
-	int	rtn;
+	char	*pwd;
+	int		mult;
 
-	rtn = 1;
-	rtn = exec_tree(ast->left, envp, NULL);
-	if (rtn)
-		return (rtn);
-	rtn = exec_tree(ast->right, envp, NULL);
-	return (rtn);
+	mult = 1;
+	pwd = ft_gc_calloc(mult, 100, GC_DATA)->content;
+	if (!pwd)
+		return (1);
+	while (1)
+	{
+		if (!getcwd(pwd, (mult * 100) - 1))
+		{
+			if (errno == 34)
+			{
+				pwd = ft_gc_calloc(++mult, 100, GC_DATA)->content;
+				if (!pwd)
+					return (1);
+			}
+			else
+				return (errno);
+		}
+		else
+			break ;
+	}
+	ft_putstr_fd(pwd, fd);
+	return (0);
 }

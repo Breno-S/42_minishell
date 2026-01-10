@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   and.c                                              :+:      :+:    :+:   */
+/*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/01/08 16:43:34 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/09 21:02:50 by rgomes-d         ###   ########.fr       */
+/*   Created: 2026/01/09 16:25:58 by rgomes-d          #+#    #+#             */
+/*   Updated: 2026/01/09 17:28:37 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 
-int	exec_and(t_ast *ast, char **envp)
+int	is_builtins(char *cmd)
 {
-	int	rtn;
-
-	rtn = 1;
-	rtn = exec_tree(ast->left, envp, NULL);
-	if (rtn)
-		return (rtn);
-	rtn = exec_tree(ast->right, envp, NULL);
-	return (rtn);
+	if (!ft_strcmp("echo", cmd))
+		return (0);
+	else if (!ft_strcmp("cd", cmd))
+		return (0);
+	else if (!ft_strcmp("pwd", cmd))
+		return (0);
+	else if (!ft_strcmp("export", cmd))
+		return (0);
+	else if (!ft_strcmp("unset", cmd))
+		return (0);
+	else if (!ft_strcmp("env", cmd))
+		return (0);
+	else if (!ft_strcmp("exit", cmd))
+		return (0);
+	return (1);
 }

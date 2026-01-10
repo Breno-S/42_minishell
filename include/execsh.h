@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/08 19:57:44 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/09 21:02:27 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define EXECSH_H
 
 # include "types.h"
+
+# define BUILTINS "echo"
 
 // MAIN LOOP
 
@@ -64,6 +66,14 @@ t_redirect	*create_heredoc(char *eof);
 char		*access_temp_file(int tmp);
 void		print_warning(char *eof, int count);
 
+// PWD
+
+int			ft_pwd(int fd);
+
+// ECHO
+
+int			ft_echo(t_exec *cmd, int fd);
+
 // GLOB
 
 char		*glob_exp(t_token *token_o);
@@ -88,17 +98,19 @@ int			exec(t_exec *exec, char **envp);
 int			fork_exec(t_exec *cmd, char **envp, t_pids **pids);
 void		close_fd_parent(t_exec *cmd);
 int			handle_cmd(t_ast *ast, char **envp, t_pids **pids);
+int			is_builtins(char *cmd);
 
 char		**find_path(void);
 char		*find_executable(char *arg, char **path, t_exec **exec);
 char		*handle_search(char *arg, t_exec **exec);
 void		print_error_find(int type, char *arg, t_exec **exec);
+int			dup_fds(t_exec *exec);
 
-int			exec_and(t_ast *ast, char **envp, t_pids **pids);
-int			exec_or(t_ast *ast, char **envp, t_pids **pids);
+int			exec_and(t_ast *ast, char **envp);
+int			exec_or(t_ast *ast, char **envp);
 
 int			wait_childs(t_ast *ast, t_pids *pids, int rtn_sys);
-t_pids		**create_pids_list(t_ast **ast, t_pids **pids);
+t_pids		*create_pids_list(t_ast **ast, t_pids **pids);
 
 // REDIRS
 

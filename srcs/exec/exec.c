@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:33:11 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/08 20:18:53 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/09 14:42:41 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	exec_tree(t_ast *ast, char **envp, t_pids **pids)
 	if (ast->type == NODE_CMD)
 		rtn = handle_cmd(ast, envp, pids);
 	else if (ast->type == NODE_AND)
-		rtn = exec_and(ast, envp, pids);
+		rtn = exec_and(ast, envp);
 	else if (ast->type == NODE_OR)
-		rtn = exec_or(ast, envp, pids);
+		rtn = exec_or(ast, envp);
 	else if (ast->type == NODE_PIPE)
 		rtn = pipe_exec(ast, envp, pids);
 	// TODO: sub-shell
@@ -36,7 +36,7 @@ int	exec_tree(t_ast *ast, char **envp, t_pids **pids)
 	return (rtn);
 }
 
-t_pids	**create_pids_list(t_ast **ast, t_pids **pids)
+t_pids	*create_pids_list(t_ast **ast, t_pids **pids)
 {
 	t_pids	*my_pids;
 

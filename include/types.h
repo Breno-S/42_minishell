@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/08 19:53:24 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/09 16:33:14 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ typedef enum e_node_type
 	NODE_OR,
 	NODE_CMD,
 	NODE_SUB,
-	//TODO NODE_CMD_BUILTIN,
+	NODE_CMD_BUILTIN,
 }						t_node_type;
 
 typedef struct s_io_node

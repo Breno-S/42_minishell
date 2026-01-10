@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:00:07 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/08 19:49:21 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/09 20:54:03 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,12 @@ t_exec	*build_cmd(t_ast *ast)
 		return (NULL);
 	if (ast->redirs && handle_redirects(ast->redirs, &exec_cmd))
 		return (NULL);
+	// if (!is_builtins(exec_cmd->args[0]))
+	// {
+	// 	ast->type = NODE_CMD_BUILTIN;
+	// 	return (exec_cmd);
+	// }
 	exec_cmd->cmd = handle_search(ast->args->seg_lst->text, &exec_cmd);
-	if (!exec_cmd->cmd)
-	{
-		if (exec_cmd->infile->fd_tmp != -1)
-			close(exec_cmd->infile->fd_tmp);
-		if (exec_cmd->outfile->fd_tmp != -1)
-			close(exec_cmd->infile->fd_tmp);
-	}
 	return (exec_cmd);
 }
 
