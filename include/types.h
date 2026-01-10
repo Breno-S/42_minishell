@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/09 14:49:31 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/09 21:10:20 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef enum e_error_type
 	ERR_PERMISSION,
 	ERR_IS_DIR,
 	ERR_AMBIG_REDIR,
-}	t_error_type;
+}						t_error_type;
 
 typedef enum e_token_class
 {
@@ -109,6 +109,7 @@ typedef enum e_node_type
 	NODE_OR,
 	NODE_CMD,
 	NODE_SUB,
+	NODE_CMD_BUILTIN,
 }						t_node_type;
 
 typedef struct s_io_node
@@ -131,8 +132,8 @@ typedef struct s_exec
 	t_redirect			*outfile;
 	char				*cmd;
 	char				**args;
-	int					pipefd[2];
 	int					error;
+	int					pipefd[2];
 }						t_exec;
 
 typedef struct s_ast
@@ -143,6 +144,7 @@ typedef struct s_ast
 	t_token_word		*args;
 	t_io_node			*redirs;
 	t_exec				*cmd;
+	int					chan_com;
 	int					is_head;
 }						t_ast;
 
@@ -153,6 +155,7 @@ typedef enum e_env_type
 	T_ENV,
 	T_SET,
 	T_INTERNAL,
+	T_EXEC
 }						t_env_type;
 
 typedef struct s_hash_env
@@ -162,6 +165,12 @@ typedef struct s_hash_env
 	int					has_content;
 	struct s_hash_env	*next;
 }						t_hash_env;
+
+typedef struct s_pids
+{
+	pid_t				*pids;
+	int					total;
+}						t_pids;
 
 // typedef struct s_exec
 // {

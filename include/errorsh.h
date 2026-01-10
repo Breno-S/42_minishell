@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 15:14:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/09 18:54:41 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/09 21:12:26 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 # define STATUS_ERROR_PERMISSION 126
 # define STATUS_ERROR_CMD_NOT_FOUND 127
 
-int	log_syntax_error(t_token *token);
-int	log_ambiguous_redir_error(char *error_src);
+int		log_syntax_error(t_token *token);
+int		log_ambiguous_redir_error(char *error_src);
+void	syntax_check(t_token *token_list);
 
 #endif /* ERRORSH_H */

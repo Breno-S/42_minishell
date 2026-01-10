@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 18:23:28 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/08 21:43:57 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/09 20:53:05 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_unset(t_hash_env **hash_table, const char *var)
 		return (1);
 	hash_env = aux_unset(hash_table, var);
 	if (!hash_env)
-		return (1);
+		return (0);
 	cmp = hash_env->content;
 	if (hashpop(&hash_table[count], hash_env))
 		return (1);
@@ -68,8 +68,9 @@ t_hash_env	*aux_unset(t_hash_env **hash_table, const char *var)
 	hash_env = hash_table[count];
 	while (hash_env)
 	{
-		if (!ft_strncmp(var, hash_env->content, len)
-			&& (hash_env->content[len] == '=' || !hash_env->content[len]))
+		if (hash_env->type_var == T_ENV && !ft_strncmp(var, hash_env->content,
+				len) && (hash_env->content[len] == '='
+				|| !hash_env->content[len]))
 		{
 			return (hash_env);
 		}

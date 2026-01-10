@@ -3,60 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:33:11 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/07 16:25:21 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/09 14:42:41 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 
-// int	pre_exec(t_ast *ast)
-// {
-// 	int	rtn;
-
-// 	rtn = 1;
-// 	if (ast->type == NODE_CMD)
-// 		rtn = handle_pre_exec(ast);
-// 	else if (ast->type == NODE_AND)
-// 		rtn = handle_pre_exec(ast);
-// 	else if (ast->type == NODE_OR)
-// 		rtn = handle_pre_exec(ast);
-// 	else if (ast->type == NODE_PIPE)
-// 		rtn = handle_pre_exec(ast);
-// 	else if (ast->type == NODE_SUB)
-// 		rtn = handle_pre_exec(ast);
-// 	return (rtn);
-// }
-
-int	exec(t_exec *exec, t_hash_env **hash_env)
+int	exec_tree(t_ast *ast, char **envp, t_pids **pids)
 {
-	char	**envp;
+	int		rtn;
+	t_pids	*my_pid;
 
-	envp = ft_calloc(1, 8);
-	aux_print_export(hash_env, &envp);
-	if (!exec->cmd)
-	{
-		ft_gc_end();
+	rtn = 1;
+	my_pid = create_pids_list(&ast, pids);
+	if (!my_pid)
 		return (1);
-	}
-	if (exec->infile->fd_tmp != -1)
-	{
-		if (dup2(exec->infile->fd_tmp, STDIN_FILENO) == -1)
-			perror("dup2");
-		else
-			close(exec->infile->fd_tmp);
-	}
-	if (exec->outfile->fd_tmp != -1)
-	{
-		if (dup2(exec->outfile->fd_tmp, STDOUT_FILENO) == -1)
-			perror("dup2");
-		else
-			close(exec->outfile->fd_tmp);
-	}
-	execve(exec->cmd, exec->args, envp);
-	perror("Minishell");
-	ft_gc_end();
-	exit(1);
+	pids = &my_pid;
+	if (ast->type == NODE_CMD)
+		rtn = handle_cmd(ast, envp, pids);
+	else if (ast->type == NODE_AND)
+		rtn = exec_and(ast, envp);
+	else if (ast->type == NODE_OR)
+		rtn = exec_or(ast, envp);
+	else if (ast->type == NODE_PIPE)
+		rtn = pipe_exec(ast, envp, pids);
+	// TODO: sub-shell
+	if (ast->is_head)
+		rtn = wait_childs(ast, pids[0], rtn);
+	return (rtn);
 }
+
+t_pids	*create_pids_list(t_ast **ast, t_pids **pids)
+{
+	t_pids	*my_pids;
+
+	if (!pids && ast[0]->is_head == 0)
+	{
+		ast[0]->is_head = 1;
+		my_pids = ft_gc_calloc_root(1, sizeof(t_pids), "temp");
+		if (!my_pids)
+		{
+			perror("Minishell");
+			return (NULL);
+		}
+		return (my_pids);
+	}
+	return (pids[0]);
+}
+
+int	wait_childs(t_ast *ast, t_pids *pids, int rtn_sys)
+{
+	int	i;
+	int	rtn;
+
+	i = 0;
+	rtn = 1;
+	while (i < pids->total)
+		waitpid((pid_t)pids->pids[i++], &rtn, 0);
+	if (ast->type == NODE_AND || ast->type == NODE_OR)
+		return (rtn_sys);
+	return (WEXITSTATUS(rtn));
+}
+
+// TODO NODE_PIPE,
+// TODO NODE_AND,
+// TODO	NODE_OR,
+// TODO	NODE_CMD,
+// TODO	NODE_SUB,

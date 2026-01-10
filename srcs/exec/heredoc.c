@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 12:18:32 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/17 15:33:08 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/07 16:53:30 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ char	*access_temp_file(int tmp)
 
 void	print_warning(char *eof, int count)
 {
-	ft_putstr_fd("Minishell: warning: here-document at line ", 0);
-	ft_putnbr_fd(count, 0);
-	ft_putstr_fd(" delimited by end-of-file (wanted '", 0);
-	ft_putstr_fd(eof, 0);
-	ft_putstr_fd("')\n", 0);
+	ft_putstr_fd("Minishell: warning: here-document at line ", 2);
+	ft_putnbr_fd(count, 2);
+	ft_putstr_fd(" delimited by end-of-file (wanted '", 2);
+	ft_putstr_fd(eof, 2);
+	ft_putstr_fd("')\n", 2);
 }

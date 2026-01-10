@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/09 18:32:07 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/09 21:07:41 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "errorsh.h"
 #include "types.h"
 
-void	traverse_tree(t_ast *ast, int indent);
+void	traverse_tree(t_ast *ast, int indent, t_hash_env **hash_env);
 
 int	main(int argc, char *argv[], char *envp[])
 {
@@ -25,6 +25,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_token		*token_list;
 	t_ast		*ast;
 	char		*line;
+	char		**new_envp;
 
 	ft_gc_init();
 	hash_env = (t_hash_env **)create_hash_env(envp, argv);
@@ -39,7 +40,12 @@ int	main(int argc, char *argv[], char *envp[])
 		syntax_check(token_list);
 		p = parser_new(token_list);
 		ast = parser_parse(&p);
-		traverse_tree(ast, 0);
+		if (!aux_print_export(hash_env, &new_envp))
+		{
+			ft_gcfct_register((void *)new_envp, GC_DATA);
+			traverse_tree(ast, 0, hash_env);
+			ft_putnbr_fd(exec_tree(ast, new_envp, NULL), 0);
+		}
 		ft_gc_del_root("temp");
 		ft_gc_collect();
 	}

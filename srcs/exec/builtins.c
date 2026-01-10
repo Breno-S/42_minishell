@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   includes.h                                         :+:      :+:    :+:   */
+/*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/17 15:46:04 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/09 17:41:37 by rgomes-d         ###   ########.fr       */
+/*   Created: 2026/01/09 16:25:58 by rgomes-d          #+#    #+#             */
+/*   Updated: 2026/01/09 17:28:37 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef INCLUDES_H
-# define INCLUDES_H
+#include "execsh.h"
 
-# include "libft.h"
-# include <dirent.h>
-# include <errno.h>
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <sys/stat.h>
-# include <sys/types.h>
-# include <sys/wait.h>
-
-#endif // INCLUDES_H
+int	is_builtins(char *cmd)
+{
+	if (!ft_strcmp("echo", cmd))
+		return (0);
+	else if (!ft_strcmp("cd", cmd))
+		return (0);
+	else if (!ft_strcmp("pwd", cmd))
+		return (0);
+	else if (!ft_strcmp("export", cmd))
+		return (0);
+	else if (!ft_strcmp("unset", cmd))
+		return (0);
+	else if (!ft_strcmp("env", cmd))
+		return (0);
+	else if (!ft_strcmp("exit", cmd))
+		return (0);
+	return (1);
+}

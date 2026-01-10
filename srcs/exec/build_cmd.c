@@ -6,17 +6,16 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:00:07 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/07 15:13:00 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/09 20:54:03 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 
-t_exec	*build_cmd(t_ast *ast, t_hash_env **hash_env)
+t_exec	*build_cmd(t_ast *ast)
 {
 	t_exec	*exec_cmd;
 	int		i;
-	pid_t	teste;
 
 	i = 0;
 	exec_cmd = build_exec(ast);
@@ -24,15 +23,12 @@ t_exec	*build_cmd(t_ast *ast, t_hash_env **hash_env)
 		return (NULL);
 	if (ast->redirs && handle_redirects(ast->redirs, &exec_cmd))
 		return (NULL);
+	// if (!is_builtins(exec_cmd->args[0]))
+	// {
+	// 	ast->type = NODE_CMD_BUILTIN;
+	// 	return (exec_cmd);
+	// }
 	exec_cmd->cmd = handle_search(ast->args->seg_lst->text, &exec_cmd);
-	if (!exec_cmd->cmd)
-	{
-		if (exec_cmd->infile->fd_tmp != -1)
-			close(exec_cmd->infile->fd_tmp);
-		if (exec_cmd->outfile->fd_tmp != -1)
-			close(exec_cmd->infile->fd_tmp);
-		return (1);
-	}
 	return (exec_cmd);
 }
 
@@ -50,7 +46,7 @@ int	ft_sizeseg(t_token_word *args)
 			i++;
 			aux = aux->next;
 		}
-		args = args->next;
+		args = (t_token_word *)args->next;
 	}
 	return (i);
 }
@@ -92,7 +88,7 @@ void	copy_args(t_token_word *args, t_exec **cmd)
 			cmd[0]->args[i++] = args->seg_lst->text;
 			aux = aux->next;
 		}
-		args = args->next;
+		args = (t_token_word *)args->next;
 	}
 	return ;
 }
