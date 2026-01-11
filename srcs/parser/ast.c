@@ -6,11 +6,12 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 18:26:03 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/09 00:22:48 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/11 20:15:43 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsesh.h"
+#include "errorsh.h"
 
 static int	add_arg(t_ast *ast, t_token_word *token)
 {
@@ -37,6 +38,11 @@ t_ast	*parse_cmd(t_parser *p)
 	if (!parse_redirs(p, ast))
 		return (NULL);
 	class = parser_peek(p);
+	if (class != TOKEN_WORD)
+	{
+		log_syntax_error(p->idx);
+		return (NULL);
+	}
 	while (class == TOKEN_WORD)
 	{
 		add_arg(ast, (t_token_word *)p->idx);
