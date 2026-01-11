@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 19:03:05 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/09 14:44:08 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/11 19:55:27 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	remove_token(t_token **token_list, t_token *target, t_token *prev)
 
 char	*text_from_segments(t_segment *seg_lst)
 {
-	char		*str;
+	char	*str;
 
 	str = NULL;
 	while (seg_lst && !str)

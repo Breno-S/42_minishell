@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 00:09:24 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/11 13:02:44 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/11 19:40:33 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ int	parse_redirs(t_parser *p, t_ast *ast)
 			log_syntax_error(p->idx);
 			return (0);
 		}
-		io_target = (t_token_word *)p->idx;
+		io_target = ft_gc_calloc_root(1, sizeof(*io_target), "temp");
+		if (!io_target)
+			return (0);
+		ft_memcpy(io_target, p->idx, sizeof(*io_target));
+		io_target->next = NULL;
 		io_node_add(&ast->redirs, io_node(type, io_target));
 		parser_chop_token(p);
 		type = parser_peek(p);

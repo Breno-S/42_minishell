@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:23:23 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/11 14:13:29 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/11 19:48:44 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 int	log_syntax_error(t_token *token)
 {
 	ft_putstr_fd("Madshell: syntax error near unexpected token `", 2);
-	if (token->class != TOKEN_WORD)
+	if (token->class != TOKEN_WORD && token->class != TOKEN_INVALID)
 		ft_putstr_fd(token_to_str(token), 2);
 	else
 		ft_putstr_fd(ft_gcfct_register_root(
@@ -38,10 +38,8 @@ int	log_ambiguous_redir_error(char *error_src)
 int	syntax_check(t_token *token_list)
 {
 	t_token *aux;
-	t_token *prev;
 
 	aux = token_list;
-	prev = NULL;
 	while (aux)
 	{
 		if (aux->class == TOKEN_INVALID)
@@ -49,7 +47,6 @@ int	syntax_check(t_token *token_list)
 			log_syntax_error(aux);
 			return (0);
 		}
-		prev = aux;
 		aux = aux->next;
 	}
 	return (1);
