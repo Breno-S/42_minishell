@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:00:07 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/09 20:54:03 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/10 18:11:16 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,17 @@
 t_exec	*build_cmd(t_ast *ast)
 {
 	t_exec	*exec_cmd;
-	int		i;
 
-	i = 0;
 	exec_cmd = build_exec(ast);
 	if (!exec_cmd)
 		return (NULL);
 	if (ast->redirs && handle_redirects(ast->redirs, &exec_cmd))
 		return (NULL);
-	// if (!is_builtins(exec_cmd->args[0]))
-	// {
-	// 	ast->type = NODE_CMD_BUILTIN;
-	// 	return (exec_cmd);
-	// }
+	if (!is_builtins(exec_cmd->args[0]))
+	{
+		ast->type = NODE_CMD_BUILTIN;
+		return (exec_cmd);
+	}
 	exec_cmd->cmd = handle_search(ast->args->seg_lst->text, &exec_cmd);
 	return (exec_cmd);
 }
@@ -55,9 +53,7 @@ t_exec	*build_exec(t_ast *ast)
 {
 	t_exec			*new_exec;
 	t_token_word	*aux;
-	int				i;
 
-	i = 0;
 	new_exec = ft_gc_calloc_root(1, sizeof(t_exec), "exec");
 	if (!new_exec)
 		return (NULL);

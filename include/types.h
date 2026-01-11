@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/09 21:10:20 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/11 00:00:02 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,13 @@ typedef struct s_redirect
 	char				*path;
 }						t_redirect;
 
+typedef struct s_pids
+{
+	pid_t				*pids;
+	int					total;
+	t_node_type			type_head;
+}						t_pids;
+
 typedef struct s_exec
 {
 	t_redirect			*infile;
@@ -134,6 +141,7 @@ typedef struct s_exec
 	char				**args;
 	int					error;
 	int					pipefd[2];
+	t_pids				*pids;
 }						t_exec;
 
 typedef struct s_ast
@@ -165,12 +173,6 @@ typedef struct s_hash_env
 	int					has_content;
 	struct s_hash_env	*next;
 }						t_hash_env;
-
-typedef struct s_pids
-{
-	pid_t				*pids;
-	int					total;
-}						t_pids;
 
 // typedef struct s_exec
 // {

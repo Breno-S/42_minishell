@@ -6,13 +6,13 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:33:11 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/09 14:42:41 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/11 00:01:54 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 
-int	exec_tree(t_ast *ast, char **envp, t_pids **pids)
+int	exec_tree(t_ast *ast, t_aux_exec *exec, t_pids **pids)
 {
 	int		rtn;
 	t_pids	*my_pid;
@@ -23,14 +23,17 @@ int	exec_tree(t_ast *ast, char **envp, t_pids **pids)
 		return (1);
 	pids = &my_pid;
 	if (ast->type == NODE_CMD)
-		rtn = handle_cmd(ast, envp, pids);
+		rtn = handle_cmd(ast, exec, pids);
+	else if (ast->type == NODE_CMD_BUILTIN)
+		rtn = handle_builtin(ast, exec, pids);
 	else if (ast->type == NODE_AND)
-		rtn = exec_and(ast, envp);
+		rtn = exec_and(ast, exec);
 	else if (ast->type == NODE_OR)
-		rtn = exec_or(ast, envp);
+		rtn = exec_or(ast, exec);
 	else if (ast->type == NODE_PIPE)
-		rtn = pipe_exec(ast, envp, pids);
-	// TODO: sub-shell
+		rtn = pipe_exec(ast, exec, pids);
+	// else if (ast->type == NODE_SUB)
+	// 	rtn = sub_exec(ast, exec, pids);
 	if (ast->is_head)
 		rtn = wait_childs(ast, pids[0], rtn);
 	return (rtn);
@@ -49,6 +52,8 @@ t_pids	*create_pids_list(t_ast **ast, t_pids **pids)
 			perror("Minishell");
 			return (NULL);
 		}
+		my_pids->type_head = ast[0]->type;
+		ast[0]->cmd->pids = my_pids;
 		return (my_pids);
 	}
 	return (pids[0]);
@@ -63,13 +68,8 @@ int	wait_childs(t_ast *ast, t_pids *pids, int rtn_sys)
 	rtn = 1;
 	while (i < pids->total)
 		waitpid((pid_t)pids->pids[i++], &rtn, 0);
-	if (ast->type == NODE_AND || ast->type == NODE_OR)
+	if (ast->type == NODE_AND || ast->type == NODE_OR
+		|| ast->type == NODE_CMD_BUILTIN)
 		return (rtn_sys);
 	return (WEXITSTATUS(rtn));
 }
-
-// TODO NODE_PIPE,
-// TODO NODE_AND,
-// TODO	NODE_OR,
-// TODO	NODE_CMD,
-// TODO	NODE_SUB,

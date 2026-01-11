@@ -6,26 +6,36 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 18:23:28 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/19 14:03:18 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/10 22:21:13 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <execsh.h>
 
-int	ft_export(t_hash_env **hash_table, const char *var, int fd)
+int	ft_export(t_exec *exec, t_hash_env **hash_table, int fd)
 {
-	int		hash;
-	char	*str;
+	int			hash;
+	char		*str;
+	int			i;
+	t_hash_env	*n_hash;
 
-	if (!var)
+	if (!exec->args[1])
 		return (ft_print_export(hash_table, fd));
-	hash = count_hash((char *)var);
-	str = ft_gcfct_register_root(ft_strdup(var), "env");
-	if (change_env(hash, hash_table, &str))
-		ft_hashadd_back((t_hash_env **)&hash_table[hash], ft_hashnew(str,
-				T_ENV));
-	else
-		ft_gc_collect();
+	i = 1;
+	while (exec->args[i])
+	{
+		hash = count_hash((char *)exec->args[i]);
+		str = ft_gcfct_register_root(ft_strdup(exec->args[i]), "env");
+		if (change_env(hash, hash_table, &str))
+		{
+			n_hash = ft_hashnew(str, T_ENV);
+			if (n_hash)
+				ft_hashadd_back((t_hash_env **)&hash_table[hash], n_hash);
+			else
+				perror("Minishell");
+		}
+		i++;
+	}
 	return (0);
 }
 
