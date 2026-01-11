@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/10 23:27:30 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/11 00:56:31 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,9 @@ void			copy_args(t_token_word *args, t_exec **cmd);
 
 int				exec_tree(t_ast *ast, t_aux_exec *aux_exec, t_pids **pids);
 int				pipe_exec(t_ast *ast, t_aux_exec *aux_exec, t_pids **pids);
-int				exec(t_exec *exec, t_aux_exec *aux_exec);
-int				fork_exec(t_exec *cmd, t_aux_exec *aux_exec, t_pids **pids);
+int				exec(t_exec *exec, t_aux_exec *aux_exec, int chan_com);
+int				fork_exec(t_exec *cmd, t_aux_exec *aux_exec, t_pids **pids,
+					int chan_com);
 void			close_fd_parent(t_exec *cmd);
 int				handle_cmd(t_ast *ast, t_aux_exec *aux_exec, t_pids **pids);
 int				is_builtins(char *cmd);

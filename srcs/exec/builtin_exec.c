@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 18:35:55 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/11 00:19:48 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/11 00:58:47 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@ int	handle_builtin(t_ast *ast, t_aux_exec *exec, t_pids **pids)
 	int	rtn;
 
 	rtn = 1;
-	if (ast->chan_com > 0 && ast->cmd->infile->fd_tmp > 0)
-		close(ast->chan_com);
-	ast->chan_com = 0;
 	if (ast->cmd->outfile->fd_tmp == -1)
 		ast->cmd->outfile->fd_tmp = 1;
 	if (pids[0]->type_head == NODE_PIPE)
@@ -33,6 +30,9 @@ int	handle_builtin(t_ast *ast, t_aux_exec *exec, t_pids **pids)
 		}
 		rtn = list_builtin(ast->cmd, exec);
 		close_fd_parent(ast->cmd);
+		if (ast->chan_com > 0 && ast->cmd->infile->fd_tmp > 0)
+			close(ast->chan_com);
+		ast->chan_com = 0;
 	}
 	return (rtn);
 }
