@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   log_tree.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 16:57:36 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/09 21:19:33 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/11 00:29:37 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ void	traverse_tree(t_ast *ast, int indent, t_hash_env **hash_env)
 				{
 					// TODO: arrumar o retorno
 					log_ambiguous_redir_error(curr_text);
-					return ;
 				}
 			}
 			else

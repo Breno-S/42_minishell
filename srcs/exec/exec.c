@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:33:11 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/11 00:01:54 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/11 00:06:23 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_pids	*create_pids_list(t_ast **ast, t_pids **pids)
 			return (NULL);
 		}
 		my_pids->type_head = ast[0]->type;
-		ast[0]->cmd->pids = my_pids;
+		ast[0]->pids = my_pids;
 		return (my_pids);
 	}
 	return (pids[0]);

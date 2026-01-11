@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/11 00:00:02 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/11 00:06:00 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,6 @@ typedef struct s_exec
 	char				**args;
 	int					error;
 	int					pipefd[2];
-	t_pids				*pids;
 }						t_exec;
 
 typedef struct s_ast
@@ -154,6 +153,7 @@ typedef struct s_ast
 	t_exec				*cmd;
 	int					chan_com;
 	int					is_head;
+	t_pids				*pids;
 }						t_ast;
 
 // EXEC STRUCTS
