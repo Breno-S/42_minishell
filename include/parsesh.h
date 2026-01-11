@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:22:36 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/09 21:07:13 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/11 13:43:52 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ t_token			*token_word(const char *text, size_t text_len,
 					t_segment *seg_list);
 const char		*token_class_name(t_token_class class);
 void			token_add(t_token **token_list, t_token *new);
+char			*token_to_str(t_token *t);
 
 // SEGMENT
 

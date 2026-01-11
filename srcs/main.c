@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/09 21:07:41 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/11 14:10:22 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,16 @@ int	main(int argc, char *argv[], char *envp[])
 		add_history(line);
 		l = lexer_new(line, ft_strlen(line));
 		token_list = lexer_token_list(&l);
-		syntax_check(token_list);
-		p = parser_new(token_list);
-		ast = parser_parse(&p);
-		if (!aux_print_export(hash_env, &new_envp))
+		if (syntax_check(token_list))
 		{
-			ft_gcfct_register((void *)new_envp, GC_DATA);
-			traverse_tree(ast, 0, hash_env);
-			ft_putnbr_fd(exec_tree(ast, new_envp, NULL), 0);
+			p = parser_new(token_list);
+			ast = parser_parse(&p);
+			if (!aux_print_export(hash_env, &new_envp) && ast)
+			{
+				ft_gcfct_register((void *)new_envp, GC_DATA);
+				traverse_tree(ast, 0, hash_env);
+				ft_putnbr_fd(exec_tree(ast, new_envp, NULL), 0);
+			}
 		}
 		ft_gc_del_root("temp");
 		ft_gc_collect();

@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/09 21:10:20 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/11 13:36:57 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef enum e_token_class
 	TOKEN_REDIR_HEREDOC,
 	TOKEN_AND,
 	TOKEN_OR,
+	TOKEN_NEWLINE,
 }						t_token_class;
 
 typedef enum e_seg_type

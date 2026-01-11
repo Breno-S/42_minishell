@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 18:56:27 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/09 14:35:33 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/11 13:04:46 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,10 @@ static t_token	*lexer_next_dumb(t_lexer *l)
 static t_token	*handle_split_seg(t_segment *seg)
 {
 	t_lexer		l;
-	size_t		text_len;
 	t_token		*t;
 	t_token		*new_tokens;
 
 	new_tokens = NULL;
-	text_len = 0;
 	l = lexer_new(seg->text, ft_strlen(seg->text));
 	t = lexer_next_dumb(&l);
 	while (t && t->class != TOKEN_END)

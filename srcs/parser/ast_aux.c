@@ -6,11 +6,12 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 00:09:24 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/09 00:10:29 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/11 13:02:44 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsesh.h"
+#include "errorsh.h"
 
 int	parse_redirs(t_parser *p, t_ast *ast)
 {
@@ -22,7 +23,10 @@ int	parse_redirs(t_parser *p, t_ast *ast)
 	{
 		parser_chop_token(p);
 		if (parser_peek(p) != TOKEN_WORD)
+		{
+			log_syntax_error(p->idx);
 			return (0);
+		}
 		io_target = (t_token_word *)p->idx;
 		io_node_add(&ast->redirs, io_node(type, io_target));
 		parser_chop_token(p);

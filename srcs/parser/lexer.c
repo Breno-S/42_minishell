@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 16:59:17 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/07 16:18:59 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/11 14:20:10 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ t_token	*lexer_next(t_lexer *l)
 	t = NULL;
 	lexer_chop_while(l, WHITESPACE, l->str_len, NULL);
 	if (l->idx >= l->str_len)
-		return (token(TOKEN_END, &l->str[l->idx], 1));
+		return (token(TOKEN_NEWLINE, &l->str[l->idx], 1));
 	if (ft_strchr(METACHARS, l->str[l->idx]))
 		return (handle_metachar(l));
 	else
@@ -99,11 +99,12 @@ t_token	*lexer_token_list(t_lexer *l)
 	t_token	*t;
 
 	token_list = NULL;
-	t = lexer_next(l);
-	while (t && t->class != TOKEN_END)
+	while (1)
 	{
-		token_add(&token_list, t);
 		t = lexer_next(l);
+		token_add(&token_list, t);
+		if (t->class == TOKEN_NEWLINE)
+			break ;
 	}
 	return (token_list);
 }
