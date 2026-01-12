@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 12:18:32 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/07 16:53:30 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/11 16:45:44 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_redirect	*create_heredoc(char *eof)
 	char		*str;
 	int			count;
 
-	heredoc = ft_gc_calloc_root(1, sizeof(t_redirect), "here");
+	heredoc = ft_gc_calloc_root(1, sizeof(t_redirect), "temp");
 	if (!heredoc)
 		return (NULL);
 	heredoc->fd_tmp = open("/tmp", O_RDWR | __O_TMPFILE, 0667);
@@ -27,7 +27,7 @@ t_redirect	*create_heredoc(char *eof)
 	count = 0;
 	while (1)
 	{
-		str = ft_gcfct_register_root(readline("> "), "here_tmp");
+		str = ft_gcfct_register_root(readline("> "), "`temp");
 		if (!str)
 			print_warning(eof, count);
 		if ((str && !ft_strcmp(str, eof)) || !str)
@@ -47,7 +47,7 @@ char	*access_temp_file(int tmp)
 	char	*path;
 
 	tmp_char = NULL;
-	tmp_char = ft_gcfct_register_root(ft_itoa(tmp), "here_tmp");
+	tmp_char = ft_gcfct_register_root(ft_itoa(tmp), "`temp");
 	if (!tmp_char)
 		return (NULL);
 	path = ft_gcfct_register_root(ft_strjoin("/proc/self/fd/", tmp_char),

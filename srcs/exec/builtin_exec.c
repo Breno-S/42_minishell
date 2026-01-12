@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 18:35:55 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/11 00:58:47 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/11 12:23:08 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,6 @@ int	exec_builtin(t_exec *exec, t_aux_exec *aux_exec)
 	if (exec->outfile->fd_tmp == -1)
 		exec->outfile->fd_tmp = 1;
 	rtn = list_builtin(exec, aux_exec);
-	finish_tree(aux_exec, 1);
+	finish_tree(aux_exec, rtn);
 	exit(rtn);
 }

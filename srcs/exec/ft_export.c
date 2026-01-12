@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 18:23:28 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/10 22:21:13 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/11 12:18:08 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	change_env(int hash, t_hash_env **hash_table, char **str)
 		len = ft_strlen(str[0]);
 	while (hash_env)
 	{
-		if (!ft_strncmp(((t_hash_env *)hash_table[hash])->content, str[0], len))
+		if (!ft_strncmp(hash_env->content, str[0], len))
 		{
 			ft_remove_var(((t_hash_env *)hash_table[hash])->content,
 				ft_gc_call_root("env")->lst);

@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 14:07:18 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/10 17:42:41 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/11 13:53:45 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,17 @@ int	cd_exec(char *new_path, t_hash_env **env)
 	if (!S_ISDIR(status.st_mode))
 		return (cd_error(new_path, 2));
 	if (update_pwd(1, env))
+	{
+		perror("Minishell");
 		return (1);
+	}
 	if (chdir(new_path) == -1)
 		return (cd_error(new_path, 3));
 	if (update_pwd(2, env))
+	{
+		perror("Minishell");
 		return (1);
+	}
 	return (0);
 }
 
@@ -62,10 +68,10 @@ int	cd_special(t_hash_env **env, int type)
 		str = var_exp("~");
 	if (!str && type == 1)
 		return (cd_error("HOME", 4));
-	else if (!str && type == 1)
-		return (cd_error("HOME", 4));
-	else if (!str && type == 1)
-		return (cd_error("HOME", 4));
+	else if (!str && type == 2)
+		return (cd_error("OLDPWD", 4));
+	else if (!str && type == 3)
+		return (cd_error("PWD", 4));
 	else if (str)
 		return (cd_exec(str, env));
 	return (1);
@@ -73,28 +79,28 @@ int	cd_special(t_hash_env **env, int type)
 
 int	update_pwd(int type, t_hash_env **hash_table)
 {
-	char	*str;
-	int		rtn;
+	char		*str;
+	int			rtn;
+	int			hash;
+	t_hash_env	*n_hash;
 
 	rtn = aux_pwd(&str);
 	if (rtn)
-	{
-		perror("Minishell");
 		return (rtn);
-	}
 	if (type == 1)
 		str = ft_gcfct_register_root(ft_strjoin("OLDPWD=", str), "env");
 	else if (type == 2)
 		str = ft_gcfct_register_root(ft_strjoin("PWD=", str), "env");
 	if (!str)
-	{
-		perror("Minishell");
 		return (1);
-	}
+	hash = count_hash(str);
 	if (change_env(count_hash(str), hash_table, &str))
 	{
-		perror("Minishell");
-		return (1);
+		n_hash = ft_hashnew(str, T_ENV);
+		if (n_hash)
+			ft_hashadd_back((t_hash_env **)&hash_table[hash], n_hash);
+		else
+			return (1);
 	}
 	return (0);
 }
