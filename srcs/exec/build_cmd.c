@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:00:07 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/13 14:41:58 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/13 20:21:31 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,24 @@ t_exec	*build_cmd(t_ast *ast)
 
 	exec_cmd = build_exec(ast);
 	if (!exec_cmd)
+	{
+		exec_cmd->error = 1;
 		return (NULL);
+	}
 	if (ast->redirs && handle_redirects(ast->redirs, &exec_cmd, ast))
-		return (NULL);
+	{
+		ast->cmd = exec_cmd;
+		close_fds_tree_cmd(ast);
+		exec_cmd->error = 1;
+		return (exec_cmd);
+	}
+	if (!ast->args)
+		return (exec_cmd);
 	if (!is_builtins(exec_cmd->args[0]))
 	{
 		ast->type = NODE_CMD_BUILTIN;
 		return (exec_cmd);
 	}
-	exec_cmd->cmd = handle_search(ast->args->seg_lst->text, &exec_cmd);
 	return (exec_cmd);
 }
 
@@ -60,8 +69,6 @@ t_exec	*build_exec(t_ast *ast)
 	aux = ast->args;
 	new_exec->args = ft_gc_calloc_root(ft_sizeseg(aux) + 1, sizeof(char *),
 			"exec");
-	if (!new_exec->args)
-		return (NULL);
 	copy_args(aux, &new_exec);
 	new_exec->infile = -1;
 	new_exec->outfile = -1;

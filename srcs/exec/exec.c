@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:33:11 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/12 22:52:35 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/13 18:34:39 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,28 @@ int	wait_childs(t_ast *ast, t_pids *pids, int rtn_sys)
 		waitpid((pid_t)pids->pids[i++], &rtn, 0);
 		if (WIFSIGNALED(rtn))
 		{
+			handle_error_msg(WTERMSIG(rtn));
 			rtn = 128 + WTERMSIG(rtn);
 		}
 		else if (WIFEXITED(rtn))
-		{
 			rtn = WEXITSTATUS(rtn);
-		}
 	}
 	if (ast->type == NODE_AND || ast->type == NODE_OR
 		|| ast->type == NODE_CMD_BUILTIN)
 		return (rtn_sys);
 	return (rtn);
+}
+
+void	handle_error_msg(int code)
+{
+	if (code == 11)
+		ft_putendl_fd("Segmentation fault (core dumped)", 2);
+	if (code == 7)
+		ft_putendl_fd("Bus error", 2);
+	if (code == 3)
+		ft_putendl_fd("Quit (core dumped)", 2);
+	if (code == 6)
+		ft_putendl_fd("Aborted", 2);
+	if (code == 8)
+		ft_putendl_fd("Floating point exception", 2);
 }

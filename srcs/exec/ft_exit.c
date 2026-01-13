@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 18:14:06 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/13 11:32:56 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/13 20:16:39 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,17 @@ void	close_fds_tree(t_ast *ast)
 		ast->chan_com = 0;
 		return ;
 	}
-	if (ast->cmd->infile  > 2)
-		close(ast->cmd->infile );
-	ast->cmd->infile  = -1;
-	if (ast->cmd->outfile  > 2)
-		close(ast->cmd->outfile );
-	ast->cmd->outfile  = -1;
+	close_fds_tree_cmd(ast);
+}
+
+void	close_fds_tree_cmd(t_ast *ast)
+{
+	if (ast->cmd->infile > 2)
+		close(ast->cmd->infile);
+	ast->cmd->infile = -1;
+	if (ast->cmd->outfile > 2)
+		close(ast->cmd->outfile);
+	ast->cmd->outfile = -1;
 	if (ast->chan_com > 2)
 		close(ast->chan_com);
 	if (ast->cmd->pipefd[1] > 2)
@@ -56,4 +61,12 @@ void	close_fds_tree(t_ast *ast)
 	if (ast->cmd->pipefd[0] > 2)
 		close(ast->cmd->pipefd[0]);
 	ast->chan_com = 0;
+	if (ast->heredoc)
+	{
+		while (ast->heredoc)
+		{
+			close(ast->heredoc->fd_tmp);
+			ast->heredoc = ast->heredoc->next;
+		}
+	}
 }

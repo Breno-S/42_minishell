@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/13 14:41:39 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/13 18:51:15 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(int argc, char *argv[], char *envp[])
 	hash_env = (t_hash_env **)create_hash_env(envp, argv);
 	while (1)
 	{
+		set_signal_interactive();
 		line = ft_gcfct_register_root(readline("Madshell> "), "temp");
 		if (!line)
 			ft_exit(NULL);

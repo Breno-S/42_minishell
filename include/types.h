@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/13 14:44:59 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/13 17:00:50 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,13 @@ typedef struct s_hash_env
 	int					has_content;
 	struct s_hash_env	*next;
 }						t_hash_env;
+
+typedef struct s_aux_exec
+{
+	t_ast		*head;
+	t_hash_env	**hash_env;
+	char		**envp;
+}				t_aux_exec;
 
 // typedef struct s_exec
 // {

@@ -6,13 +6,13 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 16:57:36 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/13 11:46:37 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/13 20:27:43 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsesh.h"
 #include "errorsh.h"
 #include "execsh.h"
+#include "parsesh.h"
 
 static void	print_token(t_token *t)
 {
@@ -77,7 +77,7 @@ static void	print_args(t_ast *ast, int indent)
 		printf(" ");
 		args = (t_token_word *)args->next;
 	}
-		printf("\n");
+	printf("\n");
 }
 
 static void	normalize_here_target(t_token_word *io_target)
@@ -94,19 +94,19 @@ static void	normalize_here_target(t_token_word *io_target)
 
 void	traverse_tree(t_ast *ast, int indent, t_hash_env **hash_env)
 {
+				char *curr_text;
+
 	for (int i = 0; i < indent; i++)
 		printf("  ");
 	if (ast->type == NODE_CMD)
 	{
 		expand_token_list((t_token **)&ast->args);
-
 		if (ast->redirs)
 		{
 			if (ast->redirs->type != TOKEN_REDIR_HEREDOC)
 			{
-				char *curr_text;
-
-				curr_text = ft_substr(ast->redirs->io_target->text, 0, ast->redirs->io_target->text_len);
+				curr_text = ft_substr(ast->redirs->io_target->text, 0,
+						ast->redirs->io_target->text_len);
 				expand_token_list((t_token **)&ast->redirs->io_target);
 				if (!ast->redirs->io_target || ast->redirs->io_target->next)
 				{
@@ -120,8 +120,7 @@ void	traverse_tree(t_ast *ast, int indent, t_hash_env **hash_env)
 				// Check for quotes on token->text
 			}
 		}
- 		ast->cmd = build_cmd(ast);
-
+		ast->cmd = build_cmd(ast);
 		printf("CMD:\n");
 		print_args(ast, indent + 1);
 		print_redirs(ast, indent + 1);

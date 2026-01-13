@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:58:20 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/13 14:47:17 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/13 20:05:36 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int	open_infile(char *infile, t_exec **exec)
 	if (exec[0]->infile == -1)
 	{
 		perror("Minishell");
+		if (errno == 2)
+			return (0);
 		return (1);
 	}
 	return (0);

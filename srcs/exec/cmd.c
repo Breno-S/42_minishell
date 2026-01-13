@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:16:59 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/13 11:32:50 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/13 19:58:50 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,17 @@ void	close_fd_parent(t_exec *cmd)
 {
 	if (!cmd)
 		return ;
-	if (cmd->infile  > 2)
+	if (cmd->infile > 2)
 	{
-		close(cmd->infile );
-		cmd->infile  = -1;
+		close(cmd->infile);
+		cmd->infile = -1;
 	}
-	if (cmd->outfile  > 2)
+	if (cmd->outfile > 2)
 	{
-		close(cmd->outfile );
-		cmd->outfile  = -1;
+		close(cmd->outfile);
+		cmd->outfile = -1;
 	}
-	if (cmd->pipefd[0] > 2 && cmd->pipefd[1] != cmd->outfile )
+	if (cmd->pipefd[0] > 2 && cmd->pipefd[1] != cmd->outfile)
 	{
 		close(cmd->pipefd[1]);
 		cmd->pipefd[0] = 0;
@@ -68,7 +68,13 @@ int	exec(t_exec *exec, t_aux_exec *aux_exec, int chan_com)
 	close_fds_tree(aux_exec->head);
 	if (chan_com > 0)
 		close(chan_com);
-	execve(exec->cmd, exec->args, aux_exec->envp);
+	if (exec->cmd)
+		execve(exec->cmd, exec->args, aux_exec->envp);
+	if (!exec->cmd)
+	{
+		finish_tree(aux_exec, 0);
+		exit(0);
+	}
 	perror("Minishell");
 	finish_tree(aux_exec, 1);
 	return (1);
@@ -76,17 +82,17 @@ int	exec(t_exec *exec, t_aux_exec *aux_exec, int chan_com)
 
 int	dup_fds(t_exec *exec)
 {
-	if (exec->infile  != -1)
+	if (exec->infile != -1)
 	{
-		if (dup2(exec->infile , STDIN_FILENO) == -1)
+		if (dup2(exec->infile, STDIN_FILENO) == -1)
 		{
 			perror("dup2");
 			return (1);
 		}
 	}
-	if (exec->outfile  != -1)
+	if (exec->outfile != -1)
 	{
-		if (dup2(exec->outfile , STDOUT_FILENO) == -1)
+		if (dup2(exec->outfile, STDOUT_FILENO) == -1)
 		{
 			perror("dup2");
 			return (1);
@@ -99,10 +105,12 @@ int	handle_cmd(t_ast *ast, t_aux_exec *aux_exec, t_pids **pids)
 {
 	if (!ast)
 		return (1);
-	if (ast->chan_com > 0 && ast->cmd->infile  == -1)
+	if (ast->chan_com > 0 && ast->cmd->infile == -1)
 	{
-		ast->cmd->infile  = ast->chan_com;
+		ast->cmd->infile = ast->chan_com;
 		ast->chan_com = 0;
 	}
+	if (ast->args)
+		ast->cmd->cmd = handle_search(ast->args->seg_lst->text, &ast->cmd);
 	return (fork_exec(ast->cmd, aux_exec, pids, ast->chan_com));
 }

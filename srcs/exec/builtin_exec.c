@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 18:35:55 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/13 11:32:44 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/13 17:48:58 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,25 @@ int	list_builtin(t_exec *exec, t_aux_exec *aux_exec)
 
 	rtn = 1;
 	if (!ft_strcmp("echo", exec->args[0]))
-		rtn = ft_echo(exec, exec->outfile );
+		rtn = ft_echo(exec, exec->outfile);
 	else if (!ft_strcmp("cd", exec->args[0]))
 		rtn = ft_cd(exec, aux_exec->hash_env);
 	else if (!ft_strcmp("pwd", exec->args[0]))
-		rtn = ft_pwd(exec->outfile );
+		rtn = ft_pwd(exec->outfile);
 	else if (!ft_strcmp("export", exec->args[0]))
-		rtn = ft_export(exec, aux_exec->hash_env, exec->outfile );
+		rtn = ft_export(exec, aux_exec->hash_env, exec->outfile);
 	else if (!ft_strcmp("unset", exec->args[0]))
 		rtn = ft_unset(exec, aux_exec->hash_env);
 	else if (!ft_strcmp("env", exec->args[0]))
-		rtn = ft_env(aux_exec->hash_env, exec->outfile );
+		rtn = ft_env(aux_exec->hash_env, exec->outfile);
 	else if (!ft_strcmp("exit", exec->args[0]))
 		rtn = ft_exit(aux_exec);
+	if (aux_print_export(aux_exec->hash_env, &aux_exec->envp))
+	{
+		perror("Minishell");
+		return (1);
+	}
+	ft_gcfct_register((void *)aux_exec->envp, GC_DATA);
 	return (rtn);
 }
 
@@ -93,8 +99,8 @@ int	exec_builtin(t_exec *exec, t_aux_exec *aux_exec)
 	if (dup_fds(exec))
 		finish_tree(aux_exec, 1);
 	close_fds_tree(aux_exec->head);
-	if (exec->outfile  == -1)
-		exec->outfile  = 1;
+	if (exec->outfile == -1)
+		exec->outfile = 1;
 	rtn = list_builtin(exec, aux_exec);
 	finish_tree(aux_exec, rtn);
 	exit(rtn);

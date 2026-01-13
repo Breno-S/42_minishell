@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:54:37 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/13 14:54:46 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/13 16:20:45 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int	verify_text(char *str, t_heredoc *heredoc)
 			y = exp_heredoc(&str[i], fd_hr);
 			if (y == -1)
 				return (1);
+			else if (y == 0)
+				write(fd_hr, &str[i], 1);
 			i += y;
 		}
 		else

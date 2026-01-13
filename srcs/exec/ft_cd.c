@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 14:07:18 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/11 13:53:45 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/13 16:39:13 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int	cd_error(char *arg, int type)
 	}
 	else if (type == 4)
 	{
-		ft_putstr_fd("bash: cd: ", 2);
+		ft_putstr_fd("Minishell: cd: ", 2);
 		ft_putstr_fd(arg, 2);
 		ft_putendl_fd(" not set", 2);
 	}
