@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 18:26:03 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/11 20:15:43 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/13 19:49:42 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_ast	*parse_cmd(t_parser *p)
 	if (!parse_redirs(p, ast))
 		return (NULL);
 	class = parser_peek(p);
-	if (class != TOKEN_WORD)
+	if (class != TOKEN_WORD && class != TOKEN_NEWLINE)
 	{
 		log_syntax_error(p->idx);
 		return (NULL);
@@ -72,6 +72,8 @@ t_ast	*parse_pipe(t_parser *p)
 		ast->type = NODE_PIPE;
 		ast->left = cmd;
 		ast->right = parse_pipe(p);
+		if (!ast->right)
+			return (NULL);
 	}
 	else
 		ast = cmd;
@@ -87,7 +89,7 @@ t_ast	*parse_cond(t_parser *p)
 	ast = NULL;
 	cmd = parse_pipe(p);
 	if (!cmd)
-		return (0);
+		return (NULL);
 	class = parser_peek(p);
 	if (class == TOKEN_AND || class == TOKEN_OR)
 	{
@@ -98,6 +100,8 @@ t_ast	*parse_cond(t_parser *p)
 		ast->type = class - 10;
 		ast->left = cmd;
 		ast->right = parse_cond(p);
+		if (!ast->right)
+			return (NULL);
 	}
 	else
 		ast = cmd;

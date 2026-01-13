@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/11 13:36:57 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/13 19:55:24 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct s_parser
 {
 	t_token				*tokens;
 	t_token				*idx;
+	int					paren_flag;
 }						t_parser;
 
 typedef enum e_node_type

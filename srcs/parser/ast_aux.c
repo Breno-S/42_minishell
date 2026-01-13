@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 00:09:24 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/11 19:40:33 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/13 18:55:24 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ t_ast	*parse_atom(t_parser *p)
 {
 	if (parser_peek(p) == TOKEN_OPEN_PAREN)
 	{
-		parser_chop_token(p);
+		if (!parser_chop_token(p))
+			return (NULL);
 		return (parse_sub(p));
 	}
 	else

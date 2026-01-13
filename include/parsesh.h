@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:22:36 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/11 13:43:52 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/13 17:32:14 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void			segment_add(t_segment **seg_list, t_segment *new);
 // PARSER
 
 t_parser		parser_new(t_token *token_list);
-void			parser_chop_token(t_parser *p);
+int				parser_chop_token(t_parser *p);
 t_token_class	parser_peek(t_parser *p);
 
 t_ast			*parser_parse(t_parser *p);
