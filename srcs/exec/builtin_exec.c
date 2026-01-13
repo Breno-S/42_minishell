@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 18:35:55 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/11 12:23:08 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/12 23:05:14 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ int	fork_builtin(t_exec *cmd, t_aux_exec *aux_exec, t_pids **pids)
 	}
 	n_pid[i] = fork();
 	if (!n_pid[i])
+	{
 		exec_builtin(cmd, aux_exec);
+	}
 	close_fd_parent(cmd);
 	pids[0]->total++;
 	pids[0]->pids = n_pid;

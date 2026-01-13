@@ -6,16 +6,16 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/11 13:54:55 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/12 23:03:49 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsesh.h"
-#include "execsh.h"
 #include "errorsh.h"
+#include "execsh.h"
+#include "parsesh.h"
 #include "types.h"
 
-void	traverse_tree(t_ast *ast, int indent, t_hash_env **hash_env);
+void		traverse_tree(t_ast *ast, int indent, t_hash_env **hash_env);
 
 int	main(int argc, char *argv[], char *envp[])
 {
@@ -51,7 +51,7 @@ int	main(int argc, char *argv[], char *envp[])
 	}
 }
 
-t_aux_exec *build_aux_exec(t_ast *ast, t_hash_env **hash_table)
+t_aux_exec	*build_aux_exec(t_ast *ast, t_hash_env **hash_table)
 {
 	char		**new_envp;
 	t_aux_exec	*aux_exec;

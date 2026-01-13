@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/11 00:56:31 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/12 23:05:48 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,5 +153,14 @@ int				open_outfile(char *outfile, t_exec **exec, int type);
 int				open_heredoc(char *eof, t_exec **exec);
 // PWD
 // char		*pwd(int fd);
+
+// SIGNALS
+
+// void	sigint_interactive(int sig);
+// void	set_signal_interactive(void);
+// void	set_signal_exec_parent(void);
+// void	set_signal_child(void);
+// void	sigint_heredoc(int sig);
+// void	set_signal_heredoc(void);
 
 #endif // EXECSH_H

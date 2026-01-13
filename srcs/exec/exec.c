@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:33:11 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/11 00:06:23 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/12 22:52:35 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,19 @@ int	wait_childs(t_ast *ast, t_pids *pids, int rtn_sys)
 	i = 0;
 	rtn = 1;
 	while (i < pids->total)
+	{
 		waitpid((pid_t)pids->pids[i++], &rtn, 0);
+		if (WIFSIGNALED(rtn))
+		{
+			rtn = 128 + WTERMSIG(rtn);
+		}
+		else if (WIFEXITED(rtn))
+		{
+			rtn = WEXITSTATUS(rtn);
+		}
+	}
 	if (ast->type == NODE_AND || ast->type == NODE_OR
 		|| ast->type == NODE_CMD_BUILTIN)
 		return (rtn_sys);
-	return (WEXITSTATUS(rtn));
+	return (rtn);
 }
