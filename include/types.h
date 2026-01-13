@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/12 22:14:17 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/13 14:44:59 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,12 +120,6 @@ typedef struct s_io_node
 	int					is_quoted_here;
 }						t_io_node;
 
-typedef struct s_redirect
-{
-	int					fd_tmp;
-	char				*path;
-}						t_redirect;
-
 typedef struct s_pids
 {
 	pid_t				*pids;
@@ -135,13 +129,20 @@ typedef struct s_pids
 
 typedef struct s_exec
 {
-	t_redirect			*infile;
-	t_redirect			*outfile;
+	int					infile;
+	int					outfile;
 	char				*cmd;
 	char				**args;
 	int					error;
 	int					pipefd[2];
 }						t_exec;
+
+typedef struct s_heredoc
+{
+	int					fd_tmp;
+	char				*path;
+	struct s_heredoc	*next;
+}						t_heredoc;
 
 typedef struct s_ast
 {
@@ -154,6 +155,8 @@ typedef struct s_ast
 	int					chan_com;
 	int					is_head;
 	t_pids				*pids;
+	t_heredoc			*heredoc;
+
 }						t_ast;
 
 // EXEC STRUCTS

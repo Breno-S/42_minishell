@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 18:14:06 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/11 16:45:10 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/13 11:32:56 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ void	close_fds_tree(t_ast *ast)
 		ast->chan_com = 0;
 		return ;
 	}
-	if (ast->cmd->infile->fd_tmp > 2)
-		close(ast->cmd->infile->fd_tmp);
-	ast->cmd->infile->fd_tmp = -1;
-	if (ast->cmd->outfile->fd_tmp > 2)
-		close(ast->cmd->outfile->fd_tmp);
-	ast->cmd->outfile->fd_tmp = -1;
+	if (ast->cmd->infile  > 2)
+		close(ast->cmd->infile );
+	ast->cmd->infile  = -1;
+	if (ast->cmd->outfile  > 2)
+		close(ast->cmd->outfile );
+	ast->cmd->outfile  = -1;
 	if (ast->chan_com > 2)
 		close(ast->chan_com);
 	if (ast->cmd->pipefd[1] > 2)

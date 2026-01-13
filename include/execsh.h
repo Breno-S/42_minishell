@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/12 23:05:48 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/13 14:53:30 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,17 @@ char			*var_exp(const char *var_name);
 
 // HEREDOC
 
-t_redirect		*create_heredoc(char *eof);
+t_heredoc		*create_heredoc(char *eof);
 char			*access_temp_file(int tmp);
 void			print_warning(char *eof, int count);
+int				loop_heredoc(char *eof, t_heredoc *heredoc);
+int				handle_heredoc(t_ast *ast);
+
+int				open_heredoc_tree(t_ast *ast);
+int				expand_heredoc(t_heredoc *heredoc);
+int				verify_text(char *str, t_heredoc *heredoc);
+int				exp_heredoc(char *str, int fd_hr);
+void			fix_list_heredoc(t_ast *ast, t_heredoc *heredoc);
 
 // PWD
 
@@ -146,11 +154,11 @@ t_pids			*create_pids_list(t_ast **ast, t_pids **pids);
 
 // REDIRS
 
-int				handle_redirects(t_io_node *redirs, t_exec **exec);
+int				handle_redirects(t_io_node *redirs, t_exec **exec, t_ast *ast);
 int				open_pipeline(t_exec **cmd);
 int				open_infile(char *infile, t_exec **exec);
 int				open_outfile(char *outfile, t_exec **exec, int type);
-int				open_heredoc(char *eof, t_exec **exec);
+int				open_heredoc(t_exec **exec, t_ast *ast);
 // PWD
 // char		*pwd(int fd);
 

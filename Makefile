@@ -51,7 +51,8 @@ SRCS_MANDATORY_EXEC := \
 	ft_echo.c \
 	ft_cd.c \
 	ft_exit.c \
-	builtin_exec.c
+	builtin_exec.c \
+	expand_heredoc.c
 SRCS_MANDATORY_PARSER := \
 	ast.c \
 	ast_aux.c \

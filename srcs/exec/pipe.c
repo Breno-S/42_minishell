@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:17:04 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/10 14:58:42 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/13 11:33:02 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	pipe_exec(t_ast *ast, t_aux_exec *aux_exec, t_pids **pids)
 
 	rtn = 1;
 	if ((ast->left && ast->left->type == NODE_CMD && !ast->left->cmd->error
-			&& ast->left->cmd->outfile->fd_tmp == -1))
+			&& ast->left->cmd->outfile  == -1))
 	{
 		if (!open_pipeline(&ast->left->cmd))
 			ast->right->chan_com = ast->left->cmd->pipefd[0];
@@ -28,10 +28,10 @@ int	pipe_exec(t_ast *ast, t_aux_exec *aux_exec, t_pids **pids)
 	else if (ast->right)
 		if (!open_pipeline(&ast->left->cmd))
 			ast->right->chan_com = ast->left->cmd->pipefd[0];
-	if (ast->left->cmd->outfile->fd_tmp == -1 && ast->left->cmd->pipefd[0] > 0)
-		ast->left->cmd->outfile->fd_tmp = ast->left->cmd->pipefd[1];
-	if (ast->chan_com > 0 && ast->left->cmd->infile->fd_tmp == -1)
-		ast->left->cmd->infile->fd_tmp = ast->chan_com;
+	if (ast->left->cmd->outfile  == -1 && ast->left->cmd->pipefd[0] > 0)
+		ast->left->cmd->outfile  = ast->left->cmd->pipefd[1];
+	if (ast->chan_com > 0 && ast->left->cmd->infile  == -1)
+		ast->left->cmd->infile  = ast->chan_com;
 	else if (ast->chan_com > 0)
 		close(ast->chan_com);
 	ast->chan_com = 0;

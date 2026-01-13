@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 16:57:36 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/11 00:29:37 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/13 11:46:37 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	traverse_tree(t_ast *ast, int indent, t_hash_env **hash_env)
 				// Check for quotes on token->text
 			}
 		}
-		ast->cmd = build_cmd(ast);
+ 		ast->cmd = build_cmd(ast);
 
 		printf("CMD:\n");
 		print_args(ast, indent + 1);

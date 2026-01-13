@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/12 23:03:49 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/13 14:41:39 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	main(int argc, char *argv[], char *envp[])
 		syntax_check(token_list);
 		p = parser_new(token_list);
 		ast = parser_parse(&p);
+		open_heredoc_tree(ast);
 		aux_exec = build_aux_exec(ast, hash_env);
 		if (aux_exec)
 		{
@@ -51,25 +52,4 @@ int	main(int argc, char *argv[], char *envp[])
 	}
 }
 
-t_aux_exec	*build_aux_exec(t_ast *ast, t_hash_env **hash_table)
-{
-	char		**new_envp;
-	t_aux_exec	*aux_exec;
 
-	if (aux_print_export(hash_table, &new_envp))
-	{
-		perror("Minishell");
-		return (NULL);
-	}
-	ft_gcfct_register((void *)new_envp, GC_DATA);
-	aux_exec = ft_gc_calloc_root(1, sizeof(t_aux_exec), "temp");
-	if (!aux_exec)
-	{
-		perror("Minishell");
-		return (NULL);
-	}
-	aux_exec->envp = new_envp;
-	aux_exec->hash_env = hash_table;
-	aux_exec->head = ast;
-	return (aux_exec);
-}
