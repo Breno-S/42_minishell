@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 15:14:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/11 14:06:40 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/13 14:25:27 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,6 @@
 
 int		log_syntax_error(t_token *token);
 int		log_ambiguous_redir_error(char *error_src);
-int		syntax_check(t_token *token_list);
+int		syntax_check(t_token *token_list, t_lexer *l);
 
 #endif /* ERRORSH_H */

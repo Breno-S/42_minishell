@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/11 14:10:22 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/13 14:21:55 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char *argv[], char *envp[])
 		add_history(line);
 		l = lexer_new(line, ft_strlen(line));
 		token_list = lexer_token_list(&l);
-		if (syntax_check(token_list))
+		if (syntax_check(token_list, &l))
 		{
 			p = parser_new(token_list);
 			ast = parser_parse(&p);
