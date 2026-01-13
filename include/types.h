@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/13 19:55:24 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/13 20:35:09 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,21 +122,29 @@ typedef struct s_io_node
 	int					is_quoted_here;
 }						t_io_node;
 
-typedef struct s_redirect
+typedef struct s_pids
 {
-	int					fd_tmp;
-	char				*path;
-}						t_redirect;
+	pid_t				*pids;
+	int					total;
+	t_node_type			type_head;
+}						t_pids;
 
 typedef struct s_exec
 {
-	t_redirect			*infile;
-	t_redirect			*outfile;
+	int					infile;
+	int					outfile;
 	char				*cmd;
 	char				**args;
 	int					error;
 	int					pipefd[2];
 }						t_exec;
+
+typedef struct s_heredoc
+{
+	int					fd_tmp;
+	char				*path;
+	struct s_heredoc	*next;
+}						t_heredoc;
 
 typedef struct s_ast
 {
@@ -148,6 +156,9 @@ typedef struct s_ast
 	t_exec				*cmd;
 	int					chan_com;
 	int					is_head;
+	t_pids				*pids;
+	t_heredoc			*heredoc;
+
 }						t_ast;
 
 // EXEC STRUCTS
@@ -168,11 +179,12 @@ typedef struct s_hash_env
 	struct s_hash_env	*next;
 }						t_hash_env;
 
-typedef struct s_pids
+typedef struct s_aux_exec
 {
-	pid_t				*pids;
-	int					total;
-}						t_pids;
+	t_ast		*head;
+	t_hash_env	**hash_env;
+	char		**envp;
+}				t_aux_exec;
 
 // typedef struct s_exec
 // {

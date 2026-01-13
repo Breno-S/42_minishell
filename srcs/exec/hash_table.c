@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 15:22:01 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/19 14:08:14 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/10 17:31:04 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,49 @@
 t_hash_env	**create_hash_env(char **arr, char **argv)
 {
 	t_hash_env	**hash_env;
-	int			i;
 
-	i = 0;
 	hash_env = ft_gc_calloc_root(256, sizeof(void *), "hash_env");
 	if (!hash_env)
 		return (NULL);
-	import_argv(argv, hash_env);
-	import_envp(arr, hash_env);
+	if (import_argv(argv, hash_env))
+	{
+		perror("Minishell");
+		return (NULL);
+	}
+	if (import_envp(arr, hash_env))
+	{
+		perror("Minishell");
+		return (NULL);
+	}
+	if (import_special_args(hash_env))
+	{
+		perror("Minishell");
+		return (NULL);
+	}
 	return (hash_env);
+}
+
+int	import_special_args(t_hash_env **hash_env)
+{
+	int			aux;
+	char		*str[2];
+	t_hash_env	*new;
+
+	str[0] = var_exp("HOME");
+	if (!str[0])
+		return (1);
+	str[1] = ft_gcfct_register_root(ft_strjoin("~=", str[0]), "env");
+	if (!str[1])
+		return (1);
+	aux = count_hash(str[1]);
+	new = ft_hashnew(str[1], T_INTERNAL);
+	if (!new)
+		return (1);
+	if (hash_env[aux])
+		ft_hashadd_back(&hash_env[aux], new);
+	else
+		hash_env[aux] = new;
+	return (0);
 }
 
 int	import_argv(char **arr, t_hash_env **hash_env)

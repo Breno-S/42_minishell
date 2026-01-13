@@ -6,13 +6,28 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 14:07:18 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/09 15:16:51 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/10 18:34:54 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 
 int	ft_pwd(int fd)
+{
+	char	*str;
+	int		rtn;
+
+	rtn = aux_pwd(&str);
+	if (rtn)
+	{
+		perror("Minishell");
+		return (rtn);
+	}
+	ft_putendl_fd(str, fd);
+	return (0);
+}
+
+int	aux_pwd(char **str)
 {
 	char	*pwd;
 	int		mult;
@@ -37,6 +52,6 @@ int	ft_pwd(int fd)
 		else
 			break ;
 	}
-	ft_putstr_fd(pwd, fd);
+	str[0] = pwd;
 	return (0);
 }

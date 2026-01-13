@@ -6,11 +6,10 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:23:23 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/13 14:33:20 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/13 20:35:56 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "errorsh.h"
 #include "parsesh.h"
 

@@ -6,15 +6,14 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 19:03:05 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/11 19:55:27 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/13 20:36:14 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "types.h"
 #include "execsh.h"
+#include "types.h"
 
-void	remove_segment(t_segment **seg_lst, t_segment *target,
-	t_segment *prev)
+void	remove_segment(t_segment **seg_lst, t_segment *target, t_segment *prev)
 {
 	if (prev)
 		prev->next = target->next;
