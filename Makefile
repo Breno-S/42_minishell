@@ -63,11 +63,11 @@ SRCS_MANDATORY_PARSER := \
 	lexer.c \
 	lexer_handle_word.c \
 	lexer_utils.c \
-	log_tree.c \
 	parser.c \
 	parser_utils.c \
 	segment.c \
-	token.c
+	token.c \
+	traverse_expand.c
 
 SRCS_MANDATORY := $(addprefix $(PATH_MANDATORY)/,$(SRCS_MANDATORY_COMMON))
 SRCS_MANDATORY := $(SRCS_MANDATORY) $(addprefix $(PATH_MANDATORY)/$(EXEC_SRC_DIR)/,$(SRCS_MANDATORY_EXEC))

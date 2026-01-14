@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   log_tree.c                                         :+:      :+:    :+:   */
+/*   traverse_expand.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 16:57:36 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/13 20:36:18 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/14 15:34:10 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ static void	print_redir(t_io_node *io_node, int indent)
 	else if (io_node->type == TOKEN_REDIR_APPEND)
 		printf(">>");
 	printf(" ");
-	printf("%.*s", (int)io_node->io_target->text_len, io_node->io_target->text);
-	printf("\n");
+	if (io_node->io_target)
+		printf("%.*s\n", (int)io_node->io_target->text_len, io_node->io_target->text);
 }
 
 static void	print_redirs(t_ast *ast, int indent)
@@ -92,32 +92,43 @@ static void	normalize_here_target(t_token_word *io_target)
 	io_target->seg_lst->next = NULL;
 }
 
-void	traverse_tree(t_ast *ast, int indent, t_hash_env **hash_env)
+static int	expand_args_redirs(t_ast *ast)
 {
-				char *curr_text;
+	char		*curr_text;
+	t_io_node	*redir;
 
+	expand_token_list((t_token **)&ast->args);
+	redir = ast->redirs;
+	while (redir)
+	{
+		if (redir->type != TOKEN_REDIR_HEREDOC)
+		{
+			curr_text = ft_gcfct_register_root(ft_substr(redir->io_target->text,
+				0, redir->io_target->text_len), "temp");
+			expand_token_list((t_token **)&redir->io_target);
+			if (!redir->io_target || redir->io_target->next)
+			{
+				log_ambiguous_redir_error(curr_text);
+				return (0);
+			}
+		}
+		else
+			normalize_here_target(ast->redirs->io_target);
+		redir = redir->next;
+	}
+	return (1);
+}
+
+int	traverse_expand(t_ast *ast, int indent, t_hash_env **hash_env)
+{
 	for (int i = 0; i < indent; i++)
 		printf("  ");
 	if (ast->type == NODE_CMD)
 	{
-		expand_token_list((t_token **)&ast->args);
-		if (ast->redirs)
-		{
-			if (ast->redirs->type != TOKEN_REDIR_HEREDOC)
-			{
-				curr_text = ft_substr(ast->redirs->io_target->text, 0,
-						ast->redirs->io_target->text_len);
-				expand_token_list((t_token **)&ast->redirs->io_target);
-				if (!ast->redirs->io_target || ast->redirs->io_target->next)
-				{
-					// TODO: arrumar o retorno
-					log_ambiguous_redir_error(curr_text);
-				}
-			}
-			else
-				normalize_here_target(ast->redirs->io_target);
-		}
-		ast->cmd = build_cmd(ast);
+		if (expand_args_redirs(ast))
+			ast->cmd = build_cmd(ast);
+		else
+			return (0);
 		printf("CMD:\n");
 		print_args(ast, indent + 1);
 		print_redirs(ast, indent + 1);
@@ -125,24 +136,25 @@ void	traverse_tree(t_ast *ast, int indent, t_hash_env **hash_env)
 	else if (ast->type == NODE_AND)
 	{
 		printf("AND:\n");
-		traverse_tree(ast->left, indent + 1, hash_env);
-		traverse_tree(ast->right, indent + 1, hash_env);
+		traverse_expand(ast->left, indent + 1, hash_env);
+		traverse_expand(ast->right, indent + 1, hash_env);
 	}
 	else if (ast->type == NODE_OR)
 	{
 		printf("OR:\n");
-		traverse_tree(ast->left, indent + 1, hash_env);
-		traverse_tree(ast->right, indent + 1, hash_env);
+		traverse_expand(ast->left, indent + 1, hash_env);
+		traverse_expand(ast->right, indent + 1, hash_env);
 	}
 	else if (ast->type == NODE_PIPE)
 	{
 		printf("PIPE:\n");
-		traverse_tree(ast->left, indent + 1, hash_env);
-		traverse_tree(ast->right, indent + 1, hash_env);
+		traverse_expand(ast->left, indent + 1, hash_env);
+		traverse_expand(ast->right, indent + 1, hash_env);
 	}
 	else if (ast->type == NODE_SUB)
 	{
 		printf("SUB:\n");
-		traverse_tree(ast->left, indent + 1, hash_env);
+		traverse_expand(ast->left, indent + 1, hash_env);
 	}
+	return (1);
 }

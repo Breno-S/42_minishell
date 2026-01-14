@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:22:36 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/13 17:32:14 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/14 15:25:45 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,6 @@ void			remove_token(t_token **token_list, t_token *target,
 char			*text_from_segments(t_segment *seg_lst);
 int				expand_var_segs(t_token_word *token);
 
-void			traverse_tree(t_ast *ast, int indent, t_hash_env **hash_env);
+int				traverse_expand(t_ast *ast, int indent, t_hash_env **hash_env);
 
 #endif //PARSESH_H

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 12:18:32 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/13 14:54:34 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/14 13:38:14 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	loop_heredoc(char *eof, t_heredoc *heredoc)
 	// TODO: signal handle
 	while (1)
 	{
-		str = ft_gcfct_register_root(readline("> "), "`temp");
+		str = ft_gcfct_register_root(readline("> "), "temp");
 		if (!str)
 			print_warning(eof, count);
 		if ((str && !ft_strcmp(str, eof)) || !str)
@@ -78,7 +78,7 @@ char	*access_temp_file(int tmp)
 	char	*path;
 
 	tmp_char = NULL;
-	tmp_char = ft_gcfct_register_root(ft_itoa(tmp), "`temp");
+	tmp_char = ft_gcfct_register_root(ft_itoa(tmp), "temp");
 	if (!tmp_char)
 		return (NULL);
 	path = ft_gcfct_register_root(ft_strjoin("/proc/self/fd/", tmp_char),
