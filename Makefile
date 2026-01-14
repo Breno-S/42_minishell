@@ -162,7 +162,8 @@ valgrind:
 		--show-leak-kinds=all \
 		--track-origins=yes \
 		--suppressions=ignore_readline.supp \
-		./bin/Minishell > log_valgrind
+		--suppressions=ignore_readline.supp \
+		./bin/Minishell
 
 clean:
 		@make -C $(PATH_LIBFT) clean
