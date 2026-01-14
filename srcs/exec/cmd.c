@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:16:59 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/13 19:58:50 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/14 14:13:07 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,32 +31,33 @@ int	fork_exec(t_exec *cmd, t_aux_exec *aux_exec, t_pids **pids, int chan_com)
 	{
 		exec(cmd, aux_exec, chan_com);
 	}
-	close_fd_parent(cmd);
+	ft_putendl_fd(cmd->args[0], 0);
+	ft_putnbr_fd(n_pid[i], 0);
+	ft_putchar_fd('\n', 0);
+	close_fd_parent(cmd, chan_com);
 	pids[0]->total++;
 	pids[0]->pids = n_pid;
 	return (0);
 }
 
-void	close_fd_parent(t_exec *cmd)
+void	close_fd_parent(t_exec *cmd, int chan_com)
 {
 	if (!cmd)
 		return ;
 	if (cmd->infile > 2)
-	{
 		close(cmd->infile);
-		cmd->infile = -1;
-	}
+	cmd->infile = -1;
 	if (cmd->outfile > 2)
-	{
 		close(cmd->outfile);
-		cmd->outfile = -1;
-	}
+	cmd->outfile = -1;
 	if (cmd->pipefd[0] > 2 && cmd->pipefd[1] != cmd->outfile)
 	{
 		close(cmd->pipefd[1]);
 		cmd->pipefd[0] = 0;
 		cmd->pipefd[1] = 0;
 	}
+	if (chan_com > 2)
+		close(chan_com);
 }
 
 int	exec(t_exec *exec, t_aux_exec *aux_exec, int chan_com)
@@ -103,8 +104,11 @@ int	dup_fds(t_exec *exec)
 
 int	handle_cmd(t_ast *ast, t_aux_exec *aux_exec, t_pids **pids)
 {
+	int rtn;
+
+	rtn = 1;
 	if (!ast)
-		return (1);
+		return (rtn);
 	if (ast->chan_com > 0 && ast->cmd->infile == -1)
 	{
 		ast->cmd->infile = ast->chan_com;
@@ -112,5 +116,7 @@ int	handle_cmd(t_ast *ast, t_aux_exec *aux_exec, t_pids **pids)
 	}
 	if (ast->args)
 		ast->cmd->cmd = handle_search(ast->args->seg_lst->text, &ast->cmd);
-	return (fork_exec(ast->cmd, aux_exec, pids, ast->chan_com));
+	rtn = fork_exec(ast->cmd, aux_exec, pids, ast->chan_com);
+	ast->chan_com = 0;
+	return (rtn);
 }

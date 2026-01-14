@@ -14,7 +14,6 @@ PATH_BIN := ./bin/
 PATH_OBJT := ./build/
 PATH_BUILD := build/
 
-
 INCLUDES := include libs/libft/include
 PATH_MANDATORY := ./srcs
 EXEC_SRC_DIR   := exec
@@ -156,6 +155,14 @@ $(PATH_OBJT)%.o: $(PATH_MANDATORY)/%.c
 		@$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $(subst srcs/,build/,$@)
 
 .PHONY: clean fclean re all bonus $(OBJTS_LIBFT)
+
+valgrind:
+		valgrind \
+		--leak-check=full \
+		--show-leak-kinds=all \
+		--track-origins=yes \
+		--suppressions=ignore_readline.supp \
+		./bin/Minishell > log_valgrind
 
 clean:
 		@make -C $(PATH_LIBFT) clean

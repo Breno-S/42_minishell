@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/13 20:09:42 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/14 15:05:50 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,8 @@ int			ft_exit(t_aux_exec *aux_exec);
 int			exec_builtin(t_exec *exec, t_aux_exec *aux_exec);
 int			handle_builtin(t_ast *ast, t_aux_exec *exec, t_pids **pids);
 int			list_builtin(t_exec *exec, t_aux_exec *aux_exec);
-int			fork_builtin(t_exec *cmd, t_aux_exec *aux_exec, t_pids **pids);
+int			fork_builtin(t_exec *cmd, t_aux_exec *aux_exec, t_pids **pids,
+				int chan_com);
 
 // EXEC
 
@@ -125,7 +126,7 @@ int			pipe_exec(t_ast *ast, t_aux_exec *aux_exec, t_pids **pids);
 int			exec(t_exec *exec, t_aux_exec *aux_exec, int chan_com);
 int			fork_exec(t_exec *cmd, t_aux_exec *aux_exec, t_pids **pids,
 				int chan_com);
-void		close_fd_parent(t_exec *cmd);
+void		close_fd_parent(t_exec *cmd, int chan_com);
 int			handle_cmd(t_ast *ast, t_aux_exec *aux_exec, t_pids **pids);
 int			is_builtins(char *cmd);
 
@@ -152,6 +153,8 @@ int			open_outfile(char *outfile, t_exec **exec, int type);
 int			open_heredoc(t_exec **exec, t_ast *ast);
 void		handle_error_msg(int code);
 void		close_fds_tree_cmd(t_ast *ast);
+void		verify_sigpipe(t_ast *ast);
+
 // PWD
 // char		*pwd(int fd);
 

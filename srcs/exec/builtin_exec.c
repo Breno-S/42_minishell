@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 18:35:55 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/13 17:48:58 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/14 14:17:13 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,16 @@ int	handle_builtin(t_ast *ast, t_aux_exec *exec, t_pids **pids)
 	if (ast->cmd->outfile == -1)
 		ast->cmd->outfile = 1;
 	if (pids[0]->type_head == NODE_PIPE)
-		return (fork_builtin(ast->cmd, exec, pids));
+		return (fork_builtin(ast->cmd, exec, pids, ast->chan_com));
 	else if (pids[0]->type_head == NODE_CMD_BUILTIN)
 	{
 		if (ast->cmd->error)
 		{
-			close_fd_parent(ast->cmd);
+			close_fd_parent(ast->cmd, ast->chan_com);
 			return (ast->cmd->error);
 		}
 		rtn = list_builtin(ast->cmd, exec);
-		close_fd_parent(ast->cmd);
-		if (ast->chan_com > 0 && ast->cmd->infile > 0)
-			close(ast->chan_com);
-		ast->chan_com = 0;
+		close_fd_parent(ast->cmd, ast->chan_com);
 	}
 	return (rtn);
 }
@@ -65,7 +62,7 @@ int	list_builtin(t_exec *exec, t_aux_exec *aux_exec)
 	return (rtn);
 }
 
-int	fork_builtin(t_exec *cmd, t_aux_exec *aux_exec, t_pids **pids)
+int	fork_builtin(t_exec *cmd, t_aux_exec *aux_exec, t_pids **pids, int chan_com)
 {
 	pid_t	*n_pid;
 	int		i;
@@ -84,7 +81,10 @@ int	fork_builtin(t_exec *cmd, t_aux_exec *aux_exec, t_pids **pids)
 	{
 		exec_builtin(cmd, aux_exec);
 	}
-	close_fd_parent(cmd);
+	ft_putendl_fd(cmd->args[0], 0);
+	ft_putnbr_fd(n_pid[i], 0);
+	ft_putchar_fd('\n', 0);
+	close_fd_parent(cmd, chan_com);
 	pids[0]->total++;
 	pids[0]->pids = n_pid;
 	return (0);
