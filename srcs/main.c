@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/14 19:34:46 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/15 18:25:30 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	main(int argc, char *argv[], char *envp[])
 	t_ast		*ast;
 	char		*line;
 	t_aux_exec	*aux_exec;
+	int			rtn;
 
 	ft_gc_init();
 	ft_printf("%d\n", getpid());
@@ -52,7 +53,9 @@ int	main(int argc, char *argv[], char *envp[])
 					aux_exec = build_aux_exec(ast, hash_env);
 					if (aux_exec)
 						if (traverse_expand(ast, 0, hash_env))
-							ft_putnbr_fd(exec_tree(ast, aux_exec, NULL), 0);
+							rtn = exec_tree(ast, aux_exec, NULL);
+					ft_putnbr_fd(rtn, 0);
+					save_return(rtn, hash_env);
 				}
 				else
 					close_heredoc(ast);

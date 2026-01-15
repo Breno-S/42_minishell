@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execsh.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/15 17:53:38 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/15 18:22:56 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int			ft_export(t_exec *exec, t_hash_env **hash_table, int fd);
 int			ft_remove_var(void *content, t_ext_list *root);
 int			change_env(int hash, t_hash_env **hash_table, char **str);
 int			modify_var(char *str, int hash, t_hash_env **hash_table);
-int			ft_remove_var(void *content, t_ext_list *root);
 int			verify_valid_var(char *var);
 
 void		export_error(char *str);
@@ -163,6 +162,8 @@ void		verify_sigpipe(t_ast *ast);
 
 int			sub_exec(t_ast *ast, t_aux_exec *exec);
 int			sub_fork(t_ast *ast, t_aux_exec *exec, t_pids **pids);
+
+int			save_return(int rtn, t_hash_env **hash_table);
 
 // PWD
 // char		*pwd(int fd);

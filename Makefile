@@ -54,7 +54,8 @@ SRCS_MANDATORY_EXEC := \
 	expand_heredoc.c \
 	signals.c \
 	close_heredoc.c \
-	subshell.c
+	subshell.c \
+	export_utils.c
 SRCS_MANDATORY_PARSER := \
 	ast.c \
 	ast_aux.c \
