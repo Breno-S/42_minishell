@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 14:07:18 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/13 16:39:13 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/15 17:53:38 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,13 @@ int	update_pwd(int type, t_hash_env **hash_table)
 
 	rtn = aux_pwd(&str);
 	if (rtn)
-		return (rtn);
+		return (0);
 	if (type == 1)
 		str = ft_gcfct_register_root(ft_strjoin("OLDPWD=", str), "env");
 	else if (type == 2)
 		str = ft_gcfct_register_root(ft_strjoin("PWD=", str), "env");
 	if (!str)
-		return (1);
+		return (0);
 	hash = count_hash(str);
 	if (change_env(count_hash(str), hash_table, &str))
 	{

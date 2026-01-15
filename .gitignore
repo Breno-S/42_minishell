@@ -57,6 +57,9 @@ dkms.conf
 # Vscode
 .vscode
 
+#log
+*.log
+
 # Executable
 Minishell
 

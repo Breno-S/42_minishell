@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   subshell.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 20:06:10 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/15 17:16:50 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/15 17:53:38 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
+#include "signalsh.h"
 
 int	sub_fork(t_ast *ast, t_aux_exec *exec, t_pids **pids)
 {
@@ -31,7 +32,7 @@ int	sub_fork(t_ast *ast, t_aux_exec *exec, t_pids **pids)
 	n_pid[i] = fork();
 	set_signal_fork(n_pid[i]);
 	if (!n_pid[i])
-		sub_exec(ast, exec, pids);
+		sub_exec(ast, exec);
 	close_fd_parent(ast->cmd, ast->chan_com);
 	ast->chan_com = 0;
 	pids[0]->total++;
@@ -39,7 +40,7 @@ int	sub_fork(t_ast *ast, t_aux_exec *exec, t_pids **pids)
 	return (0);
 }
 
-int	sub_exec(t_ast *ast, t_aux_exec *exec, t_pids **pids)
+int	sub_exec(t_ast *ast, t_aux_exec *exec)
 {
 	int	rtn;
 

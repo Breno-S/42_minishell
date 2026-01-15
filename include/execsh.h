@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execsh.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/14 21:16:44 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/15 17:53:38 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,11 @@ int			ft_env(t_hash_env **hash_env, int fd);
 int			ft_export(t_exec *exec, t_hash_env **hash_table, int fd);
 int			ft_remove_var(void *content, t_ext_list *root);
 int			change_env(int hash, t_hash_env **hash_table, char **str);
+int			modify_var(char *str, int hash, t_hash_env **hash_table);
+int			ft_remove_var(void *content, t_ext_list *root);
+int			verify_valid_var(char *var);
 
+void		export_error(char *str);
 int			ft_print_export(t_hash_env **hash_table, int fd);
 int			aux_print_export(t_hash_env **hash_table, char ***envs);
 int			sort_print(char **envs);
@@ -89,6 +93,7 @@ int			cd_error(char *arg, int type);
 // ECHO
 
 int			ft_echo(t_exec *cmd, int fd);
+int			verify_option(char **args);
 
 // GLOB
 
@@ -155,6 +160,9 @@ int			open_heredoc(t_exec **exec, t_ast *ast);
 void		handle_error_msg(int code);
 void		close_fds_tree_cmd(t_ast *ast);
 void		verify_sigpipe(t_ast *ast);
+
+int			sub_exec(t_ast *ast, t_aux_exec *exec);
+int			sub_fork(t_ast *ast, t_aux_exec *exec, t_pids **pids);
 
 // PWD
 // char		*pwd(int fd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 18:07:37 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/10 14:47:21 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/15 17:53:38 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,11 @@ int	aux_print_export(t_hash_env **hash_table, char ***envs)
 		}
 	}
 	return (0);
+}
+
+void	export_error(char *str)
+{
+	ft_putstr_fd("Minishell: export: `", 2);
+	ft_putstr_fd(str, 2);
+	ft_putendl_fd("': not a valid identifier", 2);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:33:11 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/15 17:16:50 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/15 17:53:38 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	handle_error_msg(int code)
 		ft_putendl_fd("Aborted", 2);
 	else if (code == 8)
 		ft_putendl_fd("Floating point exception", 2);
-	else
+	else if (code == 2)
 		ft_putendl_fd("", 2);
 	g_signal = 128 + code;
 }
