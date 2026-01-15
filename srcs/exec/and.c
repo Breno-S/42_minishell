@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   and.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:43:34 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/15 17:16:50 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/15 19:50:23 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 
-int	exec_and(t_ast *ast, t_aux_exec *aux_exec)
+int	exec_and(t_ast *ast, t_msh *aux_exec)
 {
 	int	rtn;
 

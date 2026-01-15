@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 18:14:06 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/13 20:16:39 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/15 19:28:33 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 
-int	ft_exit(t_aux_exec *aux_exec)
+int	ft_exit(t_msh *aux_exec)
 {
 	finish_tree(aux_exec, 0);
 	if (isatty(STDIN_FILENO))
@@ -20,10 +20,10 @@ int	ft_exit(t_aux_exec *aux_exec)
 	exit(0);
 }
 
-void	finish_tree(t_aux_exec *aux_exec, int rtn)
+void	finish_tree(t_msh *aux_exec, int rtn)
 {
-	if (aux_exec && aux_exec->head)
-		close_fds_tree(aux_exec->head);
+	if (aux_exec && aux_exec->ast)
+		close_fds_tree(aux_exec->ast);
 	rl_clear_history();
 	ft_gc_end();
 	if (rtn)

@@ -24,7 +24,6 @@ SRCS_MANDATORY_COMMON := \
 	error.c
 
 SRCS_MANDATORY_EXEC := \
-	ft_main_loop.c \
 	ft_export.c \
 	ft_env.c \
 	ft_unset.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:00:07 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/14 21:16:44 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/15 19:34:41 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,25 +94,16 @@ void	copy_args(t_token_word *args, t_exec **cmd)
 	return ;
 }
 
-t_aux_exec	*build_aux_exec(t_ast *ast, t_hash_env **hash_table)
+int	build_aux_exec(t_msh *msh)
 {
 	char		**new_envp;
-	t_aux_exec	*aux_exec;
 
-	if (aux_print_export(hash_table, &new_envp))
+	if (aux_print_export(msh->hash_env, &new_envp))
 	{
 		perror("Minishell");
-		return (NULL);
+		return (1);
 	}
-	ft_gcfct_register((void *)new_envp, GC_DATA);
-	aux_exec = ft_gc_calloc_root(1, sizeof(t_aux_exec), "temp");
-	if (!aux_exec)
-	{
-		perror("Minishell");
-		return (NULL);
-	}
-	aux_exec->envp = new_envp;
-	aux_exec->hash_env = hash_table;
-	aux_exec->head = ast;
-	return (aux_exec);
+	ft_gcfct_register(new_envp, GC_DATA);
+	msh->envp = new_envp;
+	return (0);
 }

@@ -6,14 +6,14 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:33:11 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/15 17:53:38 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/15 19:28:33 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 #include "signalsh.h"
 
-int	exec_tree(t_ast *ast, t_aux_exec *exec, t_pids **pids)
+int	exec_tree(t_ast *ast, t_msh *msh, t_pids **pids)
 {
 	int		rtn;
 	t_pids	*my_pid;
@@ -24,17 +24,17 @@ int	exec_tree(t_ast *ast, t_aux_exec *exec, t_pids **pids)
 		return (1);
 	pids = &my_pid;
 	if (ast->type == NODE_CMD)
-		rtn = handle_cmd(ast, exec, pids);
+		rtn = handle_cmd(ast, msh, pids);
 	else if (ast->type == NODE_CMD_BUILTIN)
-		rtn = handle_builtin(ast, exec, pids);
+		rtn = handle_builtin(ast, msh, pids);
 	else if (ast->type == NODE_AND)
-		rtn = exec_and(ast, exec);
+		rtn = exec_and(ast, msh);
 	else if (ast->type == NODE_OR)
-		rtn = exec_or(ast, exec);
+		rtn = exec_or(ast, msh);
 	else if (ast->type == NODE_PIPE)
-		rtn = pipe_exec(ast, exec, pids);
+		rtn = pipe_exec(ast, msh, pids);
 	else if (ast->type == NODE_SUB)
-		rtn = sub_fork(ast, exec, pids);
+		rtn = sub_fork(ast, msh, pids);
 	if (ast->is_head)
 		rtn = wait_childs(ast, pids[0], rtn);
 	return (rtn);

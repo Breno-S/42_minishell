@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execsh.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/15 18:22:56 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/15 19:28:33 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,14 +107,14 @@ int			check_literal_match(t_segment *aux_seg, char *content,
 
 // EXIT
 
-int			ft_exit(t_aux_exec *aux_exec);
+int			ft_exit(t_msh *aux_exec);
 
 // EXEC BUILTIN
 
-int			exec_builtin(t_exec *exec, t_aux_exec *aux_exec);
-int			handle_builtin(t_ast *ast, t_aux_exec *exec, t_pids **pids);
-int			list_builtin(t_exec *exec, t_aux_exec *aux_exec);
-int			fork_builtin(t_exec *cmd, t_aux_exec *aux_exec, t_pids **pids,
+int			exec_builtin(t_exec *exec, t_msh *aux_exec);
+int			handle_builtin(t_ast *ast, t_msh *exec, t_pids **pids);
+int			list_builtin(t_exec *exec, t_msh *aux_exec);
+int			fork_builtin(t_exec *cmd, t_msh *aux_exec, t_pids **pids,
 				int chan_com);
 
 // EXEC
@@ -122,16 +122,16 @@ int			fork_builtin(t_exec *cmd, t_aux_exec *aux_exec, t_pids **pids,
 t_exec		*build_cmd(t_ast *ast);
 int			ft_sizeseg(t_token_word *args);
 t_exec		*build_exec(t_ast *ast);
-t_aux_exec	*build_aux_exec(t_ast *ast, t_hash_env **hash_table);
+int			build_aux_exec(t_msh *msh);
 void		copy_args(t_token_word *args, t_exec **cmd);
 
-int			exec_tree(t_ast *ast, t_aux_exec *aux_exec, t_pids **pids);
-int			pipe_exec(t_ast *ast, t_aux_exec *aux_exec, t_pids **pids);
-int			exec(t_exec *exec, t_aux_exec *aux_exec, int chan_com);
-int			fork_exec(t_exec *cmd, t_aux_exec *aux_exec, t_pids **pids,
+int			exec_tree(t_ast *ast, t_msh *msh, t_pids **pids);
+int			pipe_exec(t_ast *ast, t_msh *aux_exec, t_pids **pids);
+int			exec(t_exec *exec, t_msh *aux_exec, int chan_com);
+int			fork_exec(t_exec *cmd, t_msh *aux_exec, t_pids **pids,
 				int chan_com);
 void		close_fd_parent(t_exec *cmd, int chan_com);
-int			handle_cmd(t_ast *ast, t_aux_exec *aux_exec, t_pids **pids);
+int			handle_cmd(t_ast *ast, t_msh *aux_exec, t_pids **pids);
 int			is_builtins(char *cmd);
 
 char		**find_path(void);
@@ -139,12 +139,12 @@ char		*find_executable(char *arg, char **path, t_exec **exec);
 char		*handle_search(char *arg, t_exec **exec);
 void		print_error_find(int type, char *arg, t_exec **exec);
 int			dup_fds(t_exec *exec);
-void		finish_tree(t_aux_exec *aux_exec, int rtn);
+void		finish_tree(t_msh *aux_exec, int rtn);
 void		close_fds_tree(t_ast *ast);
 void		close_heredoc(t_ast *ast);
 
-int			exec_and(t_ast *ast, t_aux_exec *aux_exec);
-int			exec_or(t_ast *ast, t_aux_exec *aux_exec);
+int			exec_and(t_ast *ast, t_msh *aux_exec);
+int			exec_or(t_ast *ast, t_msh *aux_exec);
 
 int			wait_childs(t_ast *ast, t_pids *pids, int rtn_sys);
 t_pids		*create_pids_list(t_ast **ast, t_pids **pids);
@@ -160,8 +160,8 @@ void		handle_error_msg(int code);
 void		close_fds_tree_cmd(t_ast *ast);
 void		verify_sigpipe(t_ast *ast);
 
-int			sub_exec(t_ast *ast, t_aux_exec *exec);
-int			sub_fork(t_ast *ast, t_aux_exec *exec, t_pids **pids);
+int			sub_exec(t_ast *ast, t_msh *exec);
+int			sub_fork(t_ast *ast, t_msh *exec, t_pids **pids);
 
 int			save_return(int rtn, t_hash_env **hash_table);
 

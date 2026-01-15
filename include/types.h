@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/14 21:16:44 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/15 20:35:04 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,6 @@
 # define TYPES_H
 
 # include "includes.h"
-
-typedef struct s_msh
-{
-	char				**envp;
-	char				*tree;
-	char				*childs;
-	char				*cmd;
-	int					ret;
-}						t_msh;
 
 typedef enum e_error_type
 {
@@ -179,12 +170,14 @@ typedef struct s_hash_env
 	struct s_hash_env	*next;
 }						t_hash_env;
 
-typedef struct s_aux_exec
+typedef struct s_msh
 {
-	t_ast		*head;
 	t_hash_env	**hash_env;
 	char		**envp;
-}				t_aux_exec;
+	t_token		*token_list;
+	t_ast		*ast;
+	char		*line;
+}						t_msh;
 
 // typedef struct s_exec
 // {

@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:16:59 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/15 18:18:28 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/15 19:28:33 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 #include "signalsh.h"
 
-int	fork_exec(t_exec *cmd, t_aux_exec *aux_exec, t_pids **pids, int chan_com)
+int	fork_exec(t_exec *cmd, t_msh *aux_exec, t_pids **pids, int chan_com)
 {
 	pid_t	*n_pid;
 	int		i;
@@ -57,13 +57,13 @@ void	close_fd_parent(t_exec *cmd, int chan_com)
 		close(chan_com);
 }
 
-int	exec(t_exec *exec, t_aux_exec *aux_exec, int chan_com)
+int	exec(t_exec *exec, t_msh *aux_exec, int chan_com)
 {
 	if (exec->error)
 		finish_tree(aux_exec, exec->error);
 	if (dup_fds(exec))
 		finish_tree(aux_exec, 1);
-	close_fds_tree(aux_exec->head);
+	close_fds_tree(aux_exec->ast);
 	if (chan_com > 0)
 		close(chan_com);
 	if (exec->cmd)
@@ -99,7 +99,7 @@ int	dup_fds(t_exec *exec)
 	return (0);
 }
 
-int	handle_cmd(t_ast *ast, t_aux_exec *aux_exec, t_pids **pids)
+int	handle_cmd(t_ast *ast, t_msh *aux_exec, t_pids **pids)
 {
 	int	rtn;
 
@@ -111,7 +111,7 @@ int	handle_cmd(t_ast *ast, t_aux_exec *aux_exec, t_pids **pids)
 		ast->cmd->infile = ast->chan_com;
 		ast->chan_com = 0;
 	}
-	if (ast->args)
+	if (ast->args && ast->args->seg_lst)
 		ast->cmd->cmd = handle_search(ast->args->seg_lst->text, &ast->cmd);
 	rtn = fork_exec(ast->cmd, aux_exec, pids, ast->chan_com);
 	ast->chan_com = 0;
