@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 18:26:03 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/13 19:49:42 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/14 20:52:33 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,10 @@ t_ast	*parse_sub(t_parser *p)
 	if (!sub_ast)
 		return (NULL);
 	if (parser_peek(p) != TOKEN_CLOSE_PAREN)
+	{
+		log_syntax_error(p->idx);
 		return (NULL);
+	}
 	parser_chop_token(p);
 	ast = ft_gc_calloc_root(1, sizeof(*ast), "temp");
 	if (!ast)

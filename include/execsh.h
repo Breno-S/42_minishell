@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/14 15:05:50 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/14 21:16:44 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ void		print_error_find(int type, char *arg, t_exec **exec);
 int			dup_fds(t_exec *exec);
 void		finish_tree(t_aux_exec *aux_exec, int rtn);
 void		close_fds_tree(t_ast *ast);
+void		close_heredoc(t_ast *ast);
 
 int			exec_and(t_ast *ast, t_aux_exec *aux_exec);
 int			exec_or(t_ast *ast, t_aux_exec *aux_exec);
@@ -157,14 +158,5 @@ void		verify_sigpipe(t_ast *ast);
 
 // PWD
 // char		*pwd(int fd);
-
-// SIGNALS
-
-void		sigint_interactive(int sig);
-void		set_signal_interactive(void);
-// void	set_signal_exec_parent(void);
-// void	set_signal_child(void);
-// void	sigint_heredoc(int sig);
-// void	set_signal_heredoc(void);
 
 #endif // EXECSH_H

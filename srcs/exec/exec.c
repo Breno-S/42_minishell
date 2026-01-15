@@ -6,11 +6,12 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:33:11 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/13 18:34:39 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/14 21:16:44 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
+#include "signalsh.h"
 
 int	exec_tree(t_ast *ast, t_aux_exec *exec, t_pids **pids)
 {
@@ -71,7 +72,8 @@ int	wait_childs(t_ast *ast, t_pids *pids, int rtn_sys)
 		waitpid((pid_t)pids->pids[i++], &rtn, 0);
 		if (WIFSIGNALED(rtn))
 		{
-			handle_error_msg(WTERMSIG(rtn));
+			if (!g_signal)
+				handle_error_msg(WTERMSIG(rtn));
 			rtn = 128 + WTERMSIG(rtn);
 		}
 		else if (WIFEXITED(rtn))
@@ -87,12 +89,15 @@ void	handle_error_msg(int code)
 {
 	if (code == 11)
 		ft_putendl_fd("Segmentation fault (core dumped)", 2);
-	if (code == 7)
+	else if (code == 7)
 		ft_putendl_fd("Bus error", 2);
-	if (code == 3)
+	else if (code == 3)
 		ft_putendl_fd("Quit (core dumped)", 2);
-	if (code == 6)
+	else if (code == 6)
 		ft_putendl_fd("Aborted", 2);
-	if (code == 8)
+	else if (code == 8)
 		ft_putendl_fd("Floating point exception", 2);
+	else
+		ft_putendl_fd("", 2);
+	g_signal = 128 + code;
 }

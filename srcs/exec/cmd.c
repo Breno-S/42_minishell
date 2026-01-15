@@ -6,11 +6,12 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:16:59 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/14 14:13:07 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/14 21:16:44 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
+#include "signalsh.h"
 
 int	fork_exec(t_exec *cmd, t_aux_exec *aux_exec, t_pids **pids, int chan_com)
 {
@@ -27,13 +28,9 @@ int	fork_exec(t_exec *cmd, t_aux_exec *aux_exec, t_pids **pids, int chan_com)
 		i++;
 	}
 	n_pid[i] = fork();
+	set_signal_fork(n_pid[i]);
 	if (!n_pid[i])
-	{
 		exec(cmd, aux_exec, chan_com);
-	}
-	ft_putendl_fd(cmd->args[0], 0);
-	ft_putnbr_fd(n_pid[i], 0);
-	ft_putchar_fd('\n', 0);
 	close_fd_parent(cmd, chan_com);
 	pids[0]->total++;
 	pids[0]->pids = n_pid;
@@ -104,7 +101,7 @@ int	dup_fds(t_exec *exec)
 
 int	handle_cmd(t_ast *ast, t_aux_exec *aux_exec, t_pids **pids)
 {
-	int rtn;
+	int	rtn;
 
 	rtn = 1;
 	if (!ast)

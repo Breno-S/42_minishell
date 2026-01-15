@@ -52,7 +52,8 @@ SRCS_MANDATORY_EXEC := \
 	ft_exit.c \
 	builtin_exec.c \
 	expand_heredoc.c \
-	signals.c
+	signals.c \
+	close_heredoc.c
 SRCS_MANDATORY_PARSER := \
 	ast.c \
 	ast_aux.c \
@@ -161,7 +162,8 @@ valgrind:
 		--leak-check=full \
 		--show-leak-kinds=all \
 		--track-origins=yes \
-		--suppressions=ignore_readline.supp \
+		--log-file=valgrind.log \
+		--track-fds=yes \
 		--suppressions=ignore_readline.supp \
 		./bin/Minishell
 

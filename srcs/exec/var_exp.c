@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 13:32:25 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/12/22 15:35:54 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/14 21:16:44 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*var_exp(const char *var_name)
 	while (aux)
 	{
 		var = ft_trim_env(aux->content, '=', "temp");
-		if (!ft_strcmp(var_name, var[0]))
+		if (!ft_strcmp(var_name, var[0]) && aux->type_var != T_SET)
 			return (var[1]);
 		aux = aux->next;
 	}
