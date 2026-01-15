@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:33:11 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/14 21:16:44 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/15 17:16:50 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	exec_tree(t_ast *ast, t_aux_exec *exec, t_pids **pids)
 		rtn = exec_or(ast, exec);
 	else if (ast->type == NODE_PIPE)
 		rtn = pipe_exec(ast, exec, pids);
-	// else if (ast->type == NODE_SUB)
-	// 	rtn = sub_exec(ast, exec, pids);
+	else if (ast->type == NODE_SUB)
+		rtn = sub_fork(ast, exec, pids);
 	if (ast->is_head)
 		rtn = wait_childs(ast, pids[0], rtn);
 	return (rtn);

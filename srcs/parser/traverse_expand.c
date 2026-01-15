@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   traverse_expand.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 16:57:36 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/14 15:34:10 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/15 17:31:11 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,30 @@ int	traverse_expand(t_ast *ast, int indent, t_hash_env **hash_env)
 	else if (ast->type == NODE_SUB)
 	{
 		printf("SUB:\n");
+		ast->cmd = ft_gc_calloc_root(1, sizeof(t_exec), "temp");
 		traverse_expand(ast->left, indent + 1, hash_env);
 	}
 	return (1);
 }
+
+// int	traverse_expand(t_ast *ast, t_hash_env **hash_env)
+// {
+// 	if (ast->type == NODE_CMD)
+// 	{
+// 		if (expand_args_redirs(ast))
+// 			ast->cmd = build_cmd(ast);
+// 		else
+// 			return (0);
+// 	}
+// 	else if (ast->type == NODE_SUB)
+// 	{
+// 		ast->cmd = ft_gc_calloc_root(1, sizeof(t_exec), "temp");
+// 		traverse_expand(ast->left, hash_env);
+// 	}
+// 	else
+// 	{
+// 		traverse_expand(ast->left, hash_env);
+// 		traverse_expand(ast->right, hash_env);
+// 	}
+// 	return (1);
+// }

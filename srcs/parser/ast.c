@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 18:26:03 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/14 20:52:33 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/15 17:24:13 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,9 @@ t_ast	*parse_sub(t_parser *p)
 	t_ast	*ast;
 	t_ast	*sub_ast;
 
+	p->paren_flag = 0;
 	sub_ast = parse_cond(p);
+	p->paren_flag = 1;
 	if (!sub_ast)
 		return (NULL);
 	if (parser_peek(p) != TOKEN_CLOSE_PAREN)
