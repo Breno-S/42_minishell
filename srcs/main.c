@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/15 21:01:38 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/16 12:31:17 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,20 @@
 #include "signalsh.h"
 #include "types.h"
 
-int	g_signal;
+int			g_signal;
 
 static int	read_sh(t_msh *msh)
 {
+	g_signal = 0;
 	set_signal_interactive();
+	rl_event_hook = check_signal_state;
 	msh->line = ft_gcfct_register_root(readline("Madshell> "), "temp");
+	rl_event_hook = NULL;
+	if (g_signal)
+	{
+		save_return(130, msh->hash_env);
+		return (2);
+	}
 	if (!msh->line)
 	{
 		ft_exit(NULL);
@@ -61,9 +69,7 @@ int	main(int argc, char *argv[], char *envp[])
 	msh.hash_env = (t_hash_env **)create_hash_env(envp, argv);
 	while (1)
 	{
-		g_signal = 0;
-		set_signal_interactive();
-		if (read_sh(&msh) && tokenize_sh(&msh) && parse_sh(&msh))
+		if (read_sh(&msh) == 1 && tokenize_sh(&msh) && parse_sh(&msh))
 		{
 			if (!open_heredoc_tree(msh.ast) && !g_signal)
 			{
@@ -71,8 +77,11 @@ int	main(int argc, char *argv[], char *envp[])
 				if (msh.envp)
 					save_return(exec_tree(msh.ast, &msh, NULL), msh.hash_env);
 			}
-			else
+			else if (g_signal)
+			{
+				save_return(130, msh.hash_env);
 				close_heredoc(msh.ast);
+			}
 		}
 		ft_gc_del_root("temp");
 		ft_gc_collect();

@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 16:21:17 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/14 21:16:44 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/16 12:37:23 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,41 +15,42 @@
 void	handler_interactive(int sig)
 {
 	(void)sig;
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	ioctl(STDIN_FILENO, TIOCSTI, "\n");
-	g_signal = 130;
+	g_signal = SIGINT;
+}
+
+int	check_signal_state(void)
+{
+	if (g_signal == SIGINT)
+	{
+		rl_done = 1;
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	return (0);
+}
+
+int	check_signal_state_heredoc(void)
+{
+	if (g_signal == SIGINT)
+	{
+		rl_done = 1;
+		rl_on_new_line();
+		rl_replace_line("", 0);
+	}
+	return (0);
 }
 
 void	set_signal_interactive(void)
 {
 	struct sigaction	sa;
 
+	sa = (struct sigaction){0};
 	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
 	sa.sa_handler = &handler_interactive;
 	sigaction(SIGINT, &sa, NULL);
 	sa.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sa, NULL);
-}
-
-void	handler_heredoc(int sig)
-{
-	(void)sig;
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	ioctl(STDIN_FILENO, TIOCSTI, "\n");
-	g_signal = 130;
-}
-
-void	set_signal_heredoc(void)
-{
-	struct sigaction	sa;
-
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
-	sa.sa_handler = &handler_heredoc;
-	sigaction(SIGINT, &sa, NULL);
 }
 
 void	set_signal_fork(pid_t pid)

@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 12:18:32 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/16 01:35:07 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/16 12:25:29 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,12 @@ int	loop_heredoc(char *eof, t_heredoc *heredoc)
 	int		count;
 
 	count = 0;
-	set_signal_heredoc();
+	set_signal_interactive();
 	while (!g_signal)
 	{
+		rl_event_hook = check_signal_state_heredoc;
 		str = ft_gcfct_register_root(readline("> "), "temp");
+		rl_event_hook = NULL;
 		if (!str && !g_signal)
 			print_warning(eof, count);
 		if ((str && !ft_strcmp(str, eof)) || !str || g_signal)
@@ -72,7 +74,6 @@ int	loop_heredoc(char *eof, t_heredoc *heredoc)
 		ft_putendl_fd(str, heredoc->fd_tmp);
 		count++;
 	}
-	set_signal_interactive();
 	return (0);
 }
 
