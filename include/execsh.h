@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execsh.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/15 19:28:33 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/15 21:06:16 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int			exec_and(t_ast *ast, t_msh *aux_exec);
 int			exec_or(t_ast *ast, t_msh *aux_exec);
 
 int			wait_childs(t_ast *ast, t_pids *pids, int rtn_sys);
-t_pids		*create_pids_list(t_ast **ast, t_pids **pids);
+t_pids		*create_pids_list(t_ast **ast, t_pids **pids,t_msh *msh);
 
 // REDIRS
 

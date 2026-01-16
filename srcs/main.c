@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/15 20:39:31 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/15 21:01:38 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,7 @@ int	main(int argc, char *argv[], char *envp[])
 			{
 				build_aux_exec(&msh);
 				if (msh.envp)
-					if (traverse_expand(msh.ast, 0, msh.hash_env))
-						save_return(exec_tree(msh.ast, &msh, NULL),
-							msh.hash_env);
+					save_return(exec_tree(msh.ast, &msh, NULL), msh.hash_env);
 			}
 			else
 				close_heredoc(msh.ast);

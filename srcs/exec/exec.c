@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:33:11 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/15 19:28:33 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/15 21:03:57 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 #include "signalsh.h"
+#include "parsesh.h"
 
 int	exec_tree(t_ast *ast, t_msh *msh, t_pids **pids)
 {
@@ -19,7 +20,7 @@ int	exec_tree(t_ast *ast, t_msh *msh, t_pids **pids)
 	t_pids	*my_pid;
 
 	rtn = 1;
-	my_pid = create_pids_list(&ast, pids);
+	my_pid = create_pids_list(&ast, pids, msh);
 	if (!my_pid)
 		return (1);
 	pids = &my_pid;
@@ -40,12 +41,15 @@ int	exec_tree(t_ast *ast, t_msh *msh, t_pids **pids)
 	return (rtn);
 }
 
-t_pids	*create_pids_list(t_ast **ast, t_pids **pids)
+t_pids	*create_pids_list(t_ast **ast, t_pids **pids, t_msh *msh)
 {
 	t_pids	*my_pids;
 
 	if (!pids && ast[0]->is_head == 0)
 	{
+		if (ast[0]->type != NODE_AND && ast[0]->type != NODE_OR)
+			if (!traverse_expand(ast[0], 0, msh->hash_env))
+				return (NULL);
 		ast[0]->is_head = 1;
 		my_pids = ft_gc_calloc_root(1, sizeof(t_pids), "temp");
 		if (!my_pids)
