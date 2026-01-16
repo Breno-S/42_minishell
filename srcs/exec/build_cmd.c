@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:00:07 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/15 19:34:41 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/16 01:27:42 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,8 @@ t_exec	*build_cmd(t_ast *ast)
 		exec_cmd->error = 1;
 		return (exec_cmd);
 	}
-	if (!ast->args)
-		return (exec_cmd);
-	if (!is_builtins(exec_cmd->args[0]))
-	{
+	if (ast->args && !is_builtins(exec_cmd->args[0]))
 		ast->type = NODE_CMD_BUILTIN;
-		return (exec_cmd);
-	}
 	return (exec_cmd);
 }
 
@@ -96,7 +91,7 @@ void	copy_args(t_token_word *args, t_exec **cmd)
 
 int	build_aux_exec(t_msh *msh)
 {
-	char		**new_envp;
+	char	**new_envp;
 
 	if (aux_print_export(msh->hash_env, &new_envp))
 	{

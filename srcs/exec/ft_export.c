@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 18:23:28 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/15 18:22:40 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/16 01:03:53 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,10 @@ int	modify_var(char *str, int hash, t_hash_env **hash_table)
 
 int	verify_valid_var(char *var)
 {
-	int	rtn;
 	int	i;
 
 	if (!var)
 		return (-1);
-	rtn = 0;
 	i = 0;
 	while (var[i] && var[i] != '=')
 	{

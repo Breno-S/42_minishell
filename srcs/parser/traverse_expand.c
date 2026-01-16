@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   traverse_expand.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 16:57:36 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/15 17:53:38 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/16 01:58:02 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ static void	print_redir(t_io_node *io_node, int indent)
 		printf(">>");
 	printf(" ");
 	if (io_node->io_target)
-		printf("%.*s\n", (int)io_node->io_target->text_len, io_node->io_target->text);
+		printf("%.*s\n", (int)io_node->io_target->text_len,
+			io_node->io_target->text);
 }
 
 static void	print_redirs(t_ast *ast, int indent)
@@ -104,7 +105,7 @@ static int	expand_args_redirs(t_ast *ast)
 		if (redir->type != TOKEN_REDIR_HEREDOC)
 		{
 			curr_text = ft_gcfct_register_root(ft_substr(redir->io_target->text,
-				0, redir->io_target->text_len), "temp");
+						0, redir->io_target->text_len), "temp");
 			expand_token_list((t_token **)&redir->io_target);
 			if (!redir->io_target || redir->io_target->next)
 			{
@@ -154,7 +155,7 @@ int	traverse_expand(t_ast *ast, int indent, t_hash_env **hash_env)
 	else if (ast->type == NODE_SUB)
 	{
 		printf("SUB:\n");
-		ast->cmd = ft_gc_calloc_root(1, sizeof(t_exec), "temp");
+		ast->cmd = build_sub(ast);
 		traverse_expand(ast->left, indent + 1, hash_env);
 	}
 	return (1);

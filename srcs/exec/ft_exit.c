@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 18:14:06 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/15 19:28:33 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/16 01:22:35 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,21 @@ void	close_fds_tree(t_ast *ast)
 
 void	close_fds_tree_cmd(t_ast *ast)
 {
-	if (ast->cmd->infile > 2)
-		close(ast->cmd->infile);
-	ast->cmd->infile = -1;
-	if (ast->cmd->outfile > 2)
-		close(ast->cmd->outfile);
-	ast->cmd->outfile = -1;
-	if (ast->chan_com > 2)
-		close(ast->chan_com);
-	if (ast->cmd->pipefd[1] > 2)
-		close(ast->cmd->pipefd[1]);
-	if (ast->cmd->pipefd[0] > 2)
-		close(ast->cmd->pipefd[0]);
+	if (ast->cmd)
+	{
+		if (ast->cmd->infile > 2)
+			close(ast->cmd->infile);
+		ast->cmd->infile = -1;
+		if (ast->cmd->outfile > 2)
+			close(ast->cmd->outfile);
+		ast->cmd->outfile = -1;
+		if (ast->chan_com > 2)
+			close(ast->chan_com);
+		if (ast->cmd->pipefd[1] > 2)
+			close(ast->cmd->pipefd[1]);
+		if (ast->cmd->pipefd[0] > 2)
+			close(ast->cmd->pipefd[0]);
+	}
 	ast->chan_com = 0;
 	if (ast->heredoc)
 	{

@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 12:18:32 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/14 21:16:44 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/16 01:35:07 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,12 @@ int	handle_heredoc(t_ast *ast)
 	t_heredoc	*heredoc;
 
 	redirs = ast->redirs;
-	while (ast->type == NODE_CMD && redirs)
+	while ((ast->type == NODE_CMD || ast->type == NODE_SUB) && redirs)
 	{
 		if (redirs->type == TOKEN_REDIR_HEREDOC)
 		{
 			heredoc = create_heredoc(redirs->io_target->seg_lst->text);
 			if (!heredoc)
-				return (1);
-			if (!redirs->is_quoted_here && expand_heredoc(heredoc))
 				return (1);
 			fix_list_heredoc(ast, heredoc);
 		}

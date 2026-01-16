@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/15 21:06:16 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/16 02:17:43 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ int			exec_and(t_ast *ast, t_msh *aux_exec);
 int			exec_or(t_ast *ast, t_msh *aux_exec);
 
 int			wait_childs(t_ast *ast, t_pids *pids, int rtn_sys);
-t_pids		*create_pids_list(t_ast **ast, t_pids **pids,t_msh *msh);
+t_pids		**create_pids_list(t_ast **ast, t_pids **pids);
 
 // REDIRS
 
@@ -155,7 +155,7 @@ int			handle_redirects(t_io_node *redirs, t_exec **exec, t_ast *ast);
 int			open_pipeline(t_exec **cmd);
 int			open_infile(char *infile, t_exec **exec);
 int			open_outfile(char *outfile, t_exec **exec, int type);
-int			open_heredoc(t_exec **exec, t_ast *ast);
+int			open_heredoc(t_exec **exec, t_ast *ast, int is_quoted_here);
 void		handle_error_msg(int code);
 void		close_fds_tree_cmd(t_ast *ast);
 void		verify_sigpipe(t_ast *ast);
@@ -164,6 +164,9 @@ int			sub_exec(t_ast *ast, t_msh *exec);
 int			sub_fork(t_ast *ast, t_msh *exec, t_pids **pids);
 
 int			save_return(int rtn, t_hash_env **hash_table);
+
+t_exec		*build_sub(t_ast *ast);
+void		dup_sub(t_ast *ast);
 
 // PWD
 // char		*pwd(int fd);

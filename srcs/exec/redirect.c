@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:58:20 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/13 20:05:36 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/16 01:08:11 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	handle_redirects(t_io_node *redirs, t_exec **exec, t_ast *ast)
 			if (open_outfile(redirs->io_target->seg_lst->text, exec, 2))
 				return (1);
 		if (redirs->type == TOKEN_REDIR_HEREDOC)
-			if (open_heredoc(exec, ast))
+			if (open_heredoc(exec, ast, redirs->is_quoted_here))
 				return (1);
 		redirs = redirs->next;
 	}
@@ -64,10 +64,12 @@ int	open_outfile(char *outfile, t_exec **exec, int type)
 	return (0);
 }
 
-int	open_heredoc(t_exec **exec, t_ast *ast)
+int	open_heredoc(t_exec **exec, t_ast *ast, int is_quoted_here)
 {
 	if (exec[0]->infile != -1)
 		close(exec[0]->infile);
+	if (!is_quoted_here && expand_heredoc(ast->heredoc))
+		return (1);
 	exec[0]->infile = open(ast->heredoc->path, O_RDONLY);
 	close(ast->heredoc->fd_tmp);
 	ast->heredoc = ast->heredoc->next;
