@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/16 12:31:17 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/16 17:54:54 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@ int			g_signal;
 static int	read_sh(t_msh *msh)
 {
 	g_signal = 0;
+	if(isatty(STDIN_FILENO))
+		rl_event_hook = check_signal_state;
 	set_signal_interactive();
-	rl_event_hook = check_signal_state;
 	msh->line = ft_gcfct_register_root(readline("Madshell> "), "temp");
-	rl_event_hook = NULL;
+	if(isatty(STDIN_FILENO))
+		rl_event_hook = NULL;
 	if (g_signal)
 	{
 		save_return(130, msh->hash_env);

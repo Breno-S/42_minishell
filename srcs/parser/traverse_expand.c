@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 16:57:36 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/16 01:58:02 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/16 17:41:08 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,72 +14,72 @@
 #include "execsh.h"
 #include "parsesh.h"
 
-static void	print_token(t_token *t)
-{
-	printf("%*s", (int)t->text_len - 1, t->text);
-}
+// static void	print_token(t_token *t)
+// {
+// 	printf("%*s", (int)t->text_len - 1, t->text);
+// }
 
-static void	print_token_word(t_token_word *t)
-{
-	t_segment	*seg;
+// static void	print_token_word(t_token_word *t)
+// {
+// 	t_segment	*seg;
 
-	seg = t->seg_lst;
-	while (seg)
-	{
-		printf("%s", seg->text);
-		seg = seg->next;
-	}
-}
+// 	seg = t->seg_lst;
+// 	while (seg)
+// 	{
+// 		printf("%s", seg->text);
+// 		seg = seg->next;
+// 	}
+// }
 
-static void	print_redir(t_io_node *io_node, int indent)
-{
-	for (int i = 0; i < indent; i++)
-		printf("  ");
-	if (io_node->type == TOKEN_REDIR_INPUT)
-		printf("<");
-	else if (io_node->type == TOKEN_REDIR_OUTPUT)
-		printf(">");
-	else if (io_node->type == TOKEN_REDIR_HEREDOC)
-		printf("<<");
-	else if (io_node->type == TOKEN_REDIR_APPEND)
-		printf(">>");
-	printf(" ");
-	if (io_node->io_target)
-		printf("%.*s\n", (int)io_node->io_target->text_len,
-			io_node->io_target->text);
-}
+// static void	print_redir(t_io_node *io_node, int indent)
+// {
+// 	for (int i = 0; i < indent; i++)
+// 		printf("  ");
+// 	if (io_node->type == TOKEN_REDIR_INPUT)
+// 		printf("<");
+// 	else if (io_node->type == TOKEN_REDIR_OUTPUT)
+// 		printf(">");
+// 	else if (io_node->type == TOKEN_REDIR_HEREDOC)
+// 		printf("<<");
+// 	else if (io_node->type == TOKEN_REDIR_APPEND)
+// 		printf(">>");
+// 	printf(" ");
+// 	if (io_node->io_target)
+// 		printf("%.*s\n", (int)io_node->io_target->text_len,
+// 			io_node->io_target->text);
+// }
 
-static void	print_redirs(t_ast *ast, int indent)
-{
-	t_io_node	*redirs;
+// static void	print_redirs(t_ast *ast, int indent)
+// {
+// 	t_io_node	*redirs;
 
-	if (!ast || !ast->redirs)
-		return ;
-	redirs = ast->redirs;
-	while (redirs)
-	{
-		print_redir(redirs, indent);
-		redirs = redirs->next;
-	}
-}
+// 	if (!ast || !ast->redirs)
+// 		return ;
+// 	redirs = ast->redirs;
+// 	while (redirs)
+// 	{
+// 		print_redir(redirs, indent);
+// 		redirs = redirs->next;
+// 	}
+// }
 
-static void	print_args(t_ast *ast, int indent)
-{
-	t_token_word	*args;
+// static void	print_args(t_ast *ast, int indent)
+// {
+// 	t_token_word	*args;
 
-	if (!ast)
-		return ;
-	for (int i = 0; i < indent; i++)
-		printf("  ");
-	args = ast->args;
-	while (args)
-	{
-		print_token_word(args);
-		printf(" ");
-		args = (t_token_word *)args->next;
-	}
-	printf("\n");
-}
+// 	if (!ast)
+// 		return ;
+// 	for (int i = 0; i < indent; i++)
+// 		printf("  ");
+// 	args = ast->args;
+// 	while (args)
+// 	{
+// 		print_token_word(args);
+// 		printf(" ");
+// 		args = (t_token_word *)args->next;
+// 	}
+// 	printf("\n");
+// }
 
 static void	normalize_here_target(t_token_word *io_target)
 {
@@ -120,65 +120,65 @@ static int	expand_args_redirs(t_ast *ast)
 	return (1);
 }
 
-int	traverse_expand(t_ast *ast, int indent, t_hash_env **hash_env)
-{
-	for (int i = 0; i < indent; i++)
-		printf("  ");
-	if (ast->type == NODE_CMD)
-	{
-		if (expand_args_redirs(ast))
-			ast->cmd = build_cmd(ast);
-		else
-			return (0);
-		printf("CMD:\n");
-		print_args(ast, indent + 1);
-		print_redirs(ast, indent + 1);
-	}
-	else if (ast->type == NODE_AND)
-	{
-		printf("AND:\n");
-		traverse_expand(ast->left, indent + 1, hash_env);
-		traverse_expand(ast->right, indent + 1, hash_env);
-	}
-	else if (ast->type == NODE_OR)
-	{
-		printf("OR:\n");
-		traverse_expand(ast->left, indent + 1, hash_env);
-		traverse_expand(ast->right, indent + 1, hash_env);
-	}
-	else if (ast->type == NODE_PIPE)
-	{
-		printf("PIPE:\n");
-		traverse_expand(ast->left, indent + 1, hash_env);
-		traverse_expand(ast->right, indent + 1, hash_env);
-	}
-	else if (ast->type == NODE_SUB)
-	{
-		printf("SUB:\n");
-		ast->cmd = build_sub(ast);
-		traverse_expand(ast->left, indent + 1, hash_env);
-	}
-	return (1);
-}
-
-// int	traverse_expand(t_ast *ast, t_hash_env **hash_env)
+// int	traverse_expand(t_ast *ast, int indent, t_hash_env **hash_env)
 // {
+// 	for (int i = 0; i < indent; i++)
+// 		printf("  ");
 // 	if (ast->type == NODE_CMD)
 // 	{
 // 		if (expand_args_redirs(ast))
 // 			ast->cmd = build_cmd(ast);
 // 		else
 // 			return (0);
+// 		printf("CMD:\n");
+// 		print_args(ast, indent + 1);
+// 		print_redirs(ast, indent + 1);
+// 	}
+// 	else if (ast->type == NODE_AND)
+// 	{
+// 		printf("AND:\n");
+// 		traverse_expand(ast->left, indent + 1, hash_env);
+// 		traverse_expand(ast->right, indent + 1, hash_env);
+// 	}
+// 	else if (ast->type == NODE_OR)
+// 	{
+// 		printf("OR:\n");
+// 		traverse_expand(ast->left, indent + 1, hash_env);
+// 		traverse_expand(ast->right, indent + 1, hash_env);
+// 	}
+// 	else if (ast->type == NODE_PIPE)
+// 	{
+// 		printf("PIPE:\n");
+// 		traverse_expand(ast->left, indent + 1, hash_env);
+// 		traverse_expand(ast->right, indent + 1, hash_env);
 // 	}
 // 	else if (ast->type == NODE_SUB)
 // 	{
-// 		ast->cmd = ft_gc_calloc_root(1, sizeof(t_exec), "temp");
-// 		traverse_expand(ast->left, hash_env);
-// 	}
-// 	else
-// 	{
-// 		traverse_expand(ast->left, hash_env);
-// 		traverse_expand(ast->right, hash_env);
+// 		printf("SUB:\n");
+// 		ast->cmd = build_sub(ast);
+// 		traverse_expand(ast->left, indent + 1, hash_env);
 // 	}
 // 	return (1);
 // }
+
+int	traverse_expand(t_ast *ast, t_hash_env **hash_env)
+{
+	if (ast->type == NODE_CMD)
+	{
+		if (expand_args_redirs(ast))
+			ast->cmd = build_cmd(ast);
+		else
+			return (0);
+	}
+	else if (ast->type == NODE_SUB)
+	{
+		ast->cmd = build_sub(ast);
+		traverse_expand(ast->left, hash_env);
+	}
+	else
+	{
+		traverse_expand(ast->left, hash_env);
+		traverse_expand(ast->right, hash_env);
+	}
+	return (1);
+}

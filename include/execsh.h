@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/16 12:11:54 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/16 17:10:20 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 # define EXECSH_H
 
 # include "types.h"
-
-// MAIN LOOP
-
-int			ft_main_loop(t_msh *msh);
 
 // UTILS ENV
 

@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:33:11 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/16 02:18:01 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/16 17:41:42 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	exec_tree(t_ast *ast, t_msh *msh, t_pids **pids)
 
 	rtn = 1;
 	if (!pids && ast->type != NODE_AND && ast->type != NODE_OR)
-		if (!traverse_expand(ast, 0, msh->hash_env))
+		if (!traverse_expand(ast, msh->hash_env))
 			return (2);
 	pids = create_pids_list(&ast, pids);
 	if (!pids)
