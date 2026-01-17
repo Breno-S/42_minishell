@@ -6,12 +6,13 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:23:23 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/17 18:19:33 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/17 18:47:39 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errorsh.h"
 #include "parsesh.h"
+#include "execsh.h"
 
 int	log_syntax_error(t_token *token)
 {

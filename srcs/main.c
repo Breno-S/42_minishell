@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/17 17:44:47 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/17 18:54:44 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static int	tokenize_sh(t_msh *msh)
 	msh->token_list = lexer_token_list(&l);
 	if (syntax_check(msh->token_list, &l))
 		return (1);
+	save_return(2, msh->hash_env);
 	return (0);
 }
 
@@ -61,7 +62,10 @@ static int	parse_sh(t_msh *msh)
 	p = parser_new(msh->token_list);
 	msh->ast = parser_parse(&p);
 	if (msh->ast == NULL)
+	{
+		save_return(2, msh->hash_env);
 		return (0);
+	}
 	return (1);
 }
 
