@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 18:10:00 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/16 21:27:02 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/16 23:50:01 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,25 +107,22 @@ void	join_fixed_segs(t_token_word *token)
 	t_segment	*seg;
 
 	seg = token->seg_lst;
-	if (seg && !seg->next && (seg->type >= 0 && seg->type <= 4))
-		seg->type = LITERAL;
-	else
+	while (seg && seg->next)
 	{
-		while (seg && seg->next)
+		if ((seg->type >= OUTSIDE && seg->type <= LITERAL)
+			&& (seg->next->type >= OUTSIDE && seg->next->type <= LITERAL))
 		{
-			if ((seg->type >= 0 && seg->type <= 5)
-				&& (seg->next->type >= 0 && seg->next->type <= 5))
-			{
-				seg->type = LITERAL;
-				seg->text = ft_gcfct_register_root(
-						ft_strjoin(seg->text, seg->next->text), "temp");
-				if (seg)
-					seg->next = seg->next->next;
-				else
-					token->seg_lst = seg->next->next;
-				continue ;
-			}
-			seg = seg->next;
+			seg->type = LITERAL;
+			seg->text = ft_gcfct_register_root(
+					ft_strjoin(seg->text, seg->next->text), "temp");
+			if (seg)
+				seg->next = seg->next->next;
+			else
+				token->seg_lst = seg->next->next;
+			continue ;
 		}
+		seg = seg->next;
 	}
+	if (seg && (seg->type >= OUTSIDE && seg->type <= CMD_FIXED))
+		seg->type = LITERAL;
 }

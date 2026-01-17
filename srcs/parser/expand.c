@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/16 15:41:04 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/16 20:56:17 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/16 23:16:32 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,12 @@ void	isolate_wildcards(t_token_word *token)
 	seg = token->seg_lst;
 	while (seg)
 	{
-		if (seg->type == OUTSIDE || seg->type == VAR_SPLIT
-			|| seg->type == CMD_SPLIT)
+		if (seg->type == VAR_SPLIT || seg->type == CMD_SPLIT)
 			insert_wildcard_seg(seg, seg->next);
+		else if (seg->type == OUTSIDE || seg->type == DQUOTES
+			|| seg->type == SQUOTES || seg->type == VAR_FIXED
+			|| seg->type == CMD_FIXED)
+			seg->type = LITERAL;
 		seg = seg->next;
 	}
 	remove_null_segs(token);
@@ -96,12 +99,11 @@ static void	expand_var(t_token **token_list, t_token *prev)
 		if (t->class == TOKEN_WORD)
 		{
 			expand_var_segs((t_token_word *)t);
-			isolate_wildcards((t_token_word *)t);
-			join_fixed_segs((t_token_word *)t);
 			if (((t_token_word *)t)->seg_lst == NULL)
 				remove_token(token_list, t, prev);
 			else
 			{
+				isolate_wildcards((t_token_word *)t);
 				split_first_segs((t_token_word *)t);
 				split_last_segs((t_token_word *)t);
 				join_fixed_segs((t_token_word *)t);
