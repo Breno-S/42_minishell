@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   traverse_expand.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 16:57:36 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/16 17:41:08 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/17 16:46:12 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ static int	expand_args_redirs(t_ast *ast)
 			curr_text = ft_gcfct_register_root(ft_substr(redir->io_target->text,
 						0, redir->io_target->text_len), "temp");
 			expand_token_list((t_token **)&redir->io_target);
-			if (!redir->io_target || redir->io_target->next)
+			if (!redir->io_target || (redir->io_target->next
+					&& redir->io_target->next->class == TOKEN_WORD))
 			{
 				log_ambiguous_redir_error(curr_text);
 				return (0);

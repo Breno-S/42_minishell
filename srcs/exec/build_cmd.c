@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:00:07 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/17 11:07:47 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/17 15:00:58 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,10 @@ int	copy_args(t_token_word *args, t_exec **cmd)
 	i = 0;
 	while (args)
 	{
-		aux = args->seg_lst;
+		if (args->class != TOKEN_NEWLINE)
+			aux = args->seg_lst;
 		arg_join = ft_gc_calloc_root(1, 1, "temp");
-		while (aux && args->class != TOKEN_NEWLINE)
+		while (args->class != TOKEN_NEWLINE && aux)
 		{
 			if (aux->text)
 				arg_join = ft_gcfct_register_root(ft_strjoin(arg_join,

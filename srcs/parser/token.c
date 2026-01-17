@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:51:43 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/17 11:00:08 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/17 16:49:48 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*token_to_str(t_token *t)
 		return (ft_gcfct_register_root(ft_strdup("<<"), "temp"));
 	else if (t->class == TOKEN_AND)
 		return (ft_gcfct_register_root(ft_strdup("&&"), "temp"));
-	else if (t->class == TOKEN_AND)
+	else if (t->class == TOKEN_OR)
 		return (ft_gcfct_register_root(ft_strdup("||"), "temp"));
 	else if (t->class == TOKEN_NEWLINE)
 		return (ft_gcfct_register_root(ft_strdup("newline"), "temp"));
