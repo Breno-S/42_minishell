@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/15 18:21:42 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/15 20:31:46 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/17 17:52:46 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	save_return(int rtn, t_hash_env **hash_table)
 			ft_hashadd_back((t_hash_env **)&hash_table[hash], n_hash);
 		else
 		{
-			perror("Minishell");
+			perror("\033[0;31mMinishell");
+			ft_putstr_fd("\033[0m", 2);
 			return (1);
 		}
 	}

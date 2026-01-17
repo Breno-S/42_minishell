@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 13:09:22 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/16 23:05:36 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/17 18:05:59 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,20 @@ void	print_error_find(int type, char *arg, t_exec **exec)
 {
 	if (type == 1 || type == 2 || type == 3)
 	{
-		ft_putstr_fd("Minishell: ", 2);
+		ft_putstr_fd("\033[0;31mMinishell: ", 2);
 		ft_putstr_fd(arg, 2);
 	}
 	if (type == 1)
-		ft_putendl_fd(": No such file or directory", 2);
+		ft_putendl_fd(": No such file or directory\033[0m", 2);
 	if (type == 2)
-		ft_putendl_fd(": Is a directory", 2);
+		ft_putendl_fd(": Is a directory\033[0m", 2);
 	if (type == 3)
-		ft_putendl_fd(": Permission denied", 2);
+		ft_putendl_fd(": Permission denied\033[0m", 2);
 	if (type == 4)
 	{
+		ft_putstr_fd("\033[0;31m", 2);
 		ft_putstr_fd(arg, 2);
-		ft_putendl_fd(": command not found", 2);
+		ft_putendl_fd(": command not found\033[0m", 2);
 	}
 	if (type == 1 || type == 4)
 		exec[0]->error = 127;

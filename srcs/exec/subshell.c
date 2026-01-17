@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 20:06:10 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/16 01:59:52 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/17 18:18:11 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,10 @@ void	dup_sub(t_ast *ast)
 	{
 		if (dup2(ast->cmd->outfile, STDOUT_FILENO) == -1)
 		{
-			perror("Minishell: dup2");
-			exit(1);
+			perror("\033[0;31mMinishell: dup2");
+			ft_putstr_fd("\033[0m", 2);
+			close_fds_tree_cmd(ast);
+			finish_tree(NULL, 1);
 		}
 		close(ast->cmd->outfile);
 		ast->cmd->outfile = -1;

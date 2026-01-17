@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:16:59 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/15 19:28:33 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/17 18:27:40 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ int	exec(t_exec *exec, t_msh *aux_exec, int chan_com)
 		finish_tree(aux_exec, 0);
 		exit(0);
 	}
-	perror("Minishell");
+	perror("\033[0;31mMinishell");
+	ft_putstr_fd("\033[0m", 2);
 	finish_tree(aux_exec, 1);
 	return (1);
 }
@@ -84,7 +85,8 @@ int	dup_fds(t_exec *exec)
 	{
 		if (dup2(exec->infile, STDIN_FILENO) == -1)
 		{
-			perror("dup2");
+			perror("\033[0;31mdup2");
+			ft_putstr_fd("\033[0m", 2);
 			return (1);
 		}
 	}
@@ -92,7 +94,8 @@ int	dup_fds(t_exec *exec)
 	{
 		if (dup2(exec->outfile, STDOUT_FILENO) == -1)
 		{
-			perror("dup2");
+			perror("\033[0;31mdup2");
+			ft_putstr_fd("\033[0m", 2);
 			return (1);
 		}
 	}

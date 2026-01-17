@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 18:23:28 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/16 22:17:33 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/17 18:08:26 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ int	modify_var(char *str, int hash, t_hash_env **hash_table)
 			ft_hashadd_back((t_hash_env **)&hash_table[hash], n_hash);
 		else
 		{
-			perror("Minishell");
+			perror("\033[0;31mMinishell");
+			ft_putstr_fd("\033[0m", 2);
 			return (1);
 		}
 	}

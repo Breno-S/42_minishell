@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 14:07:18 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/15 17:53:38 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/17 18:07:20 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,16 @@ int	cd_exec(char *new_path, t_hash_env **env)
 		return (cd_error(new_path, 2));
 	if (update_pwd(1, env))
 	{
-		perror("Minishell");
+		perror("\033[0;31mMinishell");
+		ft_putstr_fd("\033[0m", 2);
 		return (1);
 	}
 	if (chdir(new_path) == -1)
 		return (cd_error(new_path, 3));
 	if (update_pwd(2, env))
 	{
-		perror("Minishell");
+		perror("\033[0;31mMinishell");
+		ft_putstr_fd("\033[0m", 2);
 		return (1);
 	}
 	return (0);
@@ -108,23 +110,24 @@ int	update_pwd(int type, t_hash_env **hash_table)
 int	cd_error(char *arg, int type)
 {
 	if (type == 1)
-		ft_putendl_fd("Minishell: cd: too many arguments", 2);
+		ft_putendl_fd("\033[0;31mMinishell: cd: too many arguments", 2);
 	else if (type == 2)
 	{
-		ft_putstr_fd("Minishell: cd: ", 2);
+		ft_putstr_fd("\033[0;31mMinishell: cd: ", 2);
 		ft_putstr_fd(arg, 2);
-		ft_putendl_fd(": Not a directory", 2);
+		ft_putendl_fd(": Not a directory\033[0m", 2);
 	}
 	else if (type == 3)
 	{
-		ft_putstr_fd("Minishell: ", 2);
+		ft_putstr_fd("\033[0;31mMinishell: ", 2);
 		perror(arg);
+		ft_putstr_fd("\033[0m", 2);
 	}
 	else if (type == 4)
 	{
-		ft_putstr_fd("Minishell: cd: ", 2);
+		ft_putstr_fd("\033[0;31mMinishell: cd: ", 2);
 		ft_putstr_fd(arg, 2);
-		ft_putendl_fd(" not set", 2);
+		ft_putendl_fd(" not set\033[0m", 2);
 	}
 	return (1);
 }

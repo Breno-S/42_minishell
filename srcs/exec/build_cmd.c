@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:00:07 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/17 15:00:58 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/17 17:50:18 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ t_exec	*build_exec(t_ast *ast)
 			"temp");
 	if (copy_args(aux, &new_exec))
 	{
-		perror("Minishell");
+		perror("\033[0;31mMinishell");
+		ft_putstr_fd("\033[0m", 2);
 		new_exec->error = 1;
 	}
 	return (new_exec);
@@ -103,7 +104,8 @@ int	build_aux_exec(t_msh *msh)
 
 	if (aux_print_export(msh->hash_env, &new_envp))
 	{
-		perror("Minishell");
+		perror("\033[0;31mMinishell");
+		ft_putstr_fd("\033[0m", 2);
 		return (1);
 	}
 	ft_gcfct_register(new_envp, GC_DATA);

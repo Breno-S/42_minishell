@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/09 14:07:18 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/10 18:34:54 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/17 18:08:57 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	ft_pwd(int fd)
 	rtn = aux_pwd(&str);
 	if (rtn)
 	{
-		perror("Minishell");
+		perror("\033[0;31mMinishell");
+		ft_putstr_fd("\033[0m", 2);
 		return (rtn);
 	}
 	ft_putendl_fd(str, fd);

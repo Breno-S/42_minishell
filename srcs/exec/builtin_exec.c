@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 18:35:55 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/16 20:32:54 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/17 17:50:42 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ int	list_builtin(t_exec *exec, t_msh *aux_exec)
 		rtn = ft_exit(exec, aux_exec);
 	if (aux_print_export(aux_exec->hash_env, &aux_exec->envp))
 	{
-		perror("Minishell");
+		perror("\033[0;31mMinishell");
+		ft_putstr_fd("\033[0m", 2);
 		return (1);
 	}
 	ft_gcfct_register((void *)aux_exec->envp, GC_DATA);

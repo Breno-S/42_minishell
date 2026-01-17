@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 15:22:01 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/15 21:03:28 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/17 18:26:44 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,11 @@ t_hash_env	**create_hash_env(char **arr, char **argv)
 	hash_env = ft_gc_calloc_root(256, sizeof(void *), "hash_env");
 	if (!hash_env)
 		return (NULL);
-	if (import_argv(argv, hash_env))
+	if (import_argv(argv, hash_env) || import_envp(arr, hash_env)
+		|| import_special_args(hash_env))
 	{
-		perror("Minishell");
-		return (NULL);
-	}
-	if (import_envp(arr, hash_env))
-	{
-		perror("Minishell");
-		return (NULL);
-	}
-	if (import_special_args(hash_env))
-	{
-		perror("Minishell");
-		return (NULL);
+		perror("\033[0;31mMinishell");
+		ft_putstr_fd("\033[0m", 2);
 	}
 	save_return(0, hash_env);
 	return (hash_env);

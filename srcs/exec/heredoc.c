@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 12:18:32 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/17 10:20:55 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/17 18:25:45 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,13 @@ int	loop_heredoc(char *eof, t_heredoc *heredoc)
 	while (!g_signal)
 	{
 		if (isatty(STDIN_FILENO))
+		{
 			rl_event_hook = check_signal_state_heredoc;
-		str = ft_gcfct_register_root(readline("> "), "temp");
-		if (isatty(STDIN_FILENO))
+			str = ft_gcfct_register_root(readline("> "), "temp");
 			rl_event_hook = NULL;
+		}
+		else
+			str = ft_gcfct_register_root(readline(""), "temp");
 		if (!str && !g_signal)
 			print_warning(eof, count);
 		if ((str && !ft_strcmp(str, eof)) || !str || g_signal)
@@ -97,9 +100,9 @@ char	*access_temp_file(int tmp)
 
 void	print_warning(char *eof, int count)
 {
-	ft_putstr_fd("Minishell: warning: here-document at line ", 2);
+	ft_putstr_fd("\033[0;35mMinishell: warning: here-document at line ", 2);
 	ft_putnbr_fd(count, 2);
 	ft_putstr_fd(" delimited by end-of-file (wanted '", 2);
 	ft_putstr_fd(eof, 2);
-	ft_putstr_fd("')\n", 2);
+	ft_putendl_fd("')\033[0m", 2);
 }

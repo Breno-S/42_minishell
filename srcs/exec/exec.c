@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:33:11 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/16 21:53:35 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/17 17:52:26 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ t_pids	**create_pids_list(t_ast **ast, t_pids **pids)
 	my_pids = ft_gc_calloc_root(1, sizeof(t_pids *), "temp");
 	if (!my_pids)
 	{
-		perror("Minishell");
+		perror("\033[0;31mMinishell");
+		ft_putstr_fd("\033[0m", 2);
 		return (NULL);
 	}
 	if (!pids && ast[0]->is_head == 0)
@@ -58,7 +59,8 @@ t_pids	**create_pids_list(t_ast **ast, t_pids **pids)
 		my_pids[0] = ft_gc_calloc_root(1, sizeof(t_pids), "temp");
 		if (!my_pids)
 		{
-			perror("Minishell");
+			perror("\033[0;31mMinishell");
+			ft_putstr_fd("\033[0m", 2);
 			return (NULL);
 		}
 		my_pids[0]->type_head = ast[0]->type;
@@ -96,15 +98,15 @@ int	wait_childs(t_ast *ast, t_pids *pids, int rtn_sys)
 void	handle_error_msg_wait(int code)
 {
 	if (code == 11)
-		ft_putendl_fd("Segmentation fault (core dumped)", 2);
+		ft_putendl_fd("\033[0;31mSegmentation fault (core dumped)\033[0m", 2);
 	else if (code == 7)
-		ft_putendl_fd("Bus error", 2);
+		ft_putendl_fd("\033[0;31mBus error\033[0m", 2);
 	else if (code == 3)
-		ft_putendl_fd("Quit (core dumped)", 2);
+		ft_putendl_fd("\033[0;31mQuit (core dumped)\033[0m", 2);
 	else if (code == 6)
-		ft_putendl_fd("Aborted", 2);
+		ft_putendl_fd("\033[0;31mAborted\033[0m", 2);
 	else if (code == 8)
-		ft_putendl_fd("Floating point exception", 2);
+		ft_putendl_fd("\033[0;31mFloating point exception\033[0m", 2);
 	else if (code == 2)
 		ft_putendl_fd("", 2);
 	g_signal = 128 + code;
