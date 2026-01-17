@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/09 22:07:43 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/09/03 14:27:25 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/17 09:53:20 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_lstsort(t_list *lst)
 		aux_2 = aux->next;
 		while (aux_2)
 		{
-			if (ft_strncmp(aux->content, aux_2->content, 100))
+			if (ft_strcmp(aux->content, aux_2->content) > 0)
 			{
 				content_aux = aux->content;
 				aux->content = aux_2->content;

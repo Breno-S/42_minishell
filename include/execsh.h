@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/16 22:51:56 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/17 10:12:08 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int			ft_sizeseg(t_token_word *args);
 
 t_exec		*build_exec(t_ast *ast);
 int			build_aux_exec(t_msh *msh);
-void		copy_args(t_token_word *args, t_exec **cmd);
+int			copy_args(t_token_word *args, t_exec **cmd);
 char		**find_path(void);
 char		*find_executable(char *arg, char **path, t_exec **exec);
 char		*handle_search(char *arg, t_exec **exec);

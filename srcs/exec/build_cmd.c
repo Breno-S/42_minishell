@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/07 14:00:07 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/16 01:27:42 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/17 11:07:47 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,13 @@ t_exec	*build_cmd(t_ast *ast)
 
 int	ft_sizeseg(t_token_word *args)
 {
-	int			i;
-	t_segment	*aux;
+	int	i;
 
 	i = 0;
 	while (args)
 	{
-		aux = args->seg_lst;
-		while (aux)
-		{
+		if (args->class != TOKEN_NEWLINE)
 			i++;
-			aux = aux->next;
-		}
 		args = (t_token_word *)args->next;
 	}
 	return (i);
@@ -58,35 +53,47 @@ t_exec	*build_exec(t_ast *ast)
 	t_exec			*new_exec;
 	t_token_word	*aux;
 
-	new_exec = ft_gc_calloc_root(1, sizeof(t_exec), "exec");
+	new_exec = ft_gc_calloc_root(1, sizeof(t_exec), "temp");
+	new_exec->infile = -1;
+	new_exec->outfile = -1;
 	if (!new_exec)
 		return (NULL);
 	aux = ast->args;
 	new_exec->args = ft_gc_calloc_root(ft_sizeseg(aux) + 1, sizeof(char *),
-			"exec");
-	copy_args(aux, &new_exec);
-	new_exec->infile = -1;
-	new_exec->outfile = -1;
+			"temp");
+	if (copy_args(aux, &new_exec))
+	{
+		perror("Minishell");
+		new_exec->error = 1;
+	}
 	return (new_exec);
 }
 
-void	copy_args(t_token_word *args, t_exec **cmd)
+int	copy_args(t_token_word *args, t_exec **cmd)
 {
 	int			i;
 	t_segment	*aux;
+	char		*arg_join;
 
 	i = 0;
 	while (args)
 	{
 		aux = args->seg_lst;
-		while (aux)
+		arg_join = ft_gc_calloc_root(1, 1, "temp");
+		while (aux && args->class != TOKEN_NEWLINE)
 		{
-			cmd[0]->args[i++] = args->seg_lst->text;
+			if (aux->text)
+				arg_join = ft_gcfct_register_root(ft_strjoin(arg_join,
+							aux->text), "temp");
+			if (!arg_join)
+				return (1);
 			aux = aux->next;
 		}
+		if (args->class != TOKEN_NEWLINE)
+			cmd[0]->args[i++] = arg_join;
 		args = (t_token_word *)args->next;
 	}
-	return ;
+	return (0);
 }
 
 int	build_aux_exec(t_msh *msh)

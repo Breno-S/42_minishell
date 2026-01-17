@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 14:16:04 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/16 22:14:53 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/17 10:21:22 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ char	*glob_exp(t_token *token_o)
 	files = all_files(type, token->seg_lst);
 	if (!files)
 		return (NULL);
-	rtn = ft_gcfct_register_root(ft_joinlst(files), "glob");
+	ft_lstsort(files);
+	rtn = ft_gcfct_register_root(ft_joinlst(files), "temp");
 	return (rtn);
 }
 

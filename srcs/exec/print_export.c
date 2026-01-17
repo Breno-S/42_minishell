@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_export.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 18:07:37 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/15 17:53:38 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/17 10:32:47 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ int	ft_print_export(t_hash_env **hash_table, int fd)
 	i = 0;
 	while (envs[i])
 		ft_fix_print(envs[i++], fd);
-	ft_gc_del_root("env_print");
-	ft_gc_collect();
 	free(envs);
 	return (0);
 }
@@ -35,7 +33,7 @@ int	ft_fix_print(char *env, int fd)
 {
 	char	**var;
 
-	var = ft_trim_env(env, '=', "env_print");
+	var = ft_trim_env(env, '=', "temp");
 	if (!var)
 		return (1);
 	ft_putstr_fd("declare -x ", fd);
