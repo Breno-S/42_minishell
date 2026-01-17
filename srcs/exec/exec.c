@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 14:33:11 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/16 17:41:42 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/16 21:53:35 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	exec_tree(t_ast *ast, t_msh *msh, t_pids **pids)
 	rtn = 1;
 	if (!pids && ast->type != NODE_AND && ast->type != NODE_OR)
 		if (!traverse_expand(ast, msh->hash_env))
-			return (2);
+			return (1);
 	pids = create_pids_list(&ast, pids);
 	if (!pids)
 		return (1);
@@ -81,7 +81,7 @@ int	wait_childs(t_ast *ast, t_pids *pids, int rtn_sys)
 		if (WIFSIGNALED(rtn))
 		{
 			if (!g_signal)
-				handle_error_msg(WTERMSIG(rtn));
+				handle_error_msg_wait(WTERMSIG(rtn));
 			rtn = 128 + WTERMSIG(rtn);
 		}
 		else if (WIFEXITED(rtn))
@@ -93,7 +93,7 @@ int	wait_childs(t_ast *ast, t_pids *pids, int rtn_sys)
 	return (rtn);
 }
 
-void	handle_error_msg(int code)
+void	handle_error_msg_wait(int code)
 {
 	if (code == 11)
 		ft_putendl_fd("Segmentation fault (core dumped)", 2);

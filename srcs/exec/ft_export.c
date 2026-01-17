@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 18:23:28 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/16 18:14:50 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/16 22:17:33 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	verify_valid_var(char *var)
 	if (!var)
 		return (-1);
 	i = 0;
+	if (!ft_strcmp(var, "="))
+		return (1);
 	while (var[i] && var[i] != '=')
 	{
 		if (i == 0 && !ft_isalpha(var[i]))

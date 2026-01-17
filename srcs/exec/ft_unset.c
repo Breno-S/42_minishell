@@ -6,14 +6,11 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 18:23:28 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/13 17:27:31 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/16 21:42:36 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <execsh.h>
-
-t_hash_env	*aux_unset(t_hash_env **hash_table, const char *var);
-int			remove_env_root(void *arg, t_list *head);
 
 int	ft_unset(t_exec *cmd, t_hash_env **hash_table)
 {

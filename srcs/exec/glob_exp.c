@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/05 14:16:04 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/10 14:48:09 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/16 22:14:53 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,9 @@ t_list	*all_files(int type, t_segment *seg_lst)
 		ent = readdir(o_dir);
 		if (!ent)
 			break ;
-		if (i++ > 1 && save_files(ent, type, &files, seg_lst))
+		if (!ft_strcmp(ent->d_name, ".") || !ft_strcmp(ent->d_name, ".."))
+			i++;
+		else if (i++ && save_files(ent, type, &files, seg_lst))
 		{
 			closedir(o_dir);
 			return (NULL);
