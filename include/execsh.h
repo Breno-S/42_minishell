@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/28 14:10:33 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/16 17:10:20 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/16 21:00:45 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,9 @@ int			check_literal_match(t_segment *aux_seg, char *content,
 
 // EXIT
 
-int			ft_exit(t_msh *aux_exec);
+int			ft_exit(t_exec *exec, t_msh *aux_exec);
+int			print_exit_error(int type, char *str);
+int			verify_exit_arg(char *args);
 
 // EXEC BUILTIN
 

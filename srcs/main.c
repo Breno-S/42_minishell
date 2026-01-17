@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/16 17:54:54 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/16 20:51:12 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,10 @@ static int	read_sh(t_msh *msh)
 	}
 	if (!msh->line)
 	{
-		ft_exit(NULL);
-		return (0);
+		if (isatty(STDIN_FILENO))
+			ft_putendl_fd("exit", 2);
+		finish_tree(NULL, 0);
+		exit(0);
 	}
 	add_history(msh->line);
 	return (1);

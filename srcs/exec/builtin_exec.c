@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 18:35:55 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/15 19:28:33 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/16 20:32:54 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	list_builtin(t_exec *exec, t_msh *aux_exec)
 	else if (!ft_strcmp("env", exec->args[0]))
 		rtn = ft_env(aux_exec->hash_env, exec->outfile);
 	else if (!ft_strcmp("exit", exec->args[0]))
-		rtn = ft_exit(aux_exec);
+		rtn = ft_exit(exec, aux_exec);
 	if (aux_print_export(aux_exec->hash_env, &aux_exec->envp))
 	{
 		perror("Minishell");

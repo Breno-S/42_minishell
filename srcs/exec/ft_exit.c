@@ -6,70 +6,64 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 18:14:06 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/16 01:22:35 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/16 21:27:20 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 
-int	ft_exit(t_msh *aux_exec)
+int	ft_exit(t_exec *exec, t_msh *aux_exec)
 {
-	finish_tree(aux_exec, 0);
+	long long	rtn;
+	int			i;
+
+	i = 0;
+	rtn = 0;
 	if (isatty(STDIN_FILENO))
 		ft_putendl_fd("exit", 2);
-	exit(0);
+	while (exec->args[i])
+		i++;
+	if (i > 2)
+		return (print_exit_error(1, NULL));
+	if (exec->args[1])
+		rtn = verify_exit_arg(exec->args[1]);
+	finish_tree(aux_exec, 0);
+	exit((unsigned char)rtn);
 }
 
-void	finish_tree(t_msh *aux_exec, int rtn)
+int	verify_exit_arg(char *args)
 {
-	if (aux_exec && aux_exec->ast)
-		close_fds_tree(aux_exec->ast);
-	rl_clear_history();
-	ft_gc_end();
-	if (rtn)
-		exit(rtn);
-}
+	int	i;
+	int	rtn;
 
-void	close_fds_tree(t_ast *ast)
-{
-	if (!ast)
-		return ;
-	if (ast->type != NODE_CMD && ast->type != NODE_CMD_BUILTIN)
+	i = 0;
+	rtn = 0;
+	while (ft_isspace(args[i]))
+		i++;
+	if (args[i] == '-' || args[i] == '+')
+		i++;
+	rtn = ft_atoll(args);
+	while (args[i])
 	{
-		close_fds_tree(ast->left);
-		close_fds_tree(ast->right);
-		if (ast->chan_com > 2)
-			close(ast->chan_com);
-		ast->chan_com = 0;
-		return ;
-	}
-	close_fds_tree_cmd(ast);
-}
-
-void	close_fds_tree_cmd(t_ast *ast)
-{
-	if (ast->cmd)
-	{
-		if (ast->cmd->infile > 2)
-			close(ast->cmd->infile);
-		ast->cmd->infile = -1;
-		if (ast->cmd->outfile > 2)
-			close(ast->cmd->outfile);
-		ast->cmd->outfile = -1;
-		if (ast->chan_com > 2)
-			close(ast->chan_com);
-		if (ast->cmd->pipefd[1] > 2)
-			close(ast->cmd->pipefd[1]);
-		if (ast->cmd->pipefd[0] > 2)
-			close(ast->cmd->pipefd[0]);
-	}
-	ast->chan_com = 0;
-	if (ast->heredoc)
-	{
-		while (ast->heredoc)
+		if (!ft_isdigit(args[i++]))
 		{
-			close(ast->heredoc->fd_tmp);
-			ast->heredoc = ast->heredoc->next;
+			rtn = print_exit_error(2, args);
+			break ;
 		}
 	}
+	return (rtn);
+}
+
+int	print_exit_error(int type, char *str)
+{
+	if (type == 1)
+		ft_putendl_fd("Minishell: exit: too many arguments", 2);
+	else if (type == 2)
+	{
+		ft_putstr_fd("Minishell: exit: ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putendl_fd(": numeric argument required", 2);
+		return (2);
+	}
+	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 18:23:28 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/16 01:03:53 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/16 18:14:50 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ int	ft_export(t_exec *exec, t_hash_env **hash_table, int fd)
 			export_error(exec->args[i++]);
 		}
 		else
+		{
 			str = ft_gcfct_register_root(ft_strdup(exec->args[i++]), "env");
-		modify_var(str, hash, hash_table);
+			modify_var(str, hash, hash_table);
+		}
 	}
 	return (rtn);
 }
