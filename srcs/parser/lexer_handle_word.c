@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 20:47:03 by brensant          #+#    #+#             */
-/*   Updated: 2025/12/20 20:01:53 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/16 21:04:42 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ static t_segment	*handle_cmd_subst(t_lexer *l, size_t *text_len)
 	return (segment(type, seg_start, seg_len));
 }
 
-static t_segment	*handle_var(t_lexer *l, size_t *text_len)
+static t_segment	*handle_var(t_lexer *l, size_t *text_len,
+	t_seg_type fallback_type)
 {
 	t_seg_type	type;
 	const char	*seg_start;
@@ -49,8 +50,8 @@ static t_segment	*handle_var(t_lexer *l, size_t *text_len)
 		return (handle_cmd_subst(l, text_len));
 	*text_len += lexer_chop_chars(l, 1);
 	seg_start = &l->str[l->idx];
-	type = VAR_SPLIT + l->dquote_flag;
-	if (ft_strchr("0123456789@*-#!?$", l->str[l->idx]))
+	type = VAR_SPLIT - l->dquote_flag * 3;
+	if (l->str[l->idx] && ft_strchr("0123456789@*-#!?$", l->str[l->idx]))
 		return (segment(type, seg_start,
 				lexer_chop_while(l, "0123456789@*-#!?$", 1, text_len)));
 	seg_len = lexer_chop_while(l, VAR_START_CHARS, 1, text_len);
@@ -58,7 +59,7 @@ static t_segment	*handle_var(t_lexer *l, size_t *text_len)
 	{
 		seg_start--;
 		seg_len++;
-		type = LITERAL;
+		type = fallback_type;
 	}
 	while (ft_isalnum(l->str[l->idx]) || l->str[l->idx] == '_')
 	{
@@ -78,10 +79,10 @@ static t_segment	*handle_dquotes(t_lexer *l, size_t *text_len)
 	while (l->str[l->idx] != '\"' && l->idx < l->str_len)
 	{
 		seg_start = &l->str[l->idx];
-		segment_add(&seg_list, segment(LITERAL, seg_start,
+		segment_add(&seg_list, segment(DQUOTES, seg_start,
 				lexer_chop_til(l, "$\"", l->str_len, text_len)));
 		if (l->str[l->idx] == '$')
-			segment_add(&seg_list, handle_var(l, text_len));
+			segment_add(&seg_list, handle_var(l, text_len, DQUOTES));
 	}
 	lexer_chop_while(l, "\"", 1, text_len);
 	return (seg_list);
@@ -99,7 +100,7 @@ t_token	*handle_word(t_lexer *l)
 	{
 		seg_start = &l->str[l->idx];
 		if (l->str[l->idx] == '\'')
-			segment_add(&seg_list, segment(LITERAL, seg_start + 1,
+			segment_add(&seg_list, segment(SQUOTES, seg_start + 1,
 					consume_inside_squotes(l, &text_len)));
 		else if (l->str[l->idx] == '\"')
 			segment_add(&seg_list, handle_dquotes(l, &text_len));
@@ -107,9 +108,9 @@ t_token	*handle_word(t_lexer *l)
 			segment_add(&seg_list, segment(WILDCARD, seg_start,
 					lexer_chop_while(l, "*", 1, &text_len)));
 		else if (l->str[l->idx] == '$')
-			segment_add(&seg_list, handle_var(l, &text_len));
+			segment_add(&seg_list, handle_var(l, &text_len, OUTSIDE));
 		else
-			segment_add(&seg_list, segment(LITERAL, seg_start, lexer_chop_til(l,
+			segment_add(&seg_list, segment(OUTSIDE, seg_start, lexer_chop_til(l,
 						METACHARS "\"\'*$", l->str_len, &text_len)));
 	}
 	return (token_word(&l->str[l->idx - text_len], text_len, seg_list));

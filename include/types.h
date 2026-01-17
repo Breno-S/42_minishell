@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/15 20:35:04 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/16 20:47:54 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,14 @@ typedef enum e_token_class
 
 typedef enum e_seg_type
 {
+	OUTSIDE,
+	DQUOTES,
+	SQUOTES,
+	VAR_FIXED,
+	CMD_FIXED,
 	LITERAL,
 	VAR_SPLIT,
-	VAR_FIXED,
 	CMD_SPLIT,
-	CMD_FIXED,
 	WILDCARD,
 }						t_seg_type;
 

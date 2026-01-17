@@ -3,23 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 19:03:05 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/14 21:16:44 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/16 21:32:51 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 #include "types.h"
-
-void	remove_segment(t_segment **seg_lst, t_segment *target, t_segment *prev)
-{
-	if (prev)
-		prev->next = target->next;
-	else
-		*seg_lst = target->next;
-}
 
 void	remove_null_segs(t_token_word *token)
 {
@@ -31,7 +23,12 @@ void	remove_null_segs(t_token_word *token)
 	while (seg)
 	{
 		if ((!seg->text || seg->text[0] == '\0'))
-			remove_segment(&token->seg_lst, seg, prev);
+		{
+			if (prev)
+				prev->next = seg->next;
+			else
+				token->seg_lst = seg->next;
+		}
 		else
 			prev = seg;
 		seg = seg->next;
