@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:22:36 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/16 17:41:31 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/17 23:05:09 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,4 @@ int				expand_var_segs(t_token_word *token);
 
 int				traverse_expand(t_ast *ast, t_hash_env **hash_env);
 
-#endif //PARSESH_H
+#endif // PARSESH_H

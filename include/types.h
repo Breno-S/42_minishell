@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/17 17:45:10 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/17 22:53:01 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,11 +177,12 @@ typedef struct s_hash_env
 
 typedef struct s_msh
 {
-	t_hash_env	**hash_env;
-	char		**envp;
-	t_token		*token_list;
-	t_ast		*ast;
-	char		*line;
+	t_hash_env			**hash_env;
+	char				**envp;
+	t_token				*token_list;
+	t_ast				*ast;
+	char				*line;
+	int					in_sub;
 }						t_msh;
 
 // typedef struct s_exec
