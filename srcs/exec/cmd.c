@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:16:59 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/19 13:25:42 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 16:21:49 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	handle_cmd(t_ast *ast, t_msh *aux_exec, t_pids **pids)
 	if (!ast->cmd && expand_atom(ast))
 		return (1);
 	if (ast->type == NODE_CMD_BUILTIN)
-		return(handle_builtin(ast, aux_exec, pids));
+		return (handle_builtin(ast, aux_exec, pids));
 	if (!ast)
 		return (rtn);
 	if (ast->chan_com > 0 && ast->cmd->infile == -1)
