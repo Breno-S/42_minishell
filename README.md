@@ -1,60 +1,91 @@
-# 42_minishell
+# 42_minishell 🐚
 
-*This project has been created as part of the 42 curriculum by brensant and rgomes-d.*
+*This project was developed as part of the 42 curriculum by **[brensant](https://github.com/Breno-S/)** and **[rgomes-d](https://github.com/Norethx)**.*
 
-# Description
+## Description
 
-This project consists of a shell application written in C. The goal of this project is to replicate a subset of the [Bash](https://www.gnu.org/software/bash/) shell, using only a limited set of functions, alongside our own version of the C Standard Library (libft).
+This project consists of a shell application written in C. Its goal is to reproduce a subset of the behavior of the [Bash](https://www.gnu.org/software/bash/) shell, while being restricted to a limited set of allowed system calls and functions, in addition to our custom implementation of parts of the C Standard Library (`libft`).
 
-## What is a shell?
+The project emphasizes a deep understanding of several core topics of Unix systems programming, such as:
 
-A shell is an interactive text-based application that allows users to execute and orquestrate programs and procedures inside an operating system, via commands. There are many shell applications available: sh, bash, fish and zsh are the most popular. Most shell scripts are written in bash for portability reasons, as it is POSIX-compliant and used across different operating systems.
+- Command parsing.
+- Shell lifecycle.
+- Unix files and file descriptors.
+- Process creation and management.
+- Pipes, signals and inter-process communication.
 
-## Key Concepts
+### What is a shell?
 
-- Shell Operation
-- Unix Files
-	- File Descriptors
-	- File Redirection
-- Unix Pipes
-- Processes
-- Conditional Execution
-- Variable Expansion
+A shell is an interactive, text-based program that allows users to execute and orchestrate other programs within an operating system by typing commands. It acts as an interface between the user and the kernel.
 
-##
+There are many widely used shell implementations, such as `sh`, `bash`, `zsh`, and `fish`. Among them, Bash is one of the most common and is often used as a reference due to its POSIX compliance and widespread availability across Unix-like systems. For portability reasons, many shell scripts are written targeting Bash or POSIX `sh`.
 
-# Instructions
+### Minishell features
 
-Clone the repository:
+- Single and double quoting
+- Variables
+- Pipelining with `|`
+- Redirections:
+	- `<` - input
+	- `>` - output
+	- `>>` - append
+	- `<<` - here-documents
+- Signals:
 
-```
-git clone <url>
-```
+	- `Ctrl-C`
+	- `Ctrl-D`
+	- `Ctrl-\`
 
-Move to the project's directory:
+- Builtin commands:
 
-```
-cd 42_minishell
-```
+	- `echo`
+	- `cd`
+	- `pwd`
+	- `export`
+	- `unset`
+	- `env`
+	- `exit`
 
-Compile the project:
+- Filename expansion (`*`).
 
-```
-make
-```
+> [!IMPORTANT]
+> There are some limitations to our project:
+> - Listing commands with `;` or `&` is not possible. They are both treated as invalid tokens.
+> - Filename expansions (`*`) target only the current directory and its subdirectories.
+> - There is no brace (`{start..end}`), tilde (`~`), parameter (`${parameter}`) or arithmetic (`$((expression))`) expansions.
+> - There is no command or process substitution.
 
-Run the executable:
+## Instructions
 
-```
-./minishell
-```
+1. Clone the repository:
 
-Now, you can type any command in the prompt.
+	```bash
+	git clone https://github.com/Breno-S/42_minishell.git
+	```
 
-# Resources
+2. Move into the project directory:
 
-Here are some of the resources used during the project:
+	```bash
+	cd 42_minishell
+	```
 
-[Bash Reference Manual](https://www.gnu.org/software/bash/manual/bash.html#Redirections)
+3. Compile the project:
 
-[Shell Command Language](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html#tag_18_10_02)
+	```bash
+	make
+	```
+
+4. Run the program:
+
+	```bash
+	./minishell
+	```
+
+You can now type commands at the prompt and interact with the shell. Press `Ctrl-d` or type `exit` to quit.
+
+## Resources
+
+Some of the main references used during the development of this project:
+
+* [Bash Reference Manual](https://www.gnu.org/software/bash/manual/bash.html)
+* [Shell Command Language (POSIX)](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html)
