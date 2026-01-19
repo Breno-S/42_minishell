@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/02 23:10:32 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/10 23:26:59 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 17:33:28 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,5 @@ int	ft_env(t_hash_env **hash_env, int fd)
 			var = var->next;
 		}
 	}
-	ft_putendl_fd("_=/usr/bin/env", fd);
 	return (0);
 }
