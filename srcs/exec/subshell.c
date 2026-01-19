@@ -6,11 +6,12 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 20:06:10 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/17 23:33:38 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 13:34:31 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
+#include "parsesh.h"
 #include "signalsh.h"
 
 int	sub_fork(t_ast *ast, t_msh *exec, t_pids **pids)
@@ -19,6 +20,8 @@ int	sub_fork(t_ast *ast, t_msh *exec, t_pids **pids)
 	int		i;
 
 	i = 0;
+	if (!ast->cmd && expand_atom(ast))
+		return (1);
 	n_pid = ft_gc_calloc_root(pids[0]->total + 1, sizeof(pid_t *), "temp");
 	if (!n_pid)
 		return (1);
@@ -45,7 +48,6 @@ int	sub_exec(t_ast *ast, t_msh *exec)
 
 	rtn = 1;
 	dup_sub(ast);
-	exec->in_sub = 1;
 	rtn = exec_tree(ast->left, exec, NULL);
 	close_fds_tree_cmd(ast);
 	finish_tree(exec, rtn);

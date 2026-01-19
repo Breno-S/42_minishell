@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 18:14:06 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/17 18:07:58 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 13:31:30 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ int	verify_exit_arg(char *args)
 int	print_exit_error(int type, char *str)
 {
 	if (type == 1)
-		ft_putendl_fd("\033[0;31Minishell: exit: too many arguments\033[0m", 2);
+		ft_putendl_fd("\033[0;31mMinishell: exit: too many arguments\033[0m", 2);
 	else if (type == 2)
 	{
-		ft_putstr_fd("\033[0;31Minishell: exit: ", 2);
+		ft_putstr_fd("\033[0;31mMinishell: exit: ", 2);
 		ft_putstr_fd(str, 2);
 		ft_putendl_fd(": numeric argument required\033[0m", 2);
 		return (2);

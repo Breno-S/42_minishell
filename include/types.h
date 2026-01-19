@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/17 22:53:01 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 14:06:52 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "includes.h"
 
-# define PROMPT "\033[1;34mbrensant&rgomes-d\033[0m:\033[1;34mMadshell\033[0m$ "
+# define PROMPT "\001\033[1;34m\002brensant&rgomes-d\001\033[0m:\002\001\033[1;34m\002Madshell\001\033[0m\002> "
 
 typedef enum e_error_type
 {
@@ -182,7 +182,6 @@ typedef struct s_msh
 	t_token				*token_list;
 	t_ast				*ast;
 	char				*line;
-	int					in_sub;
 }						t_msh;
 
 // typedef struct s_exec

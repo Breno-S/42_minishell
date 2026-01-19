@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:22:36 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/17 23:05:09 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 12:58:57 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void			remove_token(t_token **token_list, t_token *target,
 char			*text_from_segments(t_segment *seg_lst);
 int				expand_var_segs(t_token_word *token);
 
+int				expand_atom(t_ast *ast);
 int				traverse_expand(t_ast *ast, t_hash_env **hash_env);
 
 #endif // PARSESH_H

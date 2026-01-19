@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 16:57:36 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/17 23:04:22 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 12:58:37 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,24 +162,16 @@ static int	expand_args_redirs(t_ast *ast)
 // 	return (1);
 // }
 
-int	traverse_expand(t_ast *ast, t_hash_env **hash_env)
+int	expand_atom(t_ast *ast)
 {
 	if (ast->type == NODE_CMD)
 	{
 		if (expand_args_redirs(ast))
 			ast->cmd = build_cmd(ast);
 		else
-			return (0);
+			return (1);
 	}
 	else if (ast->type == NODE_SUB)
-	{
 		ast->cmd = build_sub(ast);
-		traverse_expand(ast->left, hash_env);
-	}
-	else
-	{
-		traverse_expand(ast->left, hash_env);
-		traverse_expand(ast->right, hash_env);
-	}
-	return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/17 22:55:29 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 13:34:28 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ int	main(int argc, char *argv[], char *envp[])
 	t_msh	msh;
 
 	ft_gc_init();
-	msh.in_sub = 0;
 	msh.hash_env = (t_hash_env **)create_hash_env(envp, argv);
 	while (1)
 	{

@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 18:35:55 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/17 17:50:42 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 13:30:00 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	handle_builtin(t_ast *ast, t_msh *exec, t_pids **pids)
 		ast->cmd->outfile = 1;
 	if (pids[0]->type_head == NODE_PIPE)
 		return (fork_builtin(ast->cmd, exec, pids, ast->chan_com));
-	else if (pids[0]->type_head == NODE_CMD_BUILTIN)
+	else if (pids[0]->type_head == NODE_CMD)
 	{
 		if (ast->cmd->error)
 		{
