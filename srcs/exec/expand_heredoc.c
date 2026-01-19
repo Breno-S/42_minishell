@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 14:54:37 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/17 23:26:10 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 15:59:51 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	verify_text(char *str, t_heredoc *heredoc)
 	int	i;
 	int	y;
 
-	fd_hr = open(heredoc->path, O_RDWR, O_TRUNC);
+	fd_hr = open(heredoc->path, O_RDWR | O_TRUNC, 0644);
 	if (fd_hr == -1)
 		return (1);
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/19 14:06:52 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 15:11:14 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "includes.h"
 
-# define PROMPT "\001\033[1;34m\002brensant&rgomes-d\001\033[0m:\002\001\033[1;34m\002Madshell\001\033[0m\002> "
+# define PROMPT "brensant&rgomes-d:Madshell> "
 
 typedef enum e_error_type
 {

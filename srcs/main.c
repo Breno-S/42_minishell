@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/19 13:34:28 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 16:06:36 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static int	parse_sh(t_msh *msh)
 	return (1);
 }
 
-int	main(int argc, char *argv[], char *envp[])
+int	main(int argc __attribute__((unused)), char *argv[], char *envp[])
 {
 	t_msh	msh;
 

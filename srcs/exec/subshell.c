@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 20:06:10 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/19 13:34:31 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 15:19:55 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,13 @@ void	dup_sub(t_ast *ast)
 	}
 	if (ast->cmd->infile > 0)
 	{
-		ast->left->chan_com = ast->cmd->infile;
+		if (dup2(ast->cmd->infile, STDIN_FILENO) == -1)
+		{
+			perror("\033[0;31mMinishell: dup2");
+			ft_putstr_fd("\033[0m", 2);
+			close_fds_tree_cmd(ast);
+			finish_tree(NULL, 1);
+		}
 		ast->cmd->infile = -1;
 	}
 }

@@ -1,7 +1,7 @@
-NAME := Minishell
+NAME := minishell
 
 CC := cc
-CFLAGS := -g -Wall -Wextra # -Werror
+CFLAGS := -g -Wall -Wextra -Werror
 CPPFLAGS = $(addprefix -I,$(INCLUDES))
 
 LIB_DIRS = $(PATH_LIBFT)/bin
@@ -10,7 +10,7 @@ LIBFT := ./libs/libft/bin/libft.a
 SRCS_LIBFT := ./libs/libft/build/
 
 PATH_LIBFT := ./libs/libft/
-PATH_BIN := ./bin/
+PATH_BIN := ./
 PATH_OBJT := ./build/
 PATH_BUILD := build/
 
@@ -108,7 +108,6 @@ $(addprefix $(PATH_BIN),$(NAME)): $(LIBFT) $(subst $(PATH_MANDATORY),$(PATH_OBJT
 		@echo "          Build $(NAME)          "
 		@echo "+==========================================+$(NC)"
 
-		@mkdir -p bin
 		@printf "$(L_GREEN)Build...$(NC) %-40s\n" $(NAME)
 		@sleep 0.01
 		@$(CC) $(CFLAGS) $(CPPFLAGS) $(subst $(PATH_MANDATORY),$(PATH_OBJT),$(OBJTS)) -o $(addprefix $(PATH_BIN),$(NAME)) $(LDLIBS) $(LDFLAGS)

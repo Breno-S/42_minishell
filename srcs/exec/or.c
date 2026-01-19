@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   or.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:43:51 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/15 19:01:44 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/19 15:20:22 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ int	exec_or(t_ast *ast, t_msh *aux_exec)
 	int	rtn;
 
 	rtn = 1;
-	if (ast->chan_com > 2)
-		ast->left->chan_com = ast->chan_com;
 	ast->chan_com = 0;
 	rtn = exec_tree(ast->left, aux_exec, NULL);
 	if (!rtn)
