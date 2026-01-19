@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 19:03:05 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/19 16:21:29 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 17:53:04 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ int	expand_var_segs(t_token_word *token)
 		{
 			seg->text = var_exp(seg->text);
 			status = 1;
+			if (seg->text && !ft_strchr(seg->text, ' '))
+				seg->type = LITERAL;
 		}
 		else if (seg->type == CMD_FIXED || seg->type == CMD_SPLIT)
 			status = 1;

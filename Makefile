@@ -60,6 +60,7 @@ SRCS_MANDATORY_PARSER := \
 	ast.c \
 	ast_aux.c \
 	expand.c \
+	expand_atom.c\
 	expand_aux.c \
 	expand_split_join.c \
 	expand_utils.c \
@@ -69,8 +70,7 @@ SRCS_MANDATORY_PARSER := \
 	parser.c \
 	parser_utils.c \
 	segment.c \
-	token.c \
-	traverse_expand.c
+	token.c
 
 SRCS_MANDATORY := $(addprefix $(PATH_MANDATORY)/,$(SRCS_MANDATORY_COMMON))
 SRCS_MANDATORY := $(SRCS_MANDATORY) $(addprefix $(PATH_MANDATORY)/$(EXEC_SRC_DIR)/,$(SRCS_MANDATORY_EXEC))

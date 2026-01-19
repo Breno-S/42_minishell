@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsesh.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:22:36 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/19 12:58:57 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 18:05:18 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,5 @@ char			*text_from_segments(t_segment *seg_lst);
 int				expand_var_segs(t_token_word *token);
 
 int				expand_atom(t_ast *ast);
-int				traverse_expand(t_ast *ast, t_hash_env **hash_env);
 
-#endif // PARSESH_H
+#endif /* PARSESH_H */

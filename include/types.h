@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/19 15:11:14 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 18:14:41 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,13 +184,4 @@ typedef struct s_msh
 	char				*line;
 }						t_msh;
 
-// typedef struct s_exec
-// {
-// 	int					prev_fd;
-// 	int					pipefd[2];
-// 	int					redirect;
-// 	int					result;
-// 	t_list				*all_fds;
-// }						t_exec;
-
-#endif // TYPES_H
+#endif /* TYPES_H */
