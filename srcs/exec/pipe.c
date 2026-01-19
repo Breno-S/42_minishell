@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:17:04 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/19 16:21:35 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 16:41:12 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	pipe_exec(t_ast *ast, t_msh *aux_exec, t_pids **pids)
 	if (ast->chan_com > 0)
 		ast->left->chan_com = ast->chan_com;
 	ast->chan_com = 0;
-	if (ast->left->cmd->outfile != -1)
+	if (ast->left->cmd->outfile == -1)
 		verify_sigpipe(ast);
 	rtn = exec_tree(ast->left, aux_exec, pids);
 	rtn = exec_tree(ast->right, aux_exec, pids);
