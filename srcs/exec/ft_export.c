@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 18:23:28 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/19 15:39:34 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 16:15:48 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,14 @@ int	verify_valid_var(char *var)
 		return (1);
 	while (var[i] && var[i] != '=')
 	{
-		if (i == 0 && !ft_isalpha(var[i]))
+		if (i == 0 && !(ft_isalpha(var[i]) || var[i] == '_'))
 			return (1);
 		else if (i >= 1 && !(ft_isalnum(var[i]) || var[i] == '_'))
 			return (1);
 		i++;
 	}
+	if (i == 1 && var[0] == '_')
+		return (1);
 	return (0);
 }
 

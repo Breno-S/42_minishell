@@ -63,7 +63,7 @@ dkms.conf
 *.log
 
 # Executable
-Minishell
+minishell
 
 # Ctags
 tags
