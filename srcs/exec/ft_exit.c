@@ -6,11 +6,14 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 18:14:06 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/19 13:31:30 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/19 20:31:29 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
+
+static long long	ft_sizemult(long long n);
+static int			check_out_of_bounds(char *args, long long rtn);
 
 int	ft_exit(t_exec *exec, t_msh *aux_exec)
 {
@@ -42,22 +45,72 @@ int	verify_exit_arg(char *args)
 		i++;
 	if (args[i] == '-' || args[i] == '+')
 		i++;
+	while (args[i] == 48)
+		i++;
 	rtn = ft_atoll(args);
-	while (args[i])
+	if (check_out_of_bounds(&args[i], rtn) == rtn)
 	{
-		if (!ft_isdigit(args[i++]))
+		while (args[i])
 		{
-			rtn = print_exit_error(2, args);
-			break ;
+			if (!ft_isdigit(args[i++]))
+				rtn = print_exit_error(2, args);
+			if (!ft_isdigit(args[i++]))
+				break ;
 		}
 	}
+	else
+		rtn = print_exit_error(2, args);
 	return (rtn);
+}
+
+static int	check_out_of_bounds(char *args, long long rtn)
+{
+	long long	rtn_verify;
+	long long	len_nbr;
+	int			i;
+
+	i = 0;
+	len_nbr = ft_sizemult(rtn);
+	rtn_verify = rtn;
+	while (args[i])
+	{
+		if (!((rtn_verify / len_nbr) + '0' == args[i++]))
+		{
+			rtn = 2;
+			break ;
+		}
+		rtn_verify = rtn % len_nbr;
+		len_nbr = len_nbr / 10;
+	}
+	return (rtn);
+}
+
+static long long	ft_sizemult(long long n)
+{
+	long long	qt_char;
+	long long	verify;
+
+	verify = 1;
+	qt_char = 0;
+	while (n >= 10 || n <= -10)
+	{
+		qt_char++;
+		n /= 10;
+	}
+	if (n < 0)
+		qt_char += 2;
+	else
+		qt_char += 1;
+	while (qt_char-- > 1)
+		verify *= 10;
+	return (verify);
 }
 
 int	print_exit_error(int type, char *str)
 {
 	if (type == 1)
-		ft_putendl_fd("\033[0;31mMinishell: exit: too many arguments\033[0m", 2);
+		ft_putendl_fd("\033[0;31mMinishell: exit: too many arguments\033[0m",
+			2);
 	else if (type == 2)
 	{
 		ft_putstr_fd("\033[0;31mMinishell: exit: ", 2);
