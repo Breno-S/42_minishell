@@ -76,3 +76,7 @@ Some of the main references used during the development of this project:
 * [Shell Code Explained](https://youtube.com/playlist?list=PLbtzT1TYeoMhF4hcpEiCsOeN13zqrzBJq&si=nOBAoxPgcI911upE)
 * [Military Grade C/C++ Lexer from Scratch](https://youtu.be/AqyZztKlSGQ?si=mKJNNsJD_HAbHYYe)
 
+
+**AI usage disclaimer**
+
+During the development of this project, AI tools (such as ChatGPT) were used as a learning aid to clarify concepts related to shell behavior and Unix systems. All architectural decisions, implementations, and debugging were performed by the authors, and no code was copied verbatim from AI-generated sources. The project was developed with the intent of understanding and applying the underlying concepts.
