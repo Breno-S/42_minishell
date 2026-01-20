@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/19 18:07:35 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/20 15:36:44 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,9 @@ static int	parse_sh(t_msh *msh)
 
 	p = parser_new(msh->token_list);
 	msh->ast = parser_parse(&p);
-	if (msh->ast == NULL)
+	if (msh->ast == NULL || p.idx->next)
 	{
+		log_syntax_error(p.idx);
 		save_return(2, msh->hash_env);
 		return (0);
 	}

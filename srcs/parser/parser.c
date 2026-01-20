@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 18:54:22 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/13 19:55:16 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/20 15:49:45 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,14 @@ static int	handle_parenthesis(t_parser *p)
 	if (class == TOKEN_OPEN_PAREN)
 	{
 		if (p->paren_flag)
-		{
-			log_syntax_error(p->idx);
 			return (0);
-		}
 		else
 			p->paren_flag =! p->paren_flag;
 	}
 	else if (class == TOKEN_CLOSE_PAREN)
 	{
 		if (!p->paren_flag)
-		{
-			log_syntax_error(p->idx);
 			return (0);
-		}
 		else
 			p->paren_flag =! p->paren_flag;
 	}
