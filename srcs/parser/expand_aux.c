@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/20 18:56:27 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/11 13:04:46 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/20 16:59:58 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static t_token	*lexer_next_dumb(t_lexer *l)
 
 	lexer_chop_while(l, WHITESPACE, l->str_len, NULL);
 	if (l->idx >= l->str_len)
-		return (token(TOKEN_END, &l->str[l->idx], 1));
+		return (token(TOKEN_NEWLINE, &l->str[l->idx], 1));
 	text_start = &l->str[l->idx];
 	text_len = 0;
 	seg = segment(LITERAL, text_start, lexer_chop_til(l, WHITESPACE, l->str_len,
@@ -55,7 +55,7 @@ static t_token	*handle_split_seg(t_segment *seg)
 	new_tokens = NULL;
 	l = lexer_new(seg->text, ft_strlen(seg->text));
 	t = lexer_next_dumb(&l);
-	while (t && t->class != TOKEN_END)
+	while (t && t->class != TOKEN_NEWLINE)
 	{
 		token_add(&new_tokens, t);
 		t = lexer_next_dumb(&l);

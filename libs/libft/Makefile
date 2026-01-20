@@ -71,10 +71,15 @@ $(PATH_OBJT)%.o: $(PATH_SRCS)%.c
 	@$(CC) $(CPPFLAGS) $(CFLAGS) $< -o $(subst srcs/,build/,$@)
 
 clean:
-	rm -f $(subst $(PATH_SRCS),$(PATH_OBJT),$(OBJTS))
+	@printf "$(L_GREEN)Removing objects...$(NC)\n"
+	@rm -f $(subst $(PATH_SRCS),$(PATH_OBJT),$(OBJTS))
+	@rm -rf $(PATH_OBJT)
 
 fclean: clean
-	rm -f $(addprefix $(PATH_BIN),$(NAME))
+	@printf "$(L_GREEN)Removing library...$(NC)\n"
+	@rm -f $(addprefix $(PATH_BIN),$(NAME))
+	@rm -rf $(PATH_BIN)
+
 
 re: fclean all
 

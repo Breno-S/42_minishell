@@ -6,7 +6,7 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/06 18:54:22 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/20 15:49:45 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/20 16:59:43 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	parser_chop_token(t_parser *p)
 t_token_class	parser_peek(t_parser *p)
 {
 	if (!p || !p->idx)
-		return (TOKEN_END);
+		return (TOKEN_NEWLINE);
 	return (p->idx->class);
 }
 

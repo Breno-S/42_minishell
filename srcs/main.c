@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 19:21:07 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/20 16:56:57 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/20 17:22:14 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	read_sh(t_msh *msh)
 	g_signal = 0;
 	if (isatty(STDIN_FILENO))
 		rl_event_hook = check_signal_state;
-	if (tcsetattr(1, 0, &msh->term_settings))
+	if (isatty(STDIN_FILENO) && tcsetattr(1, 0, &msh->term_settings))
 		return (1);
 	set_signal_interactive();
 	msh->line = ft_gcfct_register_root(readline(PROMPT), "temp");
@@ -76,7 +76,7 @@ int	main(int argc __attribute__((unused)), char *argv[], char *envp[])
 {
 	t_msh	msh;
 
-	if (tcgetattr(1, &msh.term_settings))
+	if (isatty(STDIN_FILENO) && tcgetattr(1, &msh.term_settings))
 		return (1);
 	ft_gc_init();
 	msh.hash_env = (t_hash_env **)create_hash_env(envp, argv);

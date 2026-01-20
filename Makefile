@@ -169,11 +169,16 @@ valgrind:
 
 clean:
 		@make -C $(PATH_LIBFT) clean
-		rm -f $(subst $(PATH_MANDATORY),$(PATH_OBJT),$(OBJTS))
+		@printf "$(L_GREEN)Removing objects...$(NC)\n"
+		@rm -f $(subst $(PATH_MANDATORY),$(PATH_OBJT),$(OBJTS))
+		@rm -rf $(PATH_OBJT)
 
 fclean:
 		@make -C $(PATH_LIBFT) fclean
-		rm -f $(subst $(PATH_MANDATORY),$(PATH_OBJT),$(OBJTS))
-		rm -f $(addprefix $(PATH_BIN),$(NAME))
+		@printf "$(L_GREEN)Removing objects...$(NC)\n"
+		@rm -f $(subst $(PATH_MANDATORY),$(PATH_OBJT),$(OBJTS))
+		@rm -rf $(PATH_OBJT)
+		@printf "$(L_GREEN)Removing executable...$(NC)\n"
+		@rm -f $(addprefix $(PATH_BIN),$(NAME))
 
 re: fclean all

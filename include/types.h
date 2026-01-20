@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/20 16:56:22 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/20 18:00:31 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef enum e_error_type
 
 typedef enum e_token_class
 {
-	TOKEN_END,
+	TOKEN_NEWLINE,
 	TOKEN_INVALID,
 	TOKEN_WORD,
 	TOKEN_PIPE,
@@ -43,7 +43,6 @@ typedef enum e_token_class
 	TOKEN_REDIR_HEREDOC,
 	TOKEN_AND,
 	TOKEN_OR,
-	TOKEN_NEWLINE,
 }						t_token_class;
 
 typedef enum e_seg_type

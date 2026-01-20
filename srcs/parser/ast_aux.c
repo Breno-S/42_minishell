@@ -6,12 +6,50 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/09 00:09:24 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/20 15:50:47 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/20 17:57:21 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsesh.h"
 #include "errorsh.h"
+
+static int	add_arg(t_ast *ast, t_token_word *token)
+{
+	t_token_word	*arg;
+
+	arg = ft_gc_calloc_root(1, sizeof(*arg), "temp");
+	if (!arg)
+		return (0);
+	ft_memcpy(arg, token, sizeof(*arg));
+	arg->next = NULL;
+	token_add((t_token **)&ast->args, (t_token *)arg);
+	return (1);
+}
+
+t_ast	*parse_cmd(t_parser *p)
+{
+	t_ast			*ast;
+	t_token_class	class;
+
+	ast = ft_gc_calloc_root(1, sizeof(*ast), "temp");
+	if (!ast)
+		return (NULL);
+	ast->type = NODE_CMD;
+	if (!parse_redirs(p, ast))
+		return (NULL);
+	class = parser_peek(p);
+	if (class != TOKEN_WORD && class != TOKEN_NEWLINE)
+		return (NULL);
+	while (class == TOKEN_WORD)
+	{
+		add_arg(ast, (t_token_word *)p->idx);
+		parser_chop_token(p);
+		if (!parse_redirs(p, ast))
+			return (NULL);
+		class = parser_peek(p);
+	}
+	return (ast);
+}
 
 int	parse_redirs(t_parser *p, t_ast *ast)
 {

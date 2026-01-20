@@ -6,49 +6,22 @@
 /*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 18:26:03 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/20 15:50:46 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/20 18:29:49 by brensant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsesh.h"
 #include "errorsh.h"
 
-static int	add_arg(t_ast *ast, t_token_word *token)
+inline static int	is_empty_atom(t_ast *ast)
 {
-	t_token_word	*arg;
-
-	arg = ft_gc_calloc_root(1, sizeof(*arg), "temp");
-	if (!arg)
-		return (0);
-	ft_memcpy(arg, token, sizeof(*arg));
-	arg->next = NULL;
-	token_add((t_token **)&ast->args, (t_token *)arg);
-	return (1);
-}
-
-t_ast	*parse_cmd(t_parser *p)
-{
-	t_ast			*ast;
-	t_token_class	class;
-
-	ast = ft_gc_calloc_root(1, sizeof(*ast), "temp");
 	if (!ast)
-		return (NULL);
-	ast->type = NODE_CMD;
-	if (!parse_redirs(p, ast))
-		return (NULL);
-	class = parser_peek(p);
-	if (class != TOKEN_WORD && class != TOKEN_NEWLINE)
-		return (NULL);
-	while (class == TOKEN_WORD)
-	{
-		add_arg(ast, (t_token_word *)p->idx);
-		parser_chop_token(p);
-		if (!parse_redirs(p, ast))
-			return (NULL);
-		class = parser_peek(p);
-	}
-	return (ast);
+		return (1);
+	if (ast->type == NODE_CMD)
+		return ((!ast->args && !ast->redirs));
+	else if (ast->type == NODE_SUB)
+		return (is_empty_atom(ast->left));
+	return (0);
 }
 
 t_ast	*parse_pipe(t_parser *p)
@@ -69,7 +42,7 @@ t_ast	*parse_pipe(t_parser *p)
 		ast->type = NODE_PIPE;
 		ast->left = cmd;
 		ast->right = parse_pipe(p);
-		if (!ast->right)
+		if (is_empty_atom(ast->right))
 			return (NULL);
 	}
 	else
@@ -97,7 +70,7 @@ t_ast	*parse_cond(t_parser *p)
 		ast->type = class - 10;
 		ast->left = cmd;
 		ast->right = parse_cond(p);
-		if (!ast->right)
+		if (is_empty_atom(ast->right))
 			return (NULL);
 	}
 	else
