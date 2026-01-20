@@ -1,7 +1,7 @@
 NAME := minishell
 
 CC := cc
-CFLAGS := -g -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror
 CPPFLAGS = $(addprefix -I,$(INCLUDES))
 
 LIB_DIRS = $(PATH_LIBFT)/bin
@@ -12,7 +12,6 @@ SRCS_LIBFT := ./libs/libft/build/
 PATH_LIBFT := ./libs/libft/
 PATH_BIN := ./
 PATH_OBJT := ./build/
-PATH_BUILD := build/
 
 INCLUDES := include libs/libft/include
 PATH_MANDATORY := ./srcs
@@ -166,7 +165,7 @@ valgrind:
 		--log-file=valgrind.log \
 		--track-fds=yes \
 		--suppressions=ignore_readline.supp \
-		./bin/Minishell
+		./minishell
 
 clean:
 		@make -C $(PATH_LIBFT) clean
@@ -178,8 +177,3 @@ fclean:
 		rm -f $(addprefix $(PATH_BIN),$(NAME))
 
 re: fclean all
-
-teste:
-	@echo $(SRCS_MANDATORY)
-	@echo
-	@echo $(OBJTS)

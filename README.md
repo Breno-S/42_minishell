@@ -1,6 +1,6 @@
 # 42_minishell 🐚
 
-*This project was developed as part of the 42 curriculum by **[brensant](https://github.com/Breno-S/)** and **[rgomes-d](https://github.com/Norethx)**.*
+*This project was developed as part of the 42 curriculum by **[Breno Silva](https://github.com/Breno-S/)** and **[Ronaldo Gomes](https://github.com/Norethx)**.*
 
 ## Description
 
@@ -22,38 +22,22 @@ There are many widely used shell implementations, such as `sh`, `bash`, `zsh`, a
 
 ### Minishell features
 
-- Single and double quoting
-- Variables
-- Pipelining with `|`
-- Redirections:
-	- `<` - input
-	- `>` - output
-	- `>>` - append
-	- `<<` - here-documents
-- Signals:
-
-	- `Ctrl-C`
-	- `Ctrl-D`
-	- `Ctrl-\`
-
-- Builtin commands:
-
-	- `echo`
-	- `cd`
-	- `pwd`
-	- `export`
-	- `unset`
-	- `env`
-	- `exit`
-
-- Filename expansion (`*`).
+| Feature | Example |
+| ------- | ------- |
+| Single and double quoting | `echo 'single quoted $HOME'` <br> `echo "double quoted $HOME"` |
+| Variables | `export var="42"` <br> `echo $var` |
+| Pipelining | `echo "foo bar" \| tr ' ' \n' ` |
+| Redirections | `<`, `>`, `>>`, `<<` |
+| Signals | `Ctrl-C`, `Ctrl-D`, `Ctrl-\` |
+| Builtin commands | `echo`, `cd`, `pwd`, `export`, `unset`, `env`, `exit` |
+| Filename expansion | `echo *.md` |
 
 > [!IMPORTANT]
 > There are some limitations to our project:
 > - Listing commands with `;` or `&` is not possible. They are both treated as invalid tokens.
 > - Filename expansions (`*`) target only the current directory and its subdirectories.
 > - There is no brace (`{start..end}`), tilde (`~`), parameter (`${parameter}`) or arithmetic (`$((expression))`) expansions.
-> - There is no command or process substitution.
+> - There is no command (`$(command)`) or process (`>(command)`, `<(command)`) substitution.
 
 ## Instructions
 
@@ -89,3 +73,6 @@ Some of the main references used during the development of this project:
 
 * [Bash Reference Manual](https://www.gnu.org/software/bash/manual/bash.html)
 * [Shell Command Language (POSIX)](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html)
+* [Shell Code Explained](https://youtube.com/playlist?list=PLbtzT1TYeoMhF4hcpEiCsOeN13zqrzBJq&si=nOBAoxPgcI911upE)
+* [Military Grade C/C++ Lexer from Scratch](https://youtu.be/AqyZztKlSGQ?si=mKJNNsJD_HAbHYYe)
+
