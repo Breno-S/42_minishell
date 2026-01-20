@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 20:03:25 by rgomes-d          #+#    #+#             */
-/*   Updated: 2025/09/29 11:17:02 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/20 13:42:08 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 long long	ft_atoll(const char *nptr)
 {
-	int			i;
-	long long	result;
-	long long	multiplier;
+	int					i;
+	unsigned long long	result;
+	long long			rtn;
+	long long			multiplier;
 
 	i = 0;
 	result = 0;
@@ -31,5 +32,11 @@ long long	ft_atoll(const char *nptr)
 	}
 	while (nptr[i] >= '0' && nptr[i] <= '9')
 		result = (nptr[i++] - '0') + (result * 10);
-	return (result * multiplier);
+	rtn = result;
+	if (result == 9223372036854775808ULL)
+	{
+		rtn = ((result - 1) * -1) - 1;
+		return (rtn);
+	}
+	return (rtn * multiplier);
 }

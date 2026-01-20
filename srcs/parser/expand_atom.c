@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   traverse_expand.c                                  :+:      :+:    :+:   */
+/*   expand_atom.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 16:57:36 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/19 16:57:51 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/20 12:52:05 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ int	expand_atom(t_ast *ast)
 		if (expand_args_redirs(ast))
 			ast->cmd = build_cmd(ast);
 		else
+		{
+			ast->cmd = ft_gc_calloc_root(1, sizeof(t_exec), "temp");
 			return (1);
+		}
 	}
 	else if (ast->type == NODE_SUB)
 		ast->cmd = build_sub(ast);

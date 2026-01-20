@@ -6,14 +6,14 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 18:14:06 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/19 20:31:29 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/20 13:50:35 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "execsh.h"
 
 static long long	ft_sizemult(long long n);
-static int			check_out_of_bounds(char *args, long long rtn);
+static long long	check_out_of_bounds(char *args, long long rtn);
 
 int	ft_exit(t_exec *exec, t_msh *aux_exec)
 {
@@ -36,8 +36,8 @@ int	ft_exit(t_exec *exec, t_msh *aux_exec)
 
 int	verify_exit_arg(char *args)
 {
-	int	i;
-	int	rtn;
+	int			i;
+	long long	rtn;
 
 	i = 0;
 	rtn = 0;
@@ -63,22 +63,22 @@ int	verify_exit_arg(char *args)
 	return (rtn);
 }
 
-static int	check_out_of_bounds(char *args, long long rtn)
+static long long	check_out_of_bounds(char *args, long long rtn)
 {
 	long long	rtn_verify;
 	long long	len_nbr;
 	int			i;
 
 	i = 0;
-	len_nbr = ft_sizemult(rtn);
 	rtn_verify = rtn;
+	len_nbr = ft_sizemult(rtn_verify);
 	while (args[i])
 	{
-		if (!((rtn_verify / len_nbr) + '0' == args[i++]))
-		{
-			rtn = 2;
-			break ;
-		}
+		if (rtn_verify >= 0 && (!((rtn_verify / len_nbr) + '0' == args[i++])))
+			return (2);
+		else if (rtn_verify < 0 && (!(((rtn_verify / len_nbr) * -1)
+					+ '0' == args[i++])))
+			return (2);
 		rtn_verify = rtn % len_nbr;
 		len_nbr = len_nbr / 10;
 	}
@@ -97,10 +97,7 @@ static long long	ft_sizemult(long long n)
 		qt_char++;
 		n /= 10;
 	}
-	if (n < 0)
-		qt_char += 2;
-	else
-		qt_char += 1;
+	qt_char += 1;
 	while (qt_char-- > 1)
 		verify *= 10;
 	return (verify);

@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 20:06:10 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/19 15:19:55 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/20 12:58:49 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	sub_fork(t_ast *ast, t_msh *exec, t_pids **pids)
 
 	i = 0;
 	if (!ast->cmd && expand_atom(ast))
-		return (1);
+		ast->cmd->error = 1;
 	n_pid = ft_gc_calloc_root(pids[0]->total + 1, sizeof(pid_t *), "temp");
 	if (!n_pid)
 		return (1);
@@ -47,6 +47,11 @@ int	sub_exec(t_ast *ast, t_msh *exec)
 	int	rtn;
 
 	rtn = 1;
+	if (ast->cmd->error)
+	{
+		close_fds_tree_cmd(ast);
+		finish_tree(exec, rtn);
+	}
 	dup_sub(ast);
 	rtn = exec_tree(ast->left, exec, NULL);
 	close_fds_tree_cmd(ast);
