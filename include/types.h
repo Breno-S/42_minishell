@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/01 15:38:55 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/19 18:14:41 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/20 16:56:22 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,7 @@ typedef struct s_msh
 	t_token				*token_list;
 	t_ast				*ast;
 	char				*line;
+	struct termios		term_settings;
 }						t_msh;
 
 #endif /* TYPES_H */

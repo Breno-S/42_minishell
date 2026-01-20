@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   includes.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/17 15:46:04 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/19 18:05:50 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/20 16:56:02 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/ioctl.h>
+# include <termios.h>
 
 #endif /* INCLUDES_H */
