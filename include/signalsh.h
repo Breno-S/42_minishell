@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signalsh.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/14 17:43:57 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/19 18:08:13 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/20 16:26:50 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,5 @@ void	handler_interactive(int sig);
 void	set_signal_interactive(void);
 void	set_signal_fork(pid_t pid);
 int		check_signal_state(void);
-int		check_signal_state_heredoc(void);
 
 #endif /* SIGNALSH_H */

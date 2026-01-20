@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/09 12:18:32 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/19 12:57:37 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/20 16:26:30 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	loop_heredoc(char *eof, t_heredoc *heredoc)
 	{
 		if (isatty(STDIN_FILENO))
 		{
-			rl_event_hook = check_signal_state_heredoc;
+			rl_event_hook = check_signal_state;
 			str = ft_gcfct_register_root(readline("> "), "temp");
 			rl_event_hook = NULL;
 		}

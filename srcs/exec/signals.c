@@ -6,7 +6,7 @@
 /*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/13 16:21:17 by rgomes-d          #+#    #+#             */
-/*   Updated: 2026/01/16 12:37:23 by rgomes-d         ###   ########.fr       */
+/*   Updated: 2026/01/20 16:26:39 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,6 @@ int	check_signal_state(void)
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
-	}
-	return (0);
-}
-
-int	check_signal_state_heredoc(void)
-{
-	if (g_signal == SIGINT)
-	{
-		rl_done = 1;
-		rl_on_new_line();
-		rl_replace_line("", 0);
 	}
 	return (0);
 }
