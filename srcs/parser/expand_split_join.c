@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_split_join.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: brensant <brensant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgomes-d <rgomes-d@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/21 18:10:00 by brensant          #+#    #+#             */
-/*   Updated: 2026/01/16 23:50:01 by brensant         ###   ########.fr       */
+/*   Updated: 2026/01/21 14:19:04 by rgomes-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ static void	split_before(t_segment *curr, t_segment **prev, t_segment **seg_lst)
 
 	l = lexer_new(curr->text, ft_strlen(curr->text));
 	lit_len = lexer_chop_til(&l, " ", l.str_len, NULL);
-	lit = ft_gcfct_register_root(
-			ft_substr(curr->text, 0, lit_len), "temp");
+	lit = ft_gcfct_register_root(ft_substr(curr->text, 0, lit_len), "temp");
 	new_seg = ft_gc_calloc_root(1, sizeof(*new_seg), "temp");
 	*new_seg = (t_segment){LITERAL, lit, curr};
 	if (*prev)
 		(*prev)->next = new_seg;
 	else
 		*seg_lst = new_seg;
-	curr->text = ft_substr(curr->text, lit_len, l.str_len);
+	curr->text = ft_gcfct_register_root(ft_substr(curr->text, lit_len,
+				l.str_len), "temp");
 	*prev = curr;
 }
 
@@ -46,8 +46,7 @@ static void	split_after(t_segment *curr)
 	if (last_space)
 	{
 		lit_len = &curr->text[lit_len - 1] - last_space;
-		lit = ft_gcfct_register_root(
-				ft_substr(last_space, 1, lit_len), "temp");
+		lit = ft_gcfct_register_root(ft_substr(last_space, 1, lit_len), "temp");
 		new_seg = ft_gc_calloc_root(1, sizeof(*new_seg), "temp");
 		*new_seg = (t_segment){LITERAL, lit, curr->next};
 		curr->next = new_seg;
@@ -113,8 +112,8 @@ void	join_fixed_segs(t_token_word *token)
 			&& (seg->next->type >= OUTSIDE && seg->next->type <= LITERAL))
 		{
 			seg->type = LITERAL;
-			seg->text = ft_gcfct_register_root(
-					ft_strjoin(seg->text, seg->next->text), "temp");
+			seg->text = ft_gcfct_register_root(ft_strjoin(seg->text,
+						seg->next->text), "temp");
 			if (seg)
 				seg->next = seg->next->next;
 			else
