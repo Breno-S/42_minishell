@@ -21,7 +21,7 @@ t_gc_list	*ft_gc_malloc(size_t size, t_gc_type type)
 	lst = ft_gc_start();
 	if (!lst || size > 2147483647)
 		return (NULL);
-	new_gc = malloc(sizeof(t_list));
+	new_gc = malloc(sizeof(*new_gc));
 	if (!new_gc)
 		return (NULL);
 	new_gc->type = type;
